@@ -62,20 +62,16 @@ C++ adds two new keywords to support templates: ‘template’ and ‘typename�
   
 			template <class T, class U> class A 
 			{
-    				T x;
+				T x;
+				U y;
 				
-   				U y;
-  
 				public:
-				
-    					A() { cout << "Constructor Called" << endl; }
+					A() { cout << "Constructor Called" << endl; }
 			};
   
 			int main()
 			{
-    				A<char, char> a;
-				
-   				A<int, double> b;
-				
-    				return 0;
+				A<char, char> a;
+				A<int, double> b;
+			  return 0;
 			}
