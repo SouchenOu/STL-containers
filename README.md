@@ -53,3 +53,5 @@ C++ adds two new keywords to support templates: ‘template’ and ‘typename�
 	                          a.print();
 	                          return 0;
                           }
+**Template class with double argument:
+	
