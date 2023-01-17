@@ -26,7 +26,7 @@ namespace ft{
 class vector
 {
 
-};
+}
 }
 
 #endif
