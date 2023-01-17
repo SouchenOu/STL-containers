@@ -80,6 +80,7 @@ class vector
         explicit vector (const allocator_type& alloc = allocator_type())
         {
              //alloc	-	allocator to use for all memory allocations of this containe
+             //allocate: Used for allocation of memory.
                 _alloc(alloc);
              //value	-	the value to initialize elements of the container with
                 _value(NULL);
@@ -118,7 +119,12 @@ class vector
 			assign(x.begin(), x.end());
 		}
 
-        ~vector();
+        ~vector()
+		{
+            //The clear() function is used to remove all the elements of the vector container, thus making it size 0.
+			clear();
+			_alloc.deallocate(_value, _capacity);	
+		};
         vector& operator=(const vector& x);
 
 
