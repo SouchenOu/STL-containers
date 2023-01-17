@@ -102,8 +102,22 @@ class vector
             _capacity = _capacity.x;
             _current = _current.x;
             _alloc = _alloc.x;
-            
+            _value(_alloc.allocate(x._capacity));
+            //begin - Input iterator to the initial position range.
+            //end -   Input iterator to the final position range.
+            // here x element is from begin to end;
+                assign(x.begin(), x.end());
+
         }
+        //Assignment operator
+
+        vector&	operator = (const vector& x)
+		{
+			if (this == &x) 
+                return *this;
+			assign(x.begin(), x.end());
+		}
+
         ~vector();
         vector& operator=(const vector& x);
 
