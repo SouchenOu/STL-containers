@@ -20,9 +20,11 @@
 
 
 
-
+//If allocator_type is an instantiation of the default (allocator) (which has no state), this is not relevant.
 namespace ft{
-    template <class Type, class Allocator = std::allocator<Type>>
+    //template <class Type, class Allocator = std::allocator<Type>>
+    template <class Type, class Alloc = std::allocator<Type>>
+
 class vector
 {
     /**Typedefs
@@ -36,21 +38,27 @@ class vector
 
     typedef size_t  size_type;
     typedef Type  value_type;
-    typedef Allocator Allocator_type;
+    typedef Alloc allocator_type;
     typedef ptrdiff_t difference_type;
     //typedef typename iterator_traits<iterator>::difference_type		difference_type;
 
     //an allocator defines the following types:
-    typedef typename Allocator_type::pointer          ptr;
-    typedef typename Allocator_type::const_pointer     const_ptr;
-    typedef typename Allocator_type::reference       ref;
-    typedef typename Allocator_type::const_reference const_ref;
+    typedef typename allocator_type::pointer          ptr;
+    typedef typename allocator_type::const_pointer     const_ptr;
+    typedef typename allocator_type::reference       ref;
+    typedef typename allocator_type::const_reference const_ref;
     
     //iterators
     typedef ft::iterator < Type >                       iterator; 
     typedef ft::iterator <const Type>                   const_iterator;
     typedef ft::reverse_iterator<iterator>              reverce_iterator;
     typedef ft::reverse_iterator<const_iterator>        const_iterator;
+
+
+    //constructor
+    explicit vector (const allocator_type& Alloc = allocator_type());
+	
+    explicit vector (size_type n, const value_type& val = value_type(),const allocator_type&  Alloc = allocator_type());
 
 
 
