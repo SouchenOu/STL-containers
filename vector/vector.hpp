@@ -125,6 +125,19 @@ class vector
 			clear();
 			_alloc.deallocate(_value, _capacity);	
 		};
+        //Input iterators are iterators that can be used in sequential input operations, where each value pointed by the iterator is read only once and then the iterator is incremented.
+        template <class InputIterator> vector (InputIterator first, InputIterator last,const allocator_type& alloc = allocator_type())
+        {
+            _alloc(alloc);
+            _capacity(0);
+            _current(0);
+            _value(NULL);
+            //the vector::insert() function from the STL in C++ is used to insert elements or values into a vector container. In general, the function returns an iterator pointing to the first of the inserted elements.
+            //from the begin of our vector print from the first to the last
+            insert(begin(), first, last);	
+
+        }
+
         vector& operator=(const vector& x);
 
 
@@ -139,8 +152,13 @@ class vector
             }
             iterator end()
             {
-                 return iterator(_value);
+                 return iterator(_value + _current);
             }
+            const_iterator end() const
+            {
+                return const_iterator(_value + _current);
+            }
+            //impliment reverse iterators
 
 
 
