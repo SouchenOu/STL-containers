@@ -37,12 +37,19 @@ class vector
     value_type:	        A type that is managed by the allocator.*/
 
     private:
+    // value is the (Type maybe char , int ...) pointer
+    // which stores the address of our vector
         Type    *_value;
+    // capacity is the total storage
+    // capacity of the vector
         size_t  _capacity;
+     / current is the number of elements
+    // currently present in the vector
         size_t  _current;
         Alloc   _alloc;
 
     public:
+        //Member type size_type is an unsigned integral type.
         //typedef size_t  size_type;
         typedef Type  value_type;
         typedef Alloc allocator_type;
@@ -83,11 +90,20 @@ class vector
 	        //    vector(size_type __n, const value_type& __x, const allocator_type& __a);
         explicit vector (size_type n, const value_type& value = value_type(),const allocator_type&  a = allocator_type())
         {
+                _capacity(n);
+                _alloc(a);
+                insert(begin(), n, value);
 
 
          }
                 /***copy constructor***/
-        vector (const vector& x);
+        vector (const vector& x)
+        {
+            _capacity = _capacity.x;
+            _current = _current.x;
+            _alloc = _alloc.x;
+            
+        }
         ~vector();
         vector& operator=(const vector& x);
 
@@ -99,11 +115,11 @@ class vector
             }
             const_iterator begin() const
             {
-                return const_iterator(elem);
+                return const_iterator(_value);
             }
             iterator end()
             {
-                 return iterator(elem);
+                 return iterator(_value);
             }
 
 
