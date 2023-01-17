@@ -34,13 +34,26 @@ class vector
     size_type:	        An unsigned integral type that can represent the length of any sequence that an object of type allocator can allocate.
     value_type:	        A type that is managed by the allocator.*/
 
+    typedef size_t  size_type;
+    typedef Type  value_type;
+    typedef Allocator Allocator_type;
+    typedef ptrdiff_t difference_type;
+    //typedef typename iterator_traits<iterator>::difference_type		difference_type;
+
     //an allocator defines the following types:
-    typedef typename Allocator::pointer          ptr;
-    typedef typename Allocator::cont_pointer     const_ptr;
-    typedef typename Allocator::reference       ref;
-    typedef typename Allocator::const_reference const_ref;
+    typedef typename Allocator_type::pointer          ptr;
+    typedef typename Allocator_type::const_pointer     const_ptr;
+    typedef typename Allocator_type::reference       ref;
+    typedef typename Allocator_type::const_reference const_ref;
     
     //iterators
+    typedef ft::iterator < Type >                       iterator; 
+    typedef ft::iterator <const Type>                   const_iterator;
+    typedef ft::reverse_iterator<iterator>              reverce_iterator;
+    typedef ft::reverse_iterator<const_iterator>        const_iterator;
+
+
+
 
 
     
