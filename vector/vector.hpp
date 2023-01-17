@@ -59,6 +59,7 @@ class vector
     explicit vector (const allocator_type& Alloc = allocator_type());
 	
     explicit vector (size_type n, const value_type& val = value_type(),const allocator_type&  Alloc = allocator_type());
+    vector (const vector& x);
 
 
 
