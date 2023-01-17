@@ -36,58 +36,75 @@ class vector
     size_type:	        An unsigned integral type that can represent the length of any sequence that an object of type allocator can allocate.
     value_type:	        A type that is managed by the allocator.*/
 
-    //typedef size_t  size_type;
-    typedef Type  value_type;
-    typedef Alloc allocator_type;
-    //typedef ptrdiff_t difference_type;
-    //typedef typename iterator_traits<iterator>::difference_type		difference_type;
+    private:
+        Type    *_value;
+        size_t  _capacity;
+        size_t  _current;
+        Alloc   _alloc;
 
-    //an allocator defines the following types:
-    typedef typename allocator_type::size_type        size_type;
-    typedef typename allocator_type::difference_type       difference_type;
+    public:
+        //typedef size_t  size_type;
+        typedef Type  value_type;
+        typedef Alloc allocator_type;
+        //typedef ptrdiff_t difference_type;
+        //typedef typename iterator_traits<iterator>::difference_type		difference_type;
 
-    typedef typename allocator_type::pointer          ptr;
-    typedef typename allocator_type::const_pointer     const_ptr;
-    typedef typename allocator_type::reference       ref;
-    typedef typename allocator_type::const_reference const_ref;
+                    //an allocator defines the following types:
+        typedef typename allocator_type::size_type              size_type;
+        typedef typename allocator_type::difference_type        difference_type;
+
+        typedef typename allocator_type::pointer                ptr;
+        typedef typename allocator_type::const_pointer          const_ptr;
+        typedef typename allocator_type::reference              ref;
+        typedef typename allocator_type::const_reference        const_ref;
     
-    //iterators
-    typedef ft::iterator < Type >                       iterator; 
-    typedef ft::iterator <const Type>                   const_iterator;
-    typedef ft::reverse_iterator<iterator>              reverce_iterator;
-    typedef ft::reverse_iterator<const_iterator>        const_iterator;
+                //**********iterators
+        typedef ft::iterator < Type >                            iterator; 
+        typedef ft::iterator <const Type>                        const_iterator;
+        typedef ft::reverse_iterator<iterator>                   reverce_iterator;
+        typedef ft::reverse_iterator<const_iterator>             const_iterator;
+
+        /*value_type *value;
+        size_type   _capacity;
+        size_type   _current;
+        allocator_type  alloc;*/
+
+                //********************constructors
+        explicit vector (const allocator_type& alloc = allocator_type())
+        {
+             //alloc	-	allocator to use for all memory allocations of this containe
+                _alloc(alloc);
+             //value	-	the value to initialize elements of the container with
+                _value(NULL);
+                _current(0);
+                _capacity(0);
+
+         }
+	        //    vector(size_type __n, const value_type& __x, const allocator_type& __a);
+        explicit vector (size_type n, const value_type& value = value_type(),const allocator_type&  a = allocator_type())
+        {
 
 
-    //********************constructors
-    explicit vector (const allocator_type& alloc = allocator_type())
-    {
-        //alloc	-	allocator to use for all memory allocations of this containe
-        _alloc(alloc);
-        //value	-	the value to initialize elements of the container with
-        _value(NULL);
-
-    }
-	//    vector(size_type __n, const value_type& __x, const allocator_type& __a);
-    explicit vector (size_type n, const value_type& value = value_type(),const allocator_type&  a = allocator_type());
-    /***copy constructor***/
-    vector (const vector& x);
-    ~vector();
-    vector& operator=(const vector& x);
+         }
+                /***copy constructor***/
+        vector (const vector& x);
+        ~vector();
+        vector& operator=(const vector& x);
 
 
-    //implement iterators
-    iterator begin()
-    {
-        return iterator(_value);
-    }
-    const_iterator begin() const
-    {
-        return const_iterator(elem);
-    }
-    iterator end()
-    {
-        return iterator(elem);
-    }
+            //implement iterators
+            iterator begin()
+            {
+                 return iterator(_value);
+            }
+            const_iterator begin() const
+            {
+                return const_iterator(elem);
+            }
+            iterator end()
+            {
+                 return iterator(elem);
+            }
 
 
 
