@@ -43,22 +43,23 @@ class vector
     // capacity is the total storage
     // capacity of the vector
         size_t  _capacity;
-     / current is the number of elements
+     // current is the number of elements
     // currently present in the vector
         size_t  _current;
         Alloc   _alloc;
 
     public:
+        // //***************** Aliases
         //Member type size_type is an unsigned integral type.
-        //typedef size_t  size_type;
+        typedef size_t  size_type;
         typedef Type  value_type;
         typedef Alloc allocator_type;
-        //typedef ptrdiff_t difference_type;
+        typedef ptrdiff_t difference_type;
         //typedef typename iterator_traits<iterator>::difference_type		difference_type;
 
                     //an allocator defines the following types:
-        typedef typename allocator_type::size_type              size_type;
-        typedef typename allocator_type::difference_type        difference_type;
+        //typedef typename allocator_type::size_type              size_type;
+       // typedef typename allocator_type::difference_type        difference_type;
 
         typedef typename allocator_type::pointer                ptr;
         typedef typename allocator_type::const_pointer          const_ptr;
@@ -68,8 +69,8 @@ class vector
                 //**********iterators
         typedef ft::iterator < Type >                            iterator; 
         typedef ft::iterator <const Type>                        const_iterator;
-        typedef ft::reverse_iterator<iterator>                   reverce_iterator;
-        typedef ft::reverse_iterator<const_iterator>             const_iterator;
+        typedef ft::reverse_iterator<iterator>                   reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>             const_reverse_iterator;
 
         /*value_type *value;
         size_type   _capacity;
@@ -118,7 +119,7 @@ class vector
                 return *this;
 			assign(x.begin(), x.end());
 		}
-
+        // function
         ~vector()
 		{
             //The clear() function is used to remove all the elements of the vector container, thus making it size 0.
@@ -139,8 +140,21 @@ class vector
         }
 
         vector& operator=(const vector& x);
-
-
+        //function allocate
+        void allocate(size_type capacity) 
+        {
+            _capacity = capacity;
+            _value = std::allocator_traits<allocator_type>::allocate(_alloc, capacity);
+        }
+        //function dealocate
+        void deallocate(size_type capacity) 
+        {
+            std::allocator_traits<allocator_type>::deallocate(_alloc, _value, capacity);
+            _capacity = 0;
+            _current = 0;
+        }
+            
+            
             //implement iterators
             iterator begin()
             {
@@ -180,6 +194,7 @@ class vector
             //size	Retourne le nombre d'éléments figurant dans le vecteur.
             //resize	Spécifie une nouvelle taille pour un vecteur.
             //max_size	Retourne la longueur maximale autorisée du vecteur.
+            /**First, the size is NOT the same as the capacity. A vector’s size is the number of elements in the vector whereas the capacity is the number of elements for which there is allocated memory.*/
             size_type size() const
             {
                     return _current;
@@ -190,12 +205,12 @@ class vector
                     return _alloc.max_size();
             }
             //capacity
-            size_type capacity()
+            size_type capacity() const
             {
                 return _capacity;
             }
             // function empty
-            bool empty()
+            bool empty() const
             {
                 if(_current == 0)
                     return 1;
@@ -203,8 +218,42 @@ class vector
                     return 0;
             }
             //function resize
+            void resize(size_type n, value_type val = value_type())
+            {
+                while(n < _current)
+                {
+                    pop_back();
+                }
+                while(n > _current)
+                {
+                    push_back(val);
+                }
+            }
 
-            
+             void resize(size_type newsize)
+             {
+
+             }
+            // function at()
+            //The member function returns a reference to the element of the controlled sequence at position off. If that position is invalid, the function throws an object of class out_of_range.
+            reference at (size_type n)
+            {
+                if (n > _current)
+                    throw std::out_of_range("vector ");
+                return value[n];
+            }
+            const_reference at (size_type n) const
+            {
+                if (n > _current)
+                    throw std::out_of_range("vector ");
+                return (value[n]);
+            }
+
+            // function assign
+            void assign(size_type count, const Ty& val)
+            {
+
+            }
 
 
 
