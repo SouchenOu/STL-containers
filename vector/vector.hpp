@@ -176,6 +176,13 @@ class vector
                 return reverse_iterator(begin());
             }
 
+            // Capacity (size, max_size, resize)
+            //size	Retourne le nombre d'éléments figurant dans le vecteur.
+            //resize	Spécifie une nouvelle taille pour un vecteur.
+            //max_size	Retourne la longueur maximale autorisée du vecteur.
+            //test
+            
+
 
 
 
