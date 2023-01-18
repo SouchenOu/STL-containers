@@ -180,7 +180,30 @@ class vector
             //size	Retourne le nombre d'éléments figurant dans le vecteur.
             //resize	Spécifie une nouvelle taille pour un vecteur.
             //max_size	Retourne la longueur maximale autorisée du vecteur.
-            //test
+            size_type size() const
+            {
+                    return _current;
+            }
+            //The vector::max_size() is a built-in function in C++ STL which returns the maximum number of elements that can be held by the vector container
+            size_type max_size() const
+            {
+                    return _alloc.max_size();
+            }
+            //capacity
+            size_type capacity()
+            {
+                return _capacity;
+            }
+            // function empty
+            bool empty()
+            {
+                if(_current == 0)
+                    return 1;
+                else if (_current != 0)
+                    return 0;
+            }
+            //function resize
+
             
 
 
