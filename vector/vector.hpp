@@ -283,7 +283,7 @@ class vector
                         tmp[i] = val;
                         i++;
                     }
-                    _alloc.deallocate(tmp, _capacity);
+                    _alloc.deallocate(_value, _capacity);
                     _value = tmp;
                     _capacity = n;
                     _current = n;
@@ -305,7 +305,23 @@ class vector
                 return (_value[n]);
             }
             // function reserve()
-            
+            void	reserve(size_type n)
+			{
+				if (n <= _capacity)	return ;
+				if (n > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
+                // the capacity should be equal to n (that why we should allocate n place in memory)
+				value_type	*_new = _alloc.allocate(n);
+				for (size_type i = 0; i < _current; i++)
+				{
+					_alloc.construct(&_new[i], _value[i]);
+					_alloc.destroy(&_value[i]);
+				}
+				_alloc.deallocate(_value, _capacity);
+				_value= _new;
+				_capacity = n;
+			}
+
             // function assign
             // there is two differete assign function
             //1: template <class InputIterator>  void assign (InputIterator first, InputIterator last);
