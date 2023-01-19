@@ -381,6 +381,8 @@ class vector
             }
             //push_back , pop_back, insert, erase, swap, clear,  get_allocator and operators
             // function push_back
+
+
             /**The C++ function std::vector::capacity() returns the size of allocate storage, expressed in terms of elements.
 
             This capacity is not necessarily equal to the size of vector. It can be equal or greater than vector size.
@@ -400,7 +402,17 @@ class vector
                 _current--;		
             };
 
-  
+			iterator	insert(iterator position, const value_type& val)
+			{
+			
+                value[position] = val;
+				return begin() + position;
+			}
+
+
+
+
+    
 
 };
 }
