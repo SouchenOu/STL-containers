@@ -326,23 +326,81 @@ class vector
             // there is two differete assign function
             //1: template <class InputIterator>  void assign (InputIterator first, InputIterator last);
             //2: template <class InputIterator>  void assign (InputIterator first, InputIterator last);
+            //Method 1
+            template <class InputIterator>
+			void		assign( InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
+			{
+				size_type	n = ft::distance(first, last);
 
+				clear();
+				if (n > _capacity)	
+                    reserve(n);
+				for (size_type i = 0; i < n; i++)
+					_alloc.construct(_value + i, *first++);
+				_current = n;
+			};
+            //Method 2
+			void		assign( size_type count, const value_type& val )
+			{
+                //The clear() function is used to remove all the elements of the vector container, thus making it size 0.
+				clear();
+				if (count > _capacity)
+                {
+                    reserve(count);
+                    //_capacity = count;
+                    //** in reserve the capacity will change ant it will be equal to count
+                }	
+				for (size_type i = 0; i < count; i++)	
+                    _alloc.construct(_value + i, val);
+				_current = count;
+
+			};
+            // method 3
             void assign(size_type count, const Ty& val)
             {
-                size_type i = 0;
-                while(i < count)
+                // count here is the capacity of our vector so i should allocate count space
+                if(count > _capacity)
                 {
-                    _value[i] = val;
-                    i++;
+                    value_type *_new = _alloc.allocate(count);
+                    for(size_type i = 0; i < count; i++)
+                    {
+                        _alloc.construct(&_new[i], val);
+                        _alloc.destroy(&_value[i]);
+                    }
+                    _alloc.deallocate(_value , _capacity);
+                    _value = _new;
+                    _capacity = count;
+                    _current = count;
+                }else{
+                    for (size_type i = 0; i < count; i++)	
+                        _alloc.construct(_value + i, val);
+				    _current = count;
                 }
+                
 
             }
+            //push_back , pop_back, insert, erase, swap, clear,  get_allocator and operators
+            // function push_back
+            /**The C++ function std::vector::capacity() returns the size of allocate storage, expressed in terms of elements.
 
+            This capacity is not necessarily equal to the size of vector. It can be equal or greater than vector size.
 
+            The theoretical limit on vector size is given by member max_size.*/
+            void		push_back(const value_type& val)
+			{
+				if (_current == _capacity)
+					reserve(_new_capacity(_current + 1));
+				_alloc.construct(_value + _current, val);
+				_current++;
+			};
 
+			void		pop_back() 						
+            {		
+                _alloc.destroy(&_value[_current]);
+                _current--;		
+            };
 
-
-    
+  
 
 };
 }
