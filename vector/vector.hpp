@@ -240,19 +240,73 @@ class vector
              {
 
              }
+            //resize function using destroy, allocate , deallocate and construct
+            //In C++, the operator new allocates memory for an object and then creates an object at that location by calling a constructor. Occasionally, however, it is useful to separate those two operations. [1] If p is a pointer to memory that has been allocated but not initialized, then construct(p, value) creates an object of type T1 at the location pointed to by p. The argument value is passed as an argument to T1's constructor.
+            void resize (size_type n, value_type val = value_type())
+            {
+                if (n < _current)
+                {
+                    size_type i = n + 1;
+                    while (i < _current)
+                    {
+                        //Pointer to the object to be destroyed.
+                        // _alloc : allocator to use for construction
+                        _alloc.destroy((_value + i)));
+                        i++;
+                    }
+                    _current = n;
+                    return ;
+                }
+               // Notice that construct() does not allocate space for the element. It should already be available at _value (we allocate space with allocate() function).
+
+                if (n > _current && n < _capacity)
+                {
+                    size_type i = _current;
+                    while (i < n)
+                    {
+                        //this function provides the automatic fall back to placement new, the member function construct() is an optional Allocator requirement since C++11.
+                        _alloc.construct((_value + i), val);
+                        i++; 
+                    }
+                    _current = n;
+                    return;
+                }
+                // we should check first if n is already allocate in memory (if not we should allocate it)
+                if (n > _capacity)
+                {
+                    value_type *tmp = _alloc.allocate(n);
+                    size_type i = 0;
+                    while(i < _current)
+                    {
+                        tmp[i] = _value[i];
+                        i++;
+                    }
+                    size_type i = _current;
+                    while (i < n)
+                    {
+                        tmp[i] = val;
+                        i++;
+                    }
+                    _alloc.deallocate(tmp, _capacity);
+                    _value = tmp;
+                    _capacity = n;
+                    _current = n;
+                    return ;
+                }
+            }
             // function at()
             //The member function returns a reference to the element of the controlled sequence at position off. If that position is invalid, the function throws an object of class out_of_range.
             reference at (size_type n)
             {
                 if (n > _current)
                     throw std::out_of_range("vector ");
-                return value[n];
+                return _value[n];
             }
             const_reference at (size_type n) const
             {
                 if (n > _current)
                     throw std::out_of_range("vector ");
-                return (value[n]);
+                return (_value[n]);
             }
 
             // function assign
