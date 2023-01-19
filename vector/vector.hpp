@@ -153,6 +153,12 @@ class vector
             _capacity = 0;
             _current = 0;
         }
+        void construct(size_type size, const Type& value) 
+        {
+            _current = size;
+            for (size_type index{ 0 }; index < size; ++index)
+                std::allocator_traits<allocator_type>::construct(_alloc, _value + index, value);
+        }
             
             
             //implement iterators
