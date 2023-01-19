@@ -223,7 +223,7 @@ class vector
                 else if (_current != 0)
                     return 0;
             }
-            //function resize
+            //function resize Method 1
             void resize(size_type n, value_type val = value_type())
             {
                 while(n < _current)
@@ -235,11 +235,7 @@ class vector
                     push_back(val);
                 }
             }
-
-             void resize(size_type newsize)
-             {
-
-             }
+            // function resize method 2
             //resize function using destroy, allocate , deallocate and construct
             //In C++, the operator new allocates memory for an object and then creates an object at that location by calling a constructor. Occasionally, however, it is useful to separate those two operations. [1] If p is a pointer to memory that has been allocated but not initialized, then construct(p, value) creates an object of type T1 at the location pointed to by p. The argument value is passed as an argument to T1's constructor.
             void resize (size_type n, value_type val = value_type())
@@ -308,10 +304,21 @@ class vector
                     throw std::out_of_range("vector ");
                 return (_value[n]);
             }
-
+            // function reserve()
+            
             // function assign
+            // there is two differete assign function
+            //1: template <class InputIterator>  void assign (InputIterator first, InputIterator last);
+            //2: template <class InputIterator>  void assign (InputIterator first, InputIterator last);
+
             void assign(size_type count, const Ty& val)
             {
+                size_type i = 0;
+                while(i < count)
+                {
+                    _value[i] = val;
+                    i++;
+                }
 
             }
 
