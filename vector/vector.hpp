@@ -401,12 +401,39 @@ class vector
                 _alloc.destroy(&_value[_current]);
                 _current--;		
             };
-
+            // function insert
 			iterator	insert(iterator position, const value_type& val)
 			{
 			
                 value[position] = val;
+                _current++;
+                // I should check if the current size is sup than capacity
+                //This causes an automatic reallocation of the allocated storage space if -and only if- the new vector size surpasses the current vector capacity.
 				return begin() + position;
+			}
+            // erase()
+            iterator erase (iterator position)
+            {
+
+            }
+            /**erase() function is used to remove elements from a container from the specified position or range.*/
+
+            iterator	erase( iterator first, iterator last )
+			{
+				size_type			nb_element = last - first;
+
+				while (first != end() - nb_element)
+				{
+					*first = first[nb_element];
+					++first;
+				}
+				while (first != end())
+				{
+					_alloc.destroy(&(*first));
+					++first;
+				}
+				_current -= nb_element;
+				return last - nb_element;
 			}
 
 
