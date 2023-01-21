@@ -15,8 +15,12 @@
 # define VECTOR_HPP
 
 # include <memory>
-# include <algorithm>
 # include <iterator>
+# include <algorithm>
+
+# include "enable_if.hpp"
+# include "vector_iterator.hpp"
+# include "equal.hpp"
 
 
 
