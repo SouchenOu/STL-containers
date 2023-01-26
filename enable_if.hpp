@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enable_if.hpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: souchen <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/26 09:51:57 by souchen           #+#    #+#             */
+/*   Updated: 2023/01/26 09:51:59 by souchen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ENABLE_IF
 # define ENABLE_IF
 
@@ -17,50 +29,7 @@ namespace ft
 		typedef integral_constant<T, v>	type;
 	};
 
-	typedef integral_constant<bool, true>	true_type;
-	typedef integral_constant<bool, false>	false_type;
-
-	template <class T>
-		struct is_integral				:	public false_type		{};
-
-	template <class T> struct
-		is_integral<const T>			:	public is_integral<T>	{};
-	template <class T> struct
-		is_integral<volatile const T>	:	public is_integral<T>	{};
-	template <class T> struct
-		is_integral<volatile T>			:	public is_integral<T>	{};
-	template <> struct
-		is_integral<unsigned char>		:	public true_type		{};
-	template <> struct
-		is_integral<unsigned short>		:	public true_type		{};
-	template <> struct
-		is_integral<unsigned int>		:	public true_type		{};
-	template <> struct
-		is_integral<unsigned long>		:	public true_type		{};
-	template <> struct
-		is_integral<unsigned long long> :	public true_type		{};
-	template <> struct
-		is_integral<signed char>		:	public true_type		{};
-	template <> struct
-		is_integral<short>				:	public true_type		{};
-	template <> struct
-		is_integral<int>				:	public true_type		{};
-	template <> struct
-		is_integral<long>				:	public true_type		{};
-	template <> struct
-		is_integral<long long>			:	public true_type		{};
-	template <> struct
-		is_integral<char>				:	public true_type		{};
-	template <> struct
-		is_integral<bool>				:	public true_type		{};
-
-	template<typename T>
-	void	swap(T &first, T& second)
-	{
-		T	tmp = first;
-		first = second;
-		second = tmp;
-	};
+	
 };
 
 #endif
