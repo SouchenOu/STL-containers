@@ -59,7 +59,7 @@ namespace ft
 		typedef Distance difference_type;
 		typedef Pointer pointer;
 		typedef Reference reference;
-		typedef Category iterator_category;
+		typedef Category iterator_category;;
 	};
 
 #endif
