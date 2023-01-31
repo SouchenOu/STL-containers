@@ -28,11 +28,6 @@ namespace ft
 
 
 
-
-
-
-
-
 	// here in template we can write class or typename
 	template < class U >
 	struct iterator_traits
