@@ -16,7 +16,11 @@
 
 namespace ft
 {
-	
+	template <typename type1, typename type2>
+    class pair
+    {
+
+    }
 };
 
 #endif
