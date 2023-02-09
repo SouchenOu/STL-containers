@@ -116,6 +116,14 @@ namespace ft{
                 elem_left->right = elem;
                 elem->parent = elem_left;
             }
+            //*******Preorder -- Inorder ---- PostOrder
+
+
+
+
+
+            //********Delete in red_black_tree********/
+
             
             // balance out binary search tree
             void balance_red_black_tree(Node *&root, Node *&new_elem)
