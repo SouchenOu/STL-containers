@@ -74,10 +74,52 @@ namespace ft{
                 }
                 return root;
             }
+            //******************** rotations 
+            // left rotation
+            void rotationleft(Node &8roor, Node *&elem)
+            {
+                Node *elem_right = elem->right;
+                elem->right = elem_right->left;
+
+                if(elem->right != NULL)
+                {
+                    root = elem_right;
+                }else if(elem == elem->parent->left)
+                {
+                    elem->parent->left = elem_right;
+                }else {
+                    elem->parent->right = elem->right;
+                }
+                elem_right->left = elem;
+                elem->parent = elem_right;
+            }
+            // right rotation
+
+            void rotateRight(Node *&root, Node *&elem)
+            {
+                Node *elem_left = elem->left;
+                elem->left = elem_left->right;
+                if(elem->left != NULL)
+                {
+                    elem->left->parent = elem;
+                }
+                elem_left->parent = elem->parent;
+                if(elem->parent == NULL)
+                {
+                    root = elem_left;
+                }else if(elem == elem->parent->left)
+                {
+                    elem->parent->left = elem_left;
+                }else
+                    elem->parent->right = elem_left;
+
+                elem_left->right = elem;
+                elem->parent = elem_left;
+            }
+            
             // balance out binary search tree
             void balance_red_black_tree(Node *&root, Node *&new_elem)
             {
-
                 Node *parent_new = NULL;
                 Node *Grand_parent = NULL;
                 while((new_elem != root) && (new_elem->color == true) && (new_elem->parent->color == true))
