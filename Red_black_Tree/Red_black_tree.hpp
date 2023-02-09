@@ -22,7 +22,7 @@ namespace ft{
 
     #define red     true
     #define black   false
-    
+
     template < class T >
     struct Node
     {
@@ -117,6 +117,34 @@ namespace ft{
 
                     }
                     //**************Case 2****************/
+                    //if parent of our new element is right child of grand parent
+                    else{
+                        Node *Uncle = Grand_parent->left;
+                        if((Uncle != NULL) && Uncle->color = true)
+                        {
+                            Grand_parent->color = true;
+                            parent->new = false;
+                            Uncle->color = false;
+                            new_elem = Grand_parent;
+                        }else if(Uncle == NULL || Uncle->color = false)
+                        {
+                            // here again we will have two cases 
+                            // if our rotation is(right, left) then we should applicate (RL) rotation
+
+                            if(new_elem = parent_new->left)
+                            {
+                                rotateRight(root, parent_new);
+                                new_elem = parent_new;
+                                parent_new = new_elem->parent;
+                            }
+                            // if our rotation is (right, right) then we should applicate just (L) rotation
+                            rotateLeft(root, Grand_parent);
+                            //then swap
+                            swap(parent_new->color, Grand_parent->color);
+                            new_elem = parent_new;
+                        }
+                    }
+                    root->color = false;
 
                 }
             }
