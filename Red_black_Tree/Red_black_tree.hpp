@@ -14,17 +14,15 @@
 #ifndef RED_BLACK_TREE_HPP
 # define RED_BLACK_TREE_HPP
 
-
-
-
 # include <iostream>
 # include <memory>
 # include <cmath>
 namespace ft{
 
 
-    #define red true
-    #define black false
+    #define red     true
+    #define black   false
+    
     template < class T >
     struct Node
     {
@@ -79,27 +77,46 @@ namespace ft{
             // balance out binary search tree
             void balance_red_black_tree(Node *&root, Node *&new_elem)
             {
+
+                Node *parent_new = NULL;
+                Node *Grand_parent = NULL;
                 while((new_elem != root) && (new_elem->color == true) && (new_elem->parent->color == true))
                 {
+                    parent_new = new_elem->parent;
+                    Grand_parent = new_elem->parent->parent;
+                    ///*********CASE 1******************/
                     // the first case is if parent of the new element is left child of grand_parent
-                    if(new_elem->parent == new_elem->parent->parent->left)
+                    if(parent_new == Grand_parent->left)
                     {
-                        Node *Uncle = new_elem->parent->parent->right;
+                        Node *Uncle = Grand_parent->right;
                         // here we should check two cases 
                         // if the color of uncle is red then recolor 
-                        // if the clor of uncle is black or if the uncle nexiste pas the do suitable rotation and recolor
+                        // if the color of uncle is black or if the uncle nexiste pas the do suitable rotation and recolor
                         if(Uncle != NULL &&  Uncle->color == true)
                         {
-                            new_elem->parent->parent->color = true;
-                            new_elem->parent->color = false;
+                            Grand_parent->color = true;
+                            parent_new->color = false;
                             Uncle->color = false;
-                            new_elem = new_elem->parent->parent;
+                            new_elem = Grand_parent;
                         }else if(Uncle == NULL || Uncle->color = false)
                         {
-                            
+                            // then check the position of new element
+                            // if our newElem is right elem of the parent of new_elem (that means that we need--> LR rotation)
+                            // if our newElem is left elem of the parent of new_elem (that means we need just right rotation (because we have left, left)) 
+                            if(new_elem == parent_new->right)
+                            {
+                                rotateLeft(root,parent_new);
+                                new_elem = parent_new;
+                                parent_new = new_elem->parent;
+                            }
+                                rotateRight(root, Grand_parent);
+                                //then swap
+                                swap(parent_new->color, Grand_parent->color);
+                                new_elem = parent_new;
                         }
 
                     }
+                    //**************Case 2****************/
 
                 }
             }
