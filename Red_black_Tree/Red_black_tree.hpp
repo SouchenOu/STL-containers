@@ -55,7 +55,7 @@ namespace ft{
                 root = NULL;
             }
             //Insert binary search tree
-            Node *BSTinsert(Node *root, Node *new_elem)
+            Node *BSTinsert(Node <type_name> *root, Node <type_name> *new_elem)
             {
                 // if our tree is empty
                 if(root == NULL)
@@ -76,7 +76,7 @@ namespace ft{
             }
             //******************** rotations 
             // left rotation
-            void rotationleft(Node &8roor, Node *&elem)
+            void rotationleft(Node <type_name> &8roor, Node <type_name> *&elem)
             {
                 Node *elem_right = elem->right;
                 elem->right = elem_right->left;
@@ -95,7 +95,7 @@ namespace ft{
             }
             // right rotation
 
-            void rotateRight(Node *&root, Node *&elem)
+            void rotateRight(Node <type_name> *&root, Node <type_name> *&elem)
             {
                 Node *elem_left = elem->left;
                 elem->left = elem_left->right;
@@ -116,17 +116,135 @@ namespace ft{
                 elem_left->right = elem;
                 elem->parent = elem_left;
             }
-            //*******Preorder -- Inorder ---- PostOrder
+           //replace function
+           // here we didnt just delete (delete_element but we put replace element in delete element place)
+            void replace(Node elem_del, Node elem_rep)
+            {
+                // if it is a root element 
+                if(elem_del->parent == NULL)
+                {
+                    root = elem_rep;
+                }
+                else if(elem_del == elem_del->parent->left)
+                {
+                    elem_del->parent->left = elem_rep;
+                }else if(elem_del == elem_del->parent->right)
+                {
+                    elem_del->parent->right = elem_rep;
+                }
+                elem_rep->parent = elem_del->parent;
 
+            }
+            /***********the largest element*/
+            Node max_element(Node node)
+            {
+                while(node->right != NULL)
+                {
+                    node = node->right;
+                }
+                return node;
+            }
 
-
+            Node min_element(Node node)
+            {
+                while(node->left != NULL)
+                {
+                    node = node->left;
+                }
+                return node;
+            }
 
 
             //********Delete in red_black_tree********/
+            void delete_node(type_name data)
+            {
+                 deleteNodeHelp(this->root, data);
+            }
 
+            void deleteNodeHelp(Node node, type_name data)
+            {
+                Node elem_delete = NULL;
+                Node x;
+                Node node_to_delete;
+                // serch about our delete_elem
+                while(node != NULL)
+                {
+                    if(node->data == data)
+                    {
+                        elem_delete = node;
+                    }
+                    if(node->data <= data)
+                    {
+                        node = node->right;
+                    }
+                    else {
+                        node = node->left;
+                    }
+                }
+                if(elem_delete == NULL)
+                {
+                    cout << "there is no node with this data\n";
+                    return ;
+                }
+
+                // start instructions to delete 
+
+                /************Hre if it is a leaf node or just have one child*/
+                // if delete_elem has no right element so we will replace it with his left element
+                node_to_delete = elem_delete;
+                if(elem_delete->right == NULL)
+                {
+                    x = elem_delete->left;
+                    replace(elem_delete, elem_delete->left);
+                // if our delete_element has no left elem we will replace it by his right element
+                }else if(elem_delete->left == NULL)
+                {
+                    x = elem_delete->right;
+                    replace(elem_delete, elem_delete->right);
+                }
+                // sinon if it hase two shild
+                else if(elem_delete->left != NULL && elem_delete->right != NULL)
+                {
+                    // i choose to go to the left then search for the largest element
+                    node_to_delete = min_element(elem_delete->right);
+
+                    if(node_to_delete->parent == elem_delete)
+                    {
+                        x = large_elem->right;
+                    }
+                    else if(node_to_delete->parent != elem_delete) 
+                    {
+                        replace(node_to_delete, node_to_delete->right);
+                        node_to_delete->right = elem_delete->right;
+                        node_to_delete->right->parent = node_to_delete;
+
+                    }
+                    replace(elem_delete, node_to_delete);
+                    node_to_delete->left = elem_delete->left;
+                    node_to_delete->left->parent = node_to_delete;
+                    node_to_delete->color = elem_delete->color;
+                }
+                delete elem_delete;
+                if(node_to_delete->color == false)
+                {
+                    deleteFix(x);
+                }
+
+            }
+
+            // delete fix for red black tree
             
+            
+
+
+
+
+
+
+
+
             // balance out binary search tree
-            void balance_red_black_tree(Node *&root, Node *&new_elem)
+            void balance_red_black_tree(Node <type_name> *&root, Node<type_name> *&new_elem)
             {
                 Node *parent_new = NULL;
                 Node *Grand_parent = NULL;
@@ -199,7 +317,7 @@ namespace ft{
                 }
             }
             // Insert function
-            void insert(Node <type_name> data)
+            void insert(type_name data)
             {
                 Node *new_elem = new Node(data);
                 root = BSTinsert(root, new_elem);
