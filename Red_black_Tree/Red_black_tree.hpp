@@ -238,11 +238,6 @@ namespace ft{
 
 
 
-
-
-
-
-
             // balance out binary search tree
             void balance_red_black_tree(Node <type_name> *&root, Node<type_name> *&new_elem)
             {
