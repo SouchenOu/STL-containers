@@ -180,7 +180,7 @@ namespace ft{
                         //** case 2: if the suibling and his child are black
                         if(suibling->color == false && suibling->left->color == false && suibling->right->color == false)
                         {
-                            suibling->color = false;
+                            suibling->color = true;
                             node = node->parent;
                         //** case 3: if the suibling is black and the near child is red and the far child is black
                         }else 
@@ -192,19 +192,48 @@ namespace ft{
                                     rotateRight(suibling);
                                     suibling = node->parent->right;
                                 }
+                                //case 4:
                                 suibling->color = node->parent->color;
                                 node->parent->color = false;
                                 suibling->right->color = false;
                                 rotateleft(node->parent);
                                 node = root;
-                            //case 4:    
+                                
                         }       
                     }
                     else if(node = node->parent->right)
                     {
-`
+                        suibling = node->parent->left;
+                        if(suibling->color == false)
+                        {
+                            suibling->color = true;
+                            node->color = false;
+                            node->parent->color = true;
+                            rotateRight(node->parent);
+                            suibling = node->parent->left;
+                        }
+                        if(suibling->color == false && suibling->right->color == false && suibling->left->color == false)
+                        {
+                            suibling->color = true;
+                            node = node->parent;
+                        }else
+                        {
+                            if(suibling->color == false && suibling->left->color== false && suibling->right->color == true)
+                            {
+                                suibling->right->color = false;
+                                suibling->color = true;
+                                rotateleft(suibling);
+                                suibling = node->parent->left;
+                            }
+                            suibling->color = node->parent->color;
+                            node->parent->color = false;
+                            suibling->left->color = false;
+                            rotateRight(node->parent);
+                            node = root;
+                        }
                     }
                 }
+                node->color = false;
             }
             //********Delete in red_black_tree********/
             void delete_node(type_name data)
@@ -369,7 +398,42 @@ namespace ft{
                 balance_red_black_tree(root,new_elem);
     
             }
+            printHelper(Node root, strint txt, int i)
+            {
+                string color;
+                if(root != NULL)
+                {
+                    cout << txt;
+                    if(i == 1)
+                    {
+                        cout << "R***";
+                        txt = txt + "   ";
 
+                    }else if( i == 0)
+                    {
+                        cout << "L***";
+                        txt = txt + "|   ";
+                    }
+                    if(root->color == 1)
+                    {
+                        color = "Red";
+                    }else if(root->color == 0)
+                    {
+                        color = "Black";
+                    }
+                    cout << root->data << "{" << color << "}" << endl;
+                    printHelper(root->left, txt, 0);
+                    printHelper(root->right, txt, 1);
+                }
+            }
+            // print our tree
+            void printTree(int data)
+            {
+                if(root)
+                {
+                    printHelper(this->root, "", 1);
+                }
+}
 
 
 };
