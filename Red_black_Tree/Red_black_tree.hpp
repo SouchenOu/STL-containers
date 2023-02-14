@@ -235,9 +235,6 @@ namespace ft{
             // delete fix for red black tree
             
             
-
-
-
             // balance out binary search tree
             void balance_red_black_tree(Node <type_name> *&root, Node<type_name> *&new_elem)
             {
@@ -247,7 +244,7 @@ namespace ft{
                 {
                     parent_new = new_elem->parent;
                     Grand_parent = new_elem->parent->parent;
-                    ///*********CASE 1******************/
+                    ///*********CASE 1****************=**/
                     // the first case is if parent of the new element is left child of grand_parent
                     if(parent_new == Grand_parent->left)
                     {
