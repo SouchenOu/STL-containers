@@ -76,7 +76,7 @@ namespace ft{
             }
             //******************** rotations 
             // left rotation
-            void rotationleft(Node <type_name> &8roor, Node <type_name> *&elem)
+            void rotateleft(Node <type_name> &8roor, Node <type_name> *&elem)
             {
                 Node *elem_right = elem->right;
                 elem->right = elem_right->left;
@@ -154,7 +154,58 @@ namespace ft{
                 return node;
             }
 
-
+            //delete fix for red black tree
+            void deletefix(Node node)
+            {
+                Node suibling;
+                while(node != root && node->color == false)
+                {
+                    if(node = node->parent->left)
+                    {
+                        //his brother
+                        suibling = node->parent->right;
+                        //**case 1: if the suibling of the node with color red then (1:swap colors of parent and sibling /2: rotate parent in dableBlack direction/3:is still DableBlack exist apply cases again)
+                        if(suibling->color == true)
+                        {
+                            suibling->color = false;
+                            if(node->parent->color == true)
+                                node->parent->color = false;
+                            else if(node->parent->color = false)
+                            {
+                                node->parent->color = true;
+                            }
+                            rotateleft(node->parent);
+                            suibling = node->parent->right;
+                        }
+                        //** case 2: if the suibling and his child are black
+                        if(suibling->color == false && suibling->left->color == false && suibling->right->color == false)
+                        {
+                            suibling->color = false;
+                            node = node->parent;
+                        //** case 3: if the suibling is black and the near child is red and the far child is black
+                        }else 
+                        {
+                                if(suibling->color == false && suibling->left->color == true && suibling->right->color == false)
+                                {
+                                    suibling->left->color = false;
+                                    suibling->color = true;
+                                    rotateRight(suibling);
+                                    suibling = node->parent->right;
+                                }
+                                suibling->color = node->parent->color;
+                                node->parent->color = false;
+                                suibling->right->color = false;
+                                rotateleft(node->parent);
+                                node = root;
+                            //case 4:    
+                        }       
+                    }
+                    else if(node = node->parent->right)
+                    {
+`
+                    }
+                }
+            }
             //********Delete in red_black_tree********/
             void delete_node(type_name data)
             {
@@ -166,7 +217,7 @@ namespace ft{
                 Node elem_delete = NULL;
                 Node x;
                 Node node_to_delete;
-                // serch about our delete_elem
+                // search about our delete_elem
                 while(node != NULL)
                 {
                     if(node->data == data)
@@ -189,7 +240,7 @@ namespace ft{
 
                 // start instructions to delete 
 
-                /************Hre if it is a leaf node or just have one child*/
+                /************Here if it is a leaf node or just have one child*/
                 // if delete_elem has no right element so we will replace it with his left element
                 node_to_delete = elem_delete;
                 if(elem_delete->right == NULL)
@@ -205,12 +256,13 @@ namespace ft{
                 // sinon if it hase two shild
                 else if(elem_delete->left != NULL && elem_delete->right != NULL)
                 {
-                    // i choose to go to the left then search for the largest element
+                    // i should shoose which path to follow ( right or left) 
+                    // i choose to go to the right then search for the smallest element
                     node_to_delete = min_element(elem_delete->right);
 
                     if(node_to_delete->parent == elem_delete)
                     {
-                        x = large_elem->right;
+                        x = node_to_delete->right;
                     }
                     else if(node_to_delete->parent != elem_delete) 
                     {
