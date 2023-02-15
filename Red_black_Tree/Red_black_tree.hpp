@@ -24,28 +24,33 @@ using namespace std;
 namespace ft{
 
 
-    #define red     true
-    #define black   false
+    #define red     1   
+    #define black   0
 
     template < class T >
     struct Node
     {
-        typedef T   value_type;
-        value_type   data;
-        bool        color;
-        Node<value_type>        *left;
-        Node<value_type>        *right;
-        Node<value_type>        *parent;
+        typedef T               value_type;
+        value_type              data;
+        int                    color;
+        Node<value_type>                    *left;
+        Node<value_type>                    *right;
+        Node<value_type>                     *parent;
 
         //constructer
-        Node(value_type data)
-        {
-            this->data = data;
-            left = NULL;
-            right = NULL;
-            parent = NULL;
-            this->color = red;
-        }
+         Node(){
+            this->data = 0;
+            this->left = nullptr;
+            this->right =nullptr;
+         }
+        // Node(value_type data)
+        // {
+        //     this->data = data;
+        //     this->left = nullptr;
+        //     this->right = nullptr;
+        //     this->parent = NULL;
+        //     color = 1;
+        // }
     };
     // class to represent red-black tree
     template < typename T>
@@ -56,10 +61,17 @@ namespace ft{
             typedef Node<value_type>            type_name;
         
             type_name *root;
+            type_name *TNULL;
         public:
             Red_black_tree()
             {
-                root = NULL;
+                // root = NULL;
+                TNULL = new type_name;
+                TNULL->color = 0;
+                TNULL->left = nullptr;
+                TNULL->right = nullptr;
+                root=TNULL;
+                
             }
             //Insert binary search tree
             // type_name *BSTinsert(type_name *root, type_name *new_elem)
@@ -130,7 +142,7 @@ namespace ft{
             {
                 type_name *r = node->right;
                 node->right = r->left;
-                if(r->left != NULL)
+                if(r->left != TNULL)
                 {
                     r->left->parent = node;
                 }
@@ -153,7 +165,7 @@ namespace ft{
             {
                 type_name *l = node->left;
                 node->left = l->right;
-                if(l->right != NULL)
+                if(l->right != TNULL)
                 {
                     l->right->parent = node;
                 }
@@ -175,25 +187,25 @@ namespace ft{
             }
            //replace function
            // here we didnt just delete (delete_element but we put replace element in delete element place)
-            void replace(type_name elem_del, type_name elem_rep)
+            void replace(type_name *elem_del, type_name *elem_rep)
             {
                 // if it is a root element 
-                if(elem_del->parent == NULL)
+                if(elem_del->parent == nullptr)
                 {
                     root = elem_rep;
                 }
                 else if(elem_del == elem_del->parent->left)
                 {
                     elem_del->parent->left = elem_rep;
-                }else if(elem_del == elem_del->parent->right)
+                }else
                 {
                     elem_del->parent->right = elem_rep;
                 }
+                
                 elem_rep->parent = elem_del->parent;
-
             }
             /***********the largest element*/
-            type_name max_element(type_name node)
+            type_name *max_element(type_name *node)
             {
                 while(node->right != NULL)
                 {
@@ -202,7 +214,7 @@ namespace ft{
                 return node;
             }
 
-            type_name min_element(type_name node)
+            type_name *min_element(type_name *node)
             {
                 while(node->left != NULL)
                 {
@@ -212,85 +224,86 @@ namespace ft{
             }
 
             //delete fix for red black tree
-            void deletefix(type_name node)
+            void deletefix(type_name *node)
             {
-                type_name suibling;
-                while(node != root && node->color == false)
+                type_name *suibling;
+                
+                while(node != root && node->color == 0)
                 {
                     if(node == node->parent->left)
                     {
                         //his brother
                         suibling = node->parent->right;
                         //**case 1: if the suibling of the node with color red then (1:swap colors of parent and sibling /2: rotate parent in dableBlack direction/3:is still DableBlack exist apply cases again)
-                        if(suibling->color == true)
+                        if(suibling->color == 1)
                         {
-                            suibling->color = false;
-                            if(node->parent->color == true)
-                                node->parent->color = false;
-                            else if(node->parent->color == false)
-                            {
-                                node->parent->color = true;
-                            }
+                            suibling->color = 0;
+                            // if(node->parent->color == 1)
+                            //     node->parent->color = 0;
+                            // else if(node->parent->color == 0)
+                            // {
+                            //     node->parent->color = 1;
+                            // }
+                            node->parent->color = 1;
                             rotateleft(node->parent);
                             suibling = node->parent->right;
                         }
                         //** case 2: if the suibling and his child are black
-                        if(suibling->color == false && suibling->left->color == false && suibling->right->color == false)
+                        if(suibling->left->color == 0 && suibling->right->color == 0)
                         {
-                            suibling->color = true;
+                            suibling->color = 1;
                             node = node->parent;
                         //** case 3: if the suibling is black and the near child is red and the far child is black
                         }else 
                         {
-                                if(suibling->color == false && suibling->left->color == true && suibling->right->color == false)
+                                if(suibling->right->color == 0)
                                 {
-                                    suibling->left->color = false;
-                                    suibling->color = true;
+                                    suibling->left->color = 0;
+                                    suibling->color = 1;
                                     rotateRight(suibling);
                                     suibling = node->parent->right;
                                 }
                                 //case 4:
                                 suibling->color = node->parent->color;
-                                node->parent->color = false;
-                                suibling->right->color = false;
+                                node->parent->color = 0;
+                                suibling->right->color = 0;
                                 rotateleft(node->parent);
                                 node = root;
-                                
                         }       
                     }
                     else if(node == node->parent->right)
                     {
                         suibling = node->parent->left;
-                        if(suibling->color == false)
+                        if(suibling->color == 1)
                         {
-                            suibling->color = true;
-                            node->color = false;
-                            node->parent->color = true;
+                            suibling->color = 0;
+                            //node->color = 0;
+                            node->parent->color = 1;
                             rotateRight(node->parent);
                             suibling = node->parent->left;
                         }
-                        if(suibling->color == false && suibling->right->color == false && suibling->left->color == false)
+                        if(suibling->right->color == 0 && suibling->left->color == 0)
                         {
-                            suibling->color = true;
+                            suibling->color = 1;
                             node = node->parent;
                         }else
                         {
-                            if(suibling->color == false && suibling->left->color== false && suibling->right->color == true)
+                            if(suibling->left->color== 0)
                             {
-                                suibling->right->color = false;
-                                suibling->color = true;
+                                suibling->right->color = 0;
+                                suibling->color = 1;
                                 rotateleft(suibling);
                                 suibling = node->parent->left;
                             }
                             suibling->color = node->parent->color;
-                            node->parent->color = false;
-                            suibling->left->color = false;
+                            node->parent->color = 0;
+                            suibling->left->color = 0;
                             rotateRight(node->parent);
                             node = root;
                         }
                     }
                 }
-                node->color = false;
+                node->color = 0;
             }
             //********Delete in red_black_tree********/
             void delete_node(value_type data)
@@ -298,13 +311,13 @@ namespace ft{
                  deleteNodeHelp(this->root, data);
             }
 
-            void deleteNodeHelp(type_name node, value_type data)
+            void deleteNodeHelp(type_name *node, value_type data)
             {
-                type_name elem_delete = NULL;
-                type_name x;
-                type_name node_to_delete;
+                type_name *elem_delete = TNULL;
+                type_name *x;
+                type_name *node_to_delete;
                 // search about our delete_elem
-                while(node != NULL)
+                while(node != TNULL)
                 {
                     if(node->data == data)
                     {
@@ -318,7 +331,7 @@ namespace ft{
                         node = node->left;
                     }
                 }
-                if(elem_delete == NULL)
+                if(elem_delete == TNULL)
                 {
                     cout << "there is no node with this data\n";
                     return ;
@@ -329,26 +342,31 @@ namespace ft{
                 /************Here if it is a leaf node or just have one child*/
                 // if delete_elem has no right element so we will replace it with his left element
                 node_to_delete = elem_delete;
-                if(elem_delete->right == NULL)
-                {
-                    x = elem_delete->left;
-                    replace(elem_delete, elem_delete->left);
-                // if our delete_element has no left elem we will replace it by his right element
-                }else if(elem_delete->left == NULL)
+                bool orig_color = node_to_delete->color;
+                if(elem_delete->left == TNULL)
                 {
                     x = elem_delete->right;
                     replace(elem_delete, elem_delete->right);
                 }
+                //if our delete_element has no left elem we will replace it by his right element
+                else if(elem_delete->right == TNULL)
+                {
+                    x = elem_delete->left;
+                    replace(elem_delete, elem_delete->left);
+                }
                 // sinon if it hase two shild
-                else if(elem_delete->left != NULL && elem_delete->right != NULL)
+                else
                 {
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
                     node_to_delete = min_element(elem_delete->right);
+                    orig_color = node_to_delete->color;
+                    x = node_to_delete->right;
+
 
                     if(node_to_delete->parent == elem_delete)
                     {
-                        x = node_to_delete->right;
+                        x->parent = node_to_delete;
                     }
                     else if(node_to_delete->parent != elem_delete) 
                     {
@@ -363,10 +381,11 @@ namespace ft{
                     node_to_delete->color = elem_delete->color;
                 }
                 delete elem_delete;
-                if(node_to_delete->color == false)
+                if(node_to_delete->color == 0)
                 {
-                    deleteFix(x);
+                    deletefix(x);
                 }
+                
 
             }
 
@@ -378,7 +397,7 @@ namespace ft{
             // {
             //     type_name *parent_new = NULL;
             //     type_name *Grand_parent = NULL;
-            //     while((new_elem != root) && (new_elem->color == true) && (new_elem->parent->color == true))
+            //     while((new_elem != root) && (new_elem->color == 1) && (new_elem->parent->color == 1))
             //     {
             //         parent_new = new_elem->parent;
             //         Grand_parent = new_elem->parent->parent;
@@ -390,13 +409,13 @@ namespace ft{
             //             // here we should check two cases 
             //             // if the color of uncle is red then recolor 
             //             // if the color of uncle is black or if the uncle nexiste pas the do suitable rotation and recolor
-            //             if(Uncle != NULL &&  Uncle->color == true)
+            //             if(Uncle != NULL &&  Uncle->color == 1)
             //             {
-            //                 Grand_parent->color = true;
-            //                 parent_new->color = false;
-            //                 Uncle->color = false;
+            //                 Grand_parent->color = 1;
+            //                 parent_new->color = 0;
+            //                 Uncle->color = 0;
             //                 new_elem = Grand_parent;
-            //             }else if(Uncle == NULL || Uncle->color == false)
+            //             }else if(Uncle == NULL || Uncle->color == 0)
             //             {
             //                 // then check the position of new element
             //                 // if our newElem is right elem of the parent of new_elem (that means that we need--> LR rotation)
@@ -418,13 +437,13 @@ namespace ft{
             //         //if parent of our new element is right child of grand parent
             //         else{
             //             type_name *Uncle = Grand_parent->left;
-            //             if((Uncle != NULL) && Uncle->color == true)
+            //             if((Uncle != NULL) && Uncle->color == 1)
             //             {
-            //                 Grand_parent->color = true;
-            //                 parent_new->color = false;
-            //                 Uncle->color = false;
+            //                 Grand_parent->color = 1;
+            //                 parent_new->color = 0;
+            //                 Uncle->color = 0;
             //                 new_elem = Grand_parent;
-            //             }else if(Uncle == NULL || Uncle->color == false)
+            //             }else if(Uncle == NULL || Uncle->color == 0)
             //             {
             //                 // here again we will have two cases 
             //                 // if our rotation is(right, left) then we should applicate (RL) rotation
@@ -442,7 +461,7 @@ namespace ft{
             //                 new_elem = parent_new;
             //             }
             //         }
-            //         root->color = false;
+            //         root->color = 0;
 
             //     }
             // }
@@ -461,18 +480,18 @@ namespace ft{
             //****insert method 2:
             void insert(value_type data)
             {
-                type_name *node = new type_name(data);
+                type_name *node = new type_name;
                 node->parent = nullptr;
                 node->data = data;
-                node->left = NULL;
-                node->right = NULL;
-                node->color = true;
+                node->left = TNULL;
+                node->right = TNULL;
+                node->color = 1;
 
                 type_name *y = nullptr;
                 type_name *x = root;
 
                 // while root exist
-                while(x != NULL)
+                while(x != TNULL)
                 {
                     y = x;
                     if(node->data < x->data)
@@ -488,7 +507,7 @@ namespace ft{
                 if(y == nullptr)
                 {
                     root = node;
-                    root->color = false;
+                    root->color = 0;
                     return ;
                 }
                 else if(node->data < y->data)
@@ -503,8 +522,12 @@ namespace ft{
                 {
                     return ;
                 }
-
+                
                 insert_fix(node);
+                // cout << "after inserting\n";
+                // cout << node->left->data <<"\n";
+                // cout << node->right->data<<"\n";
+                // cout << node->color << endl;
 
             }
 
@@ -512,27 +535,27 @@ namespace ft{
             {
                 type_name *uncle;
                 //until parent color of our node is red 
-                while(node->parent->color == true)
+                while(node->parent->color == 1)
                 {
                     // if the parent of our node is the right shild of his parent
                     if(node->parent == node->parent->parent->right)
                     {
                         uncle = node->parent->parent->left;
-                        if(uncle->color == true)
+                        if(uncle->color == 1)
                         {
-                            uncle->color = false;
-                            node->parent->color = false;
-                            node->parent->parent->color = true;
+                            uncle->color = 0;
+                            node->parent->color = 0;
+                            node->parent->parent->color = 1;
                             node = node->parent->parent;
-                        }else if(uncle->color == false)
+                        }else if(uncle->color == 0)
                         {
                             if(node == node->parent->left)
                             {
                                 node = node->parent;
                                 rotateRight(node);
                             }
-                            node->parent->color = false;
-                            node->parent->parent->color = true;
+                            node->parent->color = 0;
+                            node->parent->parent->color = 1;
                             rotateleft(node->parent->parent);
                         }
                     // if the parent of our node is the left child of his parent
@@ -540,22 +563,22 @@ namespace ft{
                     {
                         uncle = node->parent->parent->right;
 
-                        if(uncle->color == true)
+                        if(uncle->color == 1)
                         {
-                            uncle->color = false;
-                            node->parent->color = false;
-                            node->parent->parent->color = true;
+                            uncle->color = 0;
+                            node->parent->color = 0;
+                            node->parent->parent->color = 1;
                             node = node->parent->parent;
                             
-                        }else if(uncle->color == false)
+                        }else if(uncle->color == 0)
                         {
                             if(node == node->parent->right)
                             {
                                 node = node->parent;
                                 rotateleft(node);
                             }
-                            node->parent->color = false;
-                            node->parent->parent->color = true;
+                            node->parent->color = 0;
+                            node->parent->parent->color = 1;
                             rotateRight(node->parent->parent);
                         }
                     }
@@ -565,7 +588,7 @@ namespace ft{
                         break ;
                     }
                 }
-                root->color = false;
+                root->color = 0;
             }
 
 

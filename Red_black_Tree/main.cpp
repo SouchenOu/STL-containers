@@ -23,6 +23,9 @@ int main()
     tree.insert(60);
     tree.insert(75);
     tree.insert(57);
-    
+
+    tree.printTree();
+    tree.delete_node(40);
+    cout << "After deleting\n";
     tree.printTree();
 }
