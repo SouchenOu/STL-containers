@@ -55,7 +55,7 @@ namespace ft{
             typedef T                          value_type;
             typedef Node<value_type>            type_name;
         
-            type_name root;
+            type_name *root;
         public:
             Red_black_tree()
             {
@@ -126,9 +126,52 @@ namespace ft{
 
 
             //Method 2
-            void rotateleft(type_name node)
+            void rotateleft(type_name *node)
             {
+                type_name *r = node->right;
+                node->right = r->left;
+                if(r->left != NULL)
+                {
+                    r->left->parent = node;
+                }
+                r->parent = node->parent;
+                if(node->parent == nullptr)
+                {
+                    this->root = r;
+                }
+                else if(node == node->parent->left)
+                {
+                    node->parent->left = r;
+                }else if(node == node->parent->right)
+                {
+                    node->parent->right = r;
+                }
+                r->left = node;
+                node->parent = r;
+            }
+            void rotateRight(type_name *node)
+            {
+                type_name *l = node->left;
+                node->left = l->right;
+                if(l->right != NULL)
+                {
+                    l->right->parent = node;
+                }
+                l->parent = node->parent;
+                if(node->parent == nullptr)
+                {
+                    this->root = l;
 
+                }else if(node == node->parent->right)
+                {
+                    node->parent->right = l;
+
+                }else if(node == node->parent->left)
+                {
+                    node->parent->left = l;
+                }
+                l->right = node;
+                node->parent = l;
             }
            //replace function
            // here we didnt just delete (delete_element but we put replace element in delete element place)
@@ -418,15 +461,15 @@ namespace ft{
             //****insert method 2:
             void insert(value_type data)
             {
-                type_name node = new node;
+                type_name *node = new type_name(data);
                 node->parent = nullptr;
                 node->data = data;
                 node->left = NULL;
                 node->right = NULL;
                 node->color = true;
 
-                type_name y = nullptr;
-                type_name x = root;
+                type_name *y = nullptr;
+                type_name *x = root;
 
                 // while root exist
                 while(x != NULL)
@@ -461,13 +504,13 @@ namespace ft{
                     return ;
                 }
 
-                insertFix(node);
+                insert_fix(node);
 
             }
 
-            void insert_fix(type_name node)
+            void insert_fix(type_name *node)
             {
-                typename uncle;
+                type_name *uncle;
                 //until parent color of our node is red 
                 while(node->parent->color == true)
                 {
@@ -479,11 +522,11 @@ namespace ft{
                         {
                             uncle->color = false;
                             node->parent->color = false;
-                            node->parent->parent->clor = true;
+                            node->parent->parent->color = true;
                             node = node->parent->parent;
                         }else if(uncle->color == false)
                         {
-                            if(node == node->node->parent->left)
+                            if(node == node->parent->left)
                             {
                                 node = node->parent;
                                 rotateRight(node);
@@ -527,7 +570,7 @@ namespace ft{
 
 
 
-            void printHelper(type_name root, string txt, int i)
+            void printHelper(type_name *root, string txt, int i)
             {
                 string color;
                 if(root)
