@@ -11,7 +11,18 @@
 /* ************************************************************************** */
 
 
+#include "Red_black_tree.hpp"
+#include <iostream>
+
 int main()
 {
+    ft::Red_black_tree<int> tree;
+    tree.insert(55);
+    tree.insert(40);
+    tree.insert(65);
+    tree.insert(60);
+    tree.insert(75);
+    tree.insert(57);
     
+    tree.printTree();
 }

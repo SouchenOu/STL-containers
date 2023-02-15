@@ -17,6 +17,10 @@
 # include <iostream>
 # include <memory>
 # include <cmath>
+# include <string>
+
+
+using namespace std;
 namespace ft{
 
 
@@ -26,15 +30,15 @@ namespace ft{
     template < class T >
     struct Node
     {
-        typedef T   type_name;
-        type_name   data;
+        typedef T   value_type;
+        value_type   data;
         bool        color;
-        Node        *left;
-        Node        *right;
-        Node        *parent;
+        Node<value_type>        *left;
+        Node<value_type>        *right;
+        Node<value_type>        *parent;
 
         //constructer
-        Node(int data)
+        Node(value_type data)
         {
             this->data = data;
             left = NULL;
@@ -48,77 +52,87 @@ namespace ft{
     class Red_black_tree
     {
         private:
-            Node *root;
+            typedef T                          value_type;
+            typedef Node<value_type>            type_name;
+        
+            type_name root;
         public:
             Red_black_tree()
             {
                 root = NULL;
             }
             //Insert binary search tree
-            Node *BSTinsert(Node <type_name> *root, Node <type_name> *new_elem)
-            {
-                // if our tree is empty
-                if(root == NULL)
-                {
-                    return new_elem;
-                }
-                if(new_elem->data < root->data)
-                {
-                    root->left = BSTinsert(root->left, new_elem);
-                    root->left->parent = root;
-                }
-                else if(new_elem->data > root->data)
-                {
-                    root->right = BSTinsert(root->right, new_elem);
-                    root->right->parent = root;
-                }
-                return root;
-            }
+            // type_name *BSTinsert(type_name *root, type_name *new_elem)
+            // {
+            //     // if our tree is empty
+            //     if(root == NULL)
+            //     {
+            //         return new_elem;
+            //     }
+            //     if(new_elem->data < root->data)
+            //     {
+            //         root->left = BSTinsert(root->left, new_elem);
+            //         root->left->parent = root;
+            //     }
+            //     else if(new_elem->data > root->data)
+            //     {
+            //         root->right = BSTinsert(root->right, new_elem);
+            //         root->right->parent = root;
+            //     }
+            //     return root;
+            // }
             //******************** rotations 
             // left rotation
-            void rotateleft(Node <type_name> &8roor, Node <type_name> *&elem)
+            // void rotateleft(type_name *&root, type_name *&elem)
+            // {
+            //     type_name *elem_right = elem->right;
+            //     elem->right = elem_right->left;
+
+            //     if(elem->right != NULL)
+            //     {
+            //         root = elem_right;
+            //     }else if(elem == elem->parent->left)
+            //     {
+            //         elem->parent->left = elem_right;
+            //     }else {
+            //         elem->parent->right = elem->right;
+            //     }
+            //     elem_right->left = elem;
+            //     elem->parent = elem_right;
+            // }
+            // // right rotation
+
+            // void rotateRight(type_name *&root, type_name *&elem)
+            // {
+            //     type_name *elem_left = elem->left;
+            //     elem->left = elem_left->right;
+            //     if(elem->left != NULL)
+            //     {
+            //         elem->left->parent = elem;
+            //     }
+            //     elem_left->parent = elem->parent;
+            //     if(elem->parent == NULL)
+            //     {
+            //         root = elem_left;
+            //     }else if(elem == elem->parent->left)
+            //     {
+            //         elem->parent->left = elem_left;
+            //     }else
+            //         elem->parent->right = elem_left;
+
+            //     elem_left->right = elem;
+            //     elem->parent = elem_left;
+            // }
+
+
+            //Method 2
+            void rotateleft(type_name node)
             {
-                Node *elem_right = elem->right;
-                elem->right = elem_right->left;
 
-                if(elem->right != NULL)
-                {
-                    root = elem_right;
-                }else if(elem == elem->parent->left)
-                {
-                    elem->parent->left = elem_right;
-                }else {
-                    elem->parent->right = elem->right;
-                }
-                elem_right->left = elem;
-                elem->parent = elem_right;
-            }
-            // right rotation
-
-            void rotateRight(Node <type_name> *&root, Node <type_name> *&elem)
-            {
-                Node *elem_left = elem->left;
-                elem->left = elem_left->right;
-                if(elem->left != NULL)
-                {
-                    elem->left->parent = elem;
-                }
-                elem_left->parent = elem->parent;
-                if(elem->parent == NULL)
-                {
-                    root = elem_left;
-                }else if(elem == elem->parent->left)
-                {
-                    elem->parent->left = elem_left;
-                }else
-                    elem->parent->right = elem_left;
-
-                elem_left->right = elem;
-                elem->parent = elem_left;
             }
            //replace function
            // here we didnt just delete (delete_element but we put replace element in delete element place)
-            void replace(Node elem_del, Node elem_rep)
+            void replace(type_name elem_del, type_name elem_rep)
             {
                 // if it is a root element 
                 if(elem_del->parent == NULL)
@@ -136,7 +150,7 @@ namespace ft{
 
             }
             /***********the largest element*/
-            Node max_element(Node node)
+            type_name max_element(type_name node)
             {
                 while(node->right != NULL)
                 {
@@ -145,7 +159,7 @@ namespace ft{
                 return node;
             }
 
-            Node min_element(Node node)
+            type_name min_element(type_name node)
             {
                 while(node->left != NULL)
                 {
@@ -155,12 +169,12 @@ namespace ft{
             }
 
             //delete fix for red black tree
-            void deletefix(Node node)
+            void deletefix(type_name node)
             {
-                Node suibling;
+                type_name suibling;
                 while(node != root && node->color == false)
                 {
-                    if(node = node->parent->left)
+                    if(node == node->parent->left)
                     {
                         //his brother
                         suibling = node->parent->right;
@@ -170,7 +184,7 @@ namespace ft{
                             suibling->color = false;
                             if(node->parent->color == true)
                                 node->parent->color = false;
-                            else if(node->parent->color = false)
+                            else if(node->parent->color == false)
                             {
                                 node->parent->color = true;
                             }
@@ -201,7 +215,7 @@ namespace ft{
                                 
                         }       
                     }
-                    else if(node = node->parent->right)
+                    else if(node == node->parent->right)
                     {
                         suibling = node->parent->left;
                         if(suibling->color == false)
@@ -236,16 +250,16 @@ namespace ft{
                 node->color = false;
             }
             //********Delete in red_black_tree********/
-            void delete_node(type_name data)
+            void delete_node(value_type data)
             {
                  deleteNodeHelp(this->root, data);
             }
 
-            void deleteNodeHelp(Node node, type_name data)
+            void deleteNodeHelp(type_name node, value_type data)
             {
-                Node elem_delete = NULL;
-                Node x;
-                Node node_to_delete;
+                type_name elem_delete = NULL;
+                type_name x;
+                type_name node_to_delete;
                 // search about our delete_elem
                 while(node != NULL)
                 {
@@ -317,91 +331,206 @@ namespace ft{
             
             
             // balance out binary search tree
-            void balance_red_black_tree(Node <type_name> *&root, Node<type_name> *&new_elem)
-            {
-                Node *parent_new = NULL;
-                Node *Grand_parent = NULL;
-                while((new_elem != root) && (new_elem->color == true) && (new_elem->parent->color == true))
-                {
-                    parent_new = new_elem->parent;
-                    Grand_parent = new_elem->parent->parent;
-                    ///*********CASE 1****************=**/
-                    // the first case is if parent of the new element is left child of grand_parent
-                    if(parent_new == Grand_parent->left)
-                    {
-                        Node *Uncle = Grand_parent->right;
-                        // here we should check two cases 
-                        // if the color of uncle is red then recolor 
-                        // if the color of uncle is black or if the uncle nexiste pas the do suitable rotation and recolor
-                        if(Uncle != NULL &&  Uncle->color == true)
-                        {
-                            Grand_parent->color = true;
-                            parent_new->color = false;
-                            Uncle->color = false;
-                            new_elem = Grand_parent;
-                        }else if(Uncle == NULL || Uncle->color = false)
-                        {
-                            // then check the position of new element
-                            // if our newElem is right elem of the parent of new_elem (that means that we need--> LR rotation)
-                            // if our newElem is left elem of the parent of new_elem (that means we need just right rotation (because we have left, left)) 
-                            if(new_elem == parent_new->right)
-                            {
-                                rotateLeft(root,parent_new);
-                                new_elem = parent_new;
-                                parent_new = new_elem->parent;
-                            }
-                                rotateRight(root, Grand_parent);
-                                //then swap
-                                swap(parent_new->color, Grand_parent->color);
-                                new_elem = parent_new;
-                        }
+            // void balance_red_black_tree(type_name *&root, type_name *&new_elem)
+            // {
+            //     type_name *parent_new = NULL;
+            //     type_name *Grand_parent = NULL;
+            //     while((new_elem != root) && (new_elem->color == true) && (new_elem->parent->color == true))
+            //     {
+            //         parent_new = new_elem->parent;
+            //         Grand_parent = new_elem->parent->parent;
+            //         ///*********CASE 1****************=**/
+            //         // the first case is if parent of the new element is left child of grand_parent
+            //         if(parent_new == Grand_parent->left)
+            //         {
+            //             type_name *Uncle = Grand_parent->right;
+            //             // here we should check two cases 
+            //             // if the color of uncle is red then recolor 
+            //             // if the color of uncle is black or if the uncle nexiste pas the do suitable rotation and recolor
+            //             if(Uncle != NULL &&  Uncle->color == true)
+            //             {
+            //                 Grand_parent->color = true;
+            //                 parent_new->color = false;
+            //                 Uncle->color = false;
+            //                 new_elem = Grand_parent;
+            //             }else if(Uncle == NULL || Uncle->color == false)
+            //             {
+            //                 // then check the position of new element
+            //                 // if our newElem is right elem of the parent of new_elem (that means that we need--> LR rotation)
+            //                 // if our newElem is left elem of the parent of new_elem (that means we need just right rotation (because we have left, left)) 
+            //                 if(new_elem == parent_new->right)
+            //                 {
+            //                     rotateleft(root,parent_new);
+            //                     new_elem = parent_new;
+            //                     parent_new = new_elem->parent;
+            //                 }
+            //                     rotateRight(root, Grand_parent);
+            //                     //then swap
+            //                     swap(parent_new->color, Grand_parent->color);
+            //                     new_elem = parent_new;
+            //             }
 
-                    }
-                    //**************Case 2****************/
-                    //if parent of our new element is right child of grand parent
-                    else{
-                        Node *Uncle = Grand_parent->left;
-                        if((Uncle != NULL) && Uncle->color = true)
-                        {
-                            Grand_parent->color = true;
-                            parent->new = false;
-                            Uncle->color = false;
-                            new_elem = Grand_parent;
-                        }else if(Uncle == NULL || Uncle->color = false)
-                        {
-                            // here again we will have two cases 
-                            // if our rotation is(right, left) then we should applicate (RL) rotation
+            //         }
+            //         //**************Case 2****************/
+            //         //if parent of our new element is right child of grand parent
+            //         else{
+            //             type_name *Uncle = Grand_parent->left;
+            //             if((Uncle != NULL) && Uncle->color == true)
+            //             {
+            //                 Grand_parent->color = true;
+            //                 parent_new->color = false;
+            //                 Uncle->color = false;
+            //                 new_elem = Grand_parent;
+            //             }else if(Uncle == NULL || Uncle->color == false)
+            //             {
+            //                 // here again we will have two cases 
+            //                 // if our rotation is(right, left) then we should applicate (RL) rotation
 
-                            if(new_elem = parent_new->left)
-                            {
-                                rotateRight(root, parent_new);
-                                new_elem = parent_new;
-                                parent_new = new_elem->parent;
-                            }
-                            // if our rotation is (right, right) then we should applicate just (L) rotation
-                            rotateLeft(root, Grand_parent);
-                            //then swap
-                            swap(parent_new->color, Grand_parent->color);
-                            new_elem = parent_new;
-                        }
-                    }
-                    root->color = false;
+            //                 if(new_elem == parent_new->left)
+            //                 {
+            //                     rotateRight(root, parent_new);
+            //                     new_elem = parent_new;
+            //                     parent_new = new_elem->parent;
+            //                 }
+            //                 // if our rotation is (right, right) then we should applicate just (L) rotation
+            //                 rotateleft(root, Grand_parent);
+            //                 //then swap
+            //                 swap(parent_new->color, Grand_parent->color);
+            //                 new_elem = parent_new;
+            //             }
+            //         }
+            //         root->color = false;
 
-                }
-            }
-            // Insert function
-            void insert(type_name data)
-            {
-                Node *new_elem = new Node(data);
-                root = BSTinsert(root, new_elem);
-                //balance and check if its red_black_tree
-                balance_red_black_tree(root,new_elem);
+            //     }
+            // }
+            // // Insert function
+            // void insert(value_type data)
+            // {
+            //     type_name *new_elem = new type_name(data);
+            //     root = BSTinsert(root, new_elem);
+            //     //balance and check if its red_black_tree
+            //     balance_red_black_tree(root,new_elem);
     
+            // }
+
+
+
+            //****insert method 2:
+            void insert(value_type data)
+            {
+                type_name node = new node;
+                node->parent = nullptr;
+                node->data = data;
+                node->left = NULL;
+                node->right = NULL;
+                node->color = true;
+
+                type_name y = nullptr;
+                type_name x = root;
+
+                // while root exist
+                while(x != NULL)
+                {
+                    y = x;
+                    if(node->data < x->data)
+                    {
+                        x = x->left;
+                    }else if(node->data > x->data)
+                    {
+                        x = x->right;
+                    }
+                }
+                node->parent = y;
+                // our tree is empty
+                if(y == nullptr)
+                {
+                    root = node;
+                    root->color = false;
+                    return ;
+                }
+                else if(node->data < y->data)
+                {
+                    y->left = node;
+                }else if(node->data > y->data)
+                {
+                    y->right = node;
+                }
+
+                if(node->parent->parent == nullptr)
+                {
+                    return ;
+                }
+
+                insertFix(node);
+
             }
-            printHelper(Node root, strint txt, int i)
+
+            void insert_fix(type_name node)
+            {
+                typename uncle;
+                //until parent color of our node is red 
+                while(node->parent->color == true)
+                {
+                    // if the parent of our node is the right shild of his parent
+                    if(node->parent == node->parent->parent->right)
+                    {
+                        uncle = node->parent->parent->left;
+                        if(uncle->color == true)
+                        {
+                            uncle->color = false;
+                            node->parent->color = false;
+                            node->parent->parent->clor = true;
+                            node = node->parent->parent;
+                        }else if(uncle->color == false)
+                        {
+                            if(node == node->node->parent->left)
+                            {
+                                node = node->parent;
+                                rotateRight(node);
+                            }
+                            node->parent->color = false;
+                            node->parent->parent->color = true;
+                            rotateleft(node->parent->parent);
+                        }
+                    // if the parent of our node is the left child of his parent
+                    }else if(node->parent == node->parent->parent->left)
+                    {
+                        uncle = node->parent->parent->right;
+
+                        if(uncle->color == true)
+                        {
+                            uncle->color = false;
+                            node->parent->color = false;
+                            node->parent->parent->color = true;
+                            node = node->parent->parent;
+                            
+                        }else if(uncle->color == false)
+                        {
+                            if(node == node->parent->right)
+                            {
+                                node = node->parent;
+                                rotateleft(node);
+                            }
+                            node->parent->color = false;
+                            node->parent->parent->color = true;
+                            rotateRight(node->parent->parent);
+                        }
+                    }
+
+                    if(node == root)
+                    {
+                        break ;
+                    }
+                }
+                root->color = false;
+            }
+
+
+
+            void printHelper(type_name root, string txt, int i)
             {
                 string color;
-                if(root != NULL)
+                if(root)
                 {
                     cout << txt;
                     if(i == 1)
@@ -427,13 +556,14 @@ namespace ft{
                 }
             }
             // print our tree
-            void printTree(int data)
+            void printTree()
             {
                 if(root)
                 {
-                    printHelper(this->root, "", 1);
+                    printHelper(root, "", 1);
                 }
-}
+            
+            }
 
 
 };
