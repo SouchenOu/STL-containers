@@ -125,6 +125,9 @@ namespace ft
 				_ptr-=nb;
 				return *this;
 			}
+
+			/***The .* operator is used to dereference pointers to class members. The first operand must be of class type. If the type of the first operand is class type T, or is a class that has been derived from class type T, the second operand must be a pointer to a member of a class type T.
+			The ->* operator is also used to dereference pointers to class members. The first operand must be a pointer to a class type. If the type of the first operand is a pointer to class type T, or is a pointer to a class derived from class type T, the second operand must be a pointer to a member of class type T.*/
 			reference operator*(){
 				return(*_ptr);
 			}
