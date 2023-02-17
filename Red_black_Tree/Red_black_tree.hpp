@@ -30,27 +30,56 @@ namespace ft{
     template < class T >
     struct Node
     {
-        typedef T               value_type;
-        value_type              data;
-        int                    color;
+        typedef T                           value_type;
+        value_type                           data;
+        int                                 color;
         Node<value_type>                    *left;
         Node<value_type>                    *right;
         Node<value_type>                     *parent;
 
-        //constructer
+        //default constructer
          Node(){
             this->data = 0;
             this->left = nullptr;
             this->right =nullptr;
+            this->color = 1;//(with red color)
          }
-        // Node(value_type data)
-        // {
-        //     this->data = data;
-        //     this->left = nullptr;
-        //     this->right = nullptr;
-        //     this->parent = NULL;
-        //     color = 1;
-        // }
+         // constructor with parameter
+         Node(value_type const &data, Node *parent)
+         {
+            this->data(data);
+            parent(parent);
+            left(0);
+            right(0);
+            color(1);
+         }
+         // copy constuctor
+         Node(Node const& obj)
+         {
+            this->color = obj->color;
+            this->data = obj->data;
+            this->left = obj->left;
+            this->right = obj->right;
+            this->parent = obj->parent;
+         }
+         //assignement operator
+
+         Node& operator = (Node const& obj)
+         {
+            if (this == &obj) 
+                return *this;
+            this->color = obj->color;
+            this->data = obj->data;
+            this->left = obj->left;
+            this->right = obj->right;
+            this->parent = obj->parent;
+            
+         }
+         // destructor
+
+         ~Node(){}
+
+       
     };
     // class to represent red-black tree
     template < typename T>

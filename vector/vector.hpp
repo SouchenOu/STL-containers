@@ -19,10 +19,10 @@
 # include <algorithm>
 
 
-#include "vector_iters.hpp"
-/*# include "enable_if.hpp"
+
+# include "enable_if.hpp"
 # include "vector_iterator.hpp"
-# include "equal.hpp"*/
+# include "equal.hpp"
 
 
 

@@ -20,10 +20,9 @@
 # include <iostream>
 
 using namespace std;
-#include "vector_iters.hpp"
-/*# include "enable_if.hpp"
+# include "enable_if.hpp"
 # include "vector_iterator.hpp"
-# include "equal.hpp"*/
+# include "equal.hpp"
 
 
 
