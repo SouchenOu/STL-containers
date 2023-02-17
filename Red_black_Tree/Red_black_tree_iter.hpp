@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RED_BLACK_TREE_HPP
-# define RED_BLACK_TREE_HPP
+#ifndef RED_BLACK_TREE_ITER_HPP
+# define RED_BLACK_TREE_ITER_HPP
 
 # include "Red_black_tree.hpp"
 # include <iostream>

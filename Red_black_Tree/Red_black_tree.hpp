@@ -19,6 +19,11 @@
 # include <cmath>
 # include <string>
 
+# include "Red_black_tree_iter.hpp"
+# include "../vector/vector_iterator.hpp"
+# include "../vector/vector_reverse_iterator.hpp"
+
+
 
 using namespace std;
 namespace ft{
@@ -82,16 +87,39 @@ namespace ft{
        
     };
     // class to represent red-black tree
-    template < typename T>
+    template < class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
     class Red_black_tree
     {
+        public:
+            typedef T                                                  value_type;
+            typedef Alloc                                              allocator_type;
+            typedef Compare                                            value_compare;
+            typedef std::size_t                                        size_type;
+            typedef Node<value_type>                                   type_name;
+
+
+
+             typedef typename allocator_type::pointer                   pointer;
+             typedef typename allocator_type::const_pointer             const_pointer;
+             typedef typename allocator_type::reference                 reference;
+             typedef typename allocator_type::const_reference           const_reference;
+
+             typedef Red_black_tree_iters <T>                           iterator;
+             typedef Red_black_tree_iters <const T>                     const_iterator;
+             typedef ft::reverse_iterator <iterator>                    reverse_iterator;
+             typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
+            
+
+
         private:
-            typedef T                          value_type;
-            typedef Node<value_type>            type_name;
-        
             type_name *root;
             type_name *TNULL;
+            Compare   _comp;
+            
+
         public:
+        //********constructers
+        //default constructor
             Red_black_tree()
             {
                 // root = NULL;
@@ -102,6 +130,8 @@ namespace ft{
                 root=TNULL;
                 
             }
+        // constructor with paremetre
+
             //Insert binary search tree
             // type_name *BSTinsert(type_name *root, type_name *new_elem)
             // {
