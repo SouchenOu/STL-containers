@@ -94,8 +94,90 @@ class Red_black_tree_iters
 
         // Arithmetic operator
 
-        Red_black_tree_iters &operator ++ () {
+        Red_black_tree_iters &operator ++ () 
+        {
 
+            if(_Node == nullptr)
+            {
+                _Node = Red_black_tree->root;
+                if(_Node == nullptr)
+                {
+                    throw UnderflowException { };
+                }
+                // move to the smallest value in the tree,
+                // which is the first node inorder
+                while(_Node->left != nullptr)
+                {
+                    _Node = _Node->left;
+                }
+
+            }
+            else
+                if(_Node->right != NULL)
+                {
+                    _Node = _Node->right;
+                    while(_Node != NULL && Node->left != NULL)
+                    {
+                        _Node = _Node->parent;
+                    }
+            }
+            else if(_Node->right == NULL)
+            {
+                // have already processed the left subtree, and
+                // there is no right subtree. move up the tree,
+                // looking for a parent for which nodePtr is a left child,
+                // stopping if the parent becomes NULL. a non-NULL parent
+                // is the successor. if parent is NULL, the original node
+                // was the last node inorder, and its successor
+                // is the end of the list
+                Node_tree OurNode = _Node;;
+                _Node = _Node->parent;
+                while(_Node != NULL && _Node->right = OurNode)
+                {
+                    OurNode = _Node;
+                    _Node = _Node->parent;
+                }
+            }
+            return *this;
+
+        }
+        Red_black_tree_iters &operator-- ()
+        {
+            if(_Node == nullptr)
+            {
+                _Node = Red_black_tree->root;
+                if(_Node == nullptr)
+                {
+                    throw UnderflowException { };
+                }
+                // move to the smallest value in the tree,
+                // which is the first node inorder
+                while(_Node->right != nullptr)
+                {
+                    _Node = _Node->right;
+                }
+
+            }
+            else
+                if(_Node->left != NULL)
+                {
+                    _Node = _Node->left;
+                    while(_Node != NULL && Node->right != NULL)
+                    {
+                        _Node = _Node->parent;
+                    }
+            }
+            else if(_Node->left == NULL)
+            {
+                Node_tree OurNode = _Node;;
+                _Node = _Node->parent;
+                while(_Node != NULL && _Node->left = OurNode)
+                {
+                    OurNode = _Node;
+                    _Node = _Node->parent;
+                }
+            }
+            return *this;
         }
 
 
