@@ -108,30 +108,79 @@ namespace ft{
              typedef Red_black_tree_iters <const T>                     const_iterator;
              typedef ft::reverse_iterator <iterator>                    reverse_iterator;
              typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
+             typedef typename Alloc::template rebind< type_name >::other
             
 
 
         private:
-            type_name *root;
-            type_name *TNULL;
-            Compare   _comp;
+            type_name       *root;
+            type_name       *TNULL;
+            Compare         _comp;
+            allocator_type _alloc;
+            size_type      height;
+            node
             
 
         public:
         //********constructers
         //default constructor
-            Red_black_tree()
-            {
-                // root = NULL;
-                TNULL = new type_name;
-                TNULL->color = 0;
-                TNULL->left = nullptr;
-                TNULL->right = nullptr;
-                root=TNULL;
+        Red_black_tree()
+        {
+            // root = NULL;
+            TNULL = new type_name;
+            TNULL->color = 0;
+            TNULL->left = nullptr;
+            TNULL->right = nullptr;
+            root=TNULL;
                 
-            }
+        }
         // constructor with paremetre
+        explicit Red_black_tree(const value_compare& __comp)
+        {
+            _comp(__comp);
+        }
+        explicit Red_black_tree(const allocator_type& __a)
+        {
+            _alloc(__a);
+        }
+        Red_black_tree(const value_compare& __comp, const allocator_type& __a)
+        {
+            _comp(__comp);
+            _alloc(__a);
+        }
+        // copy constructor
 
+        explicit Red_black_tree(const Red_black_tree& tree)
+        {
+                TNULL(TNULLNode());
+                root = TNULL;
+                _comp(tree._comp);
+                _alloc(tree._alloc);
+                insert(tree.begin(), tree.end());
+        }
+        //Assignement operator
+        Red_black_tree& operator=(const Red_black_tree& tree)
+        {
+            if(this == &tree)
+            {
+                return *this;
+            }
+            _comp(tree._comp);
+            _alloc(tree._alloc);
+            insert(tree.begin(), tree.end());
+
+        }
+        ~Red_black_tree(){ clear(root);}
+
+        Node TNULLNode()
+        {
+            TNULL = new type_name;
+            TNULL->color = 0;
+            TNULL->left = nullptr;
+            TNULL->right = nullptr;
+            root=TNULL;
+            return TNULL;
+        }
             //Insert binary search tree
             // type_name *BSTinsert(type_name *root, type_name *new_elem)
             // {
@@ -689,6 +738,24 @@ namespace ft{
                 }
             
             }
+
+            //Capacity
+
+            bool empty() const
+            {
+                if(height == 0)
+                    return 1;
+                else if(height != 0)
+                {
+                    return 0;
+                }
+
+            }
+            size_type size()
+            {
+                return height;
+            }
+            size_type max_size(){}
 
 
 };

@@ -50,7 +50,7 @@ namespace ft
 
         private:
 
-            Red_black_tree              _tree;
+            Red_black_tree              _R_B_Ttree;
             key_compare                 _compare;
             allocator_type              _alloc;
 
@@ -70,16 +70,105 @@ namespace ft
                 return comp(__x.first, __y.first);
             }
         }        
-            // Member functions:
+            // ***********Member functions:
 
             // constructers:
+            //default constructer
             map(){}
+            //constructer with parameters
             explicit map(const key_compare & __comp, const allocator_type& __a)
             {
-                    _compare(comp);
-                    _alloc(a);
+                    _compare(__comp);
+                    _alloc(__a);
+                    Red_black_tree(__comp);
+            }
+            // copy constructer
+
+            map(map const & obj)
+            {
+                 _R_B_Ttree(obj._R_B_Ttree);
+                 _compare(obj._compare);
+                 _alloc(obj._alloc);
             }
 
+            template <class _InputIterator>
+            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare())
+            {
+                    Red_black_tree(_comp);
+                    insert(_first, _last);
+            }
+            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp, const allocator_type& __alloc)
+            {
+                Red_black_tree(_comp);
+                _alloc(__alloc);
+                insert(_first,_last);
+            }
+            //Assignement operator
+
+            map& operator=(const map& obj)
+            {
+                _R_B_Ttree(obj._R_B_Ttree);
+                if(this != &obj)
+                {
+                    _R_B_Ttree(obj._R_B_Ttree);
+                    _compare = obj._compare;
+                    _alloc = obj._alloc;
+                }
+                return *this;
+            }
+            ~map(){}
+            allocator_type get_allocator() const
+            {
+                return _R_B_Ttree._alloc;
+            }
+
+            // Element access
+            mapped_type& operator[](const key_type& )
+            {
+                // Overloading [] operator to access elements in array style
+            }
+
+                // Iterators
+                iterator begin()
+                {
+                    return _R_B_Ttree.begin();
+                }
+                const_iterator cbegin() const 
+                {
+                    return _R_B_Ttree.cbegin();
+                }
+                iterator cend()
+                {
+                    return _R_B_Ttree.cend();
+                }
+                const_iterator end()
+                {
+                    return _R_B_Ttree.end();
+                }
+                reverse_iterator rbegin()
+                {
+                    return _R_B_Ttree.rbegin();
+                }
+                reverse_iterator rend()
+                {
+                    return _R_B_Ttree.rend();
+                }
+            //Capacity
+            bool empty() const
+            {
+                return _R_B_Ttree.empty();
+            }
+            size_type size() const{
+                return _R_B_Ttree.size();
+            }
+
+            szie_type max_size() const{
+                return _R_B_Ttree.max_size();
+            }
+
+            // Modifiers
+
+        
 
     };
 			 		 
