@@ -64,7 +64,7 @@ namespace ft
     template <typename type1, typename type2>
     bool operator == (const pair <type1,type2> &obj1, const pair <type1,type2> &obj2)
     {
-        return(obj1.a == obj2.a  && obj1.b == obj2.b)
+        return(obj1.a == obj2.a  && obj1.b == obj2.b);
     }
     template <typename type1, typename type2>
     bool operator != (const pair <type1, type2> &obj1, const pair <type1, type2> &obj2)
@@ -74,22 +74,22 @@ namespace ft
     template<typename type1, typename type2>
     bool operator < (const pair <type1,type2> &obj1, const pair <type1, type2> &obj2)
     {
-        return (obj1.a < obj2.a || obj1.b < obj2.b)
+        return (obj1.a < obj2.a || obj1.b < obj2.b);
     }
      template<typename type1, typename type2>
     bool operator <= (const pair <type1,type2> &obj1, const pair <type1, type2> &obj2)
     {
-        return !(obj1 < obj2)
+        return !(obj1 < obj2);
     }
      template<typename type1, typename type2>
     bool operator > (const pair <type1,type2> &obj1, const pair <type1, type2> &obj2)
     {
-        return (obj1 < obj2)
+        return (obj1 < obj2);
     }
     template<typename type1, typename type2>
     bool operator >= (const pair <type1,type2> &obj1, const pair <type1, type2> &obj2)
     {
-        return !(obj1 < obj2)
+        return !(obj1 < obj2);
     }
 
 };

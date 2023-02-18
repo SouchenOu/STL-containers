@@ -22,6 +22,7 @@
 using namespace std;
 # include "../enable_if.hpp"
 # include "vector_iterator.hpp"
+# include "vector_reverse_iterator.hpp"
 # include "../equal.hpp"
 
 

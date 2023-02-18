@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef EQUAL_HPP
-# define EQUAL
+# define EQUAL_HPP
 
 namespace ft{
 
@@ -55,5 +55,5 @@ template <class InputIterator1, class InputIterator2>
 }
 
 
-# endif;
+# endif
 

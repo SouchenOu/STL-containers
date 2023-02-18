@@ -21,12 +21,65 @@
 
 namespace ft{
 
-template<typename T>
+template < class T >
+    struct Node
+    {
+        typedef T                           value_type;
+        value_type                          data;
+        int                                 color;
+        Node                                *left;
+        Node                                *right;
+        Node                                *parent;
 
+        //default constructer
+         Node(){
+            this->data = 0;
+            this->left = nullptr;
+            this->right =nullptr;
+            this->color = 1;//(with red color)
+         }
+         // constructor with parameter
+         Node(value_type const &data, Node *parent)
+         {
+            this->data(data);
+            parent(parent);
+            left(0);
+            right(0);
+            color(1);
+         }
+         // copy constuctor
+         Node(Node const& obj)
+         {
+            this->color = obj->color;
+            this->data = obj->data;
+            this->left = obj->left;
+            this->right = obj->right;
+            this->parent = obj->parent;
+         }
+         //assignement operator
+
+         Node& operator = (Node const& obj)
+         {
+            if (this == &obj) 
+                return *this;
+            this->color = obj->color;
+            this->data = obj->data;
+            this->left = obj->left;
+            this->right = obj->right;
+            this->parent = obj->parent;
+            
+         }
+         // destructor
+
+         ~Node(){}
+
+       
+    };
+
+template<typename T>
 class Red_black_tree_iters
 {
-    private:
-        Node< T >        _Node;
+    
     public:
         typedef T                                   value_type;
         typedef std::ptrdiff_t                      difference_type;
@@ -56,7 +109,7 @@ class Red_black_tree_iters
 
         Red_black_tree_iters(Red_black_tree_iters const& obj)
         {
-            _Node = t._Node;
+            _Node = obj._Node;
         }
         // Assignement operator
         Red_black_tree_iters&  operator = (Red_black_tree_iters const& obj)
@@ -102,7 +155,7 @@ class Red_black_tree_iters
                 _Node = Red_black_tree->root;
                 if(_Node == nullptr)
                 {
-                    throw UnderflowException { };
+                   return *this;
                 }
                 // move to the smallest value in the tree,
                 // which is the first node inorder
@@ -116,7 +169,7 @@ class Red_black_tree_iters
                 if(_Node->right != NULL)
                 {
                     _Node = _Node->right;
-                    while(_Node != NULL && Node->left != NULL)
+                    while(_Node && _Node->left)
                     {
                         _Node = _Node->parent;
                     }
@@ -130,9 +183,9 @@ class Red_black_tree_iters
                 // is the successor. if parent is NULL, the original node
                 // was the last node inorder, and its successor
                 // is the end of the list
-                Node_tree OurNode = _Node;;
+                Node_tree OurNode = _Node;
                 _Node = _Node->parent;
-                while(_Node != NULL && _Node->right = OurNode)
+                while(_Node != TNULL && _Node->right == OurNode)
                 {
                     OurNode = _Node;
                     _Node = _Node->parent;
@@ -148,7 +201,7 @@ class Red_black_tree_iters
                 _Node = Red_black_tree->root;
                 if(_Node == nullptr)
                 {
-                    throw UnderflowException { };
+                    return *this;
                 }
                 // move to the smallest value in the tree,
                 // which is the first node inorder
@@ -159,19 +212,19 @@ class Red_black_tree_iters
 
             }
             else
-                if(_Node->left != NULL)
+                if(_Node->left)
                 {
                     _Node = _Node->left;
-                    while(_Node != NULL && Node->right != NULL)
+                    while(_Node && _Node->right)
                     {
                         _Node = _Node->parent;
                     }
             }
-            else if(_Node->left == NULL)
+            else if(!_Node->left)
             {
                 Node_tree OurNode = _Node;;
                 _Node = _Node->parent;
-                while(_Node != NULL && _Node->left = OurNode)
+                while(_Node && _Node->left == OurNode)
                 {
                     OurNode = _Node;
                     _Node = _Node->parent;
@@ -179,6 +232,9 @@ class Red_black_tree_iters
             }
             return *this;
         }
+
+        private:
+            Node_tree*                                   _Node;
 
 
 

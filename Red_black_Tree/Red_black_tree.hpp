@@ -32,60 +32,60 @@ namespace ft{
     #define red     1   
     #define black   0
 
-    template < class T >
-    struct Node
-    {
-        typedef T                           value_type;
-        value_type                          data;
-        int                                 color;
-        Node<value_type>                    *left;
-        Node<value_type>                    *right;
-        Node<value_type>                    *parent;
+    // template < class T >
+    // struct Node
+    // {
+    //     typedef T                           value_type;
+    //     value_type                          data;
+    //     int                                 color;
+    //     Node                                *left;
+    //     Node                                *right;
+    //     Node                                *parent;
 
-        //default constructer
-         Node(){
-            this->data = 0;
-            this->left = nullptr;
-            this->right =nullptr;
-            this->color = 1;//(with red color)
-         }
-         // constructor with parameter
-         Node(value_type const &data, Node *parent)
-         {
-            this->data(data);
-            parent(parent);
-            left(0);
-            right(0);
-            color(1);
-         }
-         // copy constuctor
-         Node(Node const& obj)
-         {
-            this->color = obj->color;
-            this->data = obj->data;
-            this->left = obj->left;
-            this->right = obj->right;
-            this->parent = obj->parent;
-         }
-         //assignement operator
+    //     //default constructer
+    //      Node(){
+    //         this->data = 0;
+    //         this->left = nullptr;
+    //         this->right =nullptr;
+    //         this->color = 1;//(with red color)
+    //      }
+    //      // constructor with parameter
+    //      Node(value_type const &data, Node *parent)
+    //      {
+    //         this->data(data);
+    //         parent(parent);
+    //         left(0);
+    //         right(0);
+    //         color(1);
+    //      }
+    //      // copy constuctor
+    //      Node(Node const& obj)
+    //      {
+    //         this->color = obj->color;
+    //         this->data = obj->data;
+    //         this->left = obj->left;
+    //         this->right = obj->right;
+    //         this->parent = obj->parent;
+    //      }
+    //      //assignement operator
 
-         Node& operator = (Node const& obj)
-         {
-            if (this == &obj) 
-                return *this;
-            this->color = obj->color;
-            this->data = obj->data;
-            this->left = obj->left;
-            this->right = obj->right;
-            this->parent = obj->parent;
+    //      Node& operator = (Node const& obj)
+    //      {
+    //         if (this == &obj) 
+    //             return *this;
+    //         this->color = obj->color;
+    //         this->data = obj->data;
+    //         this->left = obj->left;
+    //         this->right = obj->right;
+    //         this->parent = obj->parent;
             
-         }
-         // destructor
+    //      }
+    //      // destructor
 
-         ~Node(){}
+    //      ~Node(){}
 
        
-    };
+    // };
     // class to represent red-black tree
     template < class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
     class Red_black_tree
@@ -586,7 +586,7 @@ namespace ft{
 
 
             //****insert method 2:
-            ft__pair<iterator, bool> insert(value_type data)
+            pair<iterator, bool> insert(value_type data)
             {
                 type_name *node = new type_name;
                 node->parent = nullptr;
@@ -617,7 +617,7 @@ namespace ft{
                     root = node;
                     root->color = 0;
                     NBnode++;
-                    return ft::make_pair(iterator(root), true);
+                    return make_pair(iterator(root), true);
                 }
                 else if(node->data < y->data)
                 {
@@ -630,7 +630,7 @@ namespace ft{
                 if(node->parent->parent == nullptr)
                 {
                     NBnode++;
-                    return ft::make_pair(iterator(node->parent->parent), false);
+                    return make_pair(iterator(node->parent->parent), false);
                 }
                 NBnode++;
                 insert_fix(node);
@@ -642,7 +642,7 @@ namespace ft{
             }
 
             // insert functions
-            iterator insert (terator key, value_type &value)
+            iterator insert (iterator key, value_type &value)
             {
                 (void) key;
                 return insert(value).first;
@@ -790,7 +790,7 @@ namespace ft{
                 {
                     First_elem = First_elem->left;
                 }
-                return iterator(first_elem);
+                return iterator(First_elem);
 
             }
             const_iterator cbegin() const
@@ -805,7 +805,7 @@ namespace ft{
                 {
                     First_elem = First_elem->left;
                 }
-                return iterator(first_elem);
+                return iterator(First_elem);
             }
             iterator end()
             {
