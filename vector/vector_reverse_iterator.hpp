@@ -14,6 +14,8 @@
 # define VECTOR_REVERSE_ITERATOR_HPP
 
 
+#include "iterators_traits.hpp"
+
 namespace ft{
 
     //reverse iterator

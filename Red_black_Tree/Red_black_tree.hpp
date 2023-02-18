@@ -108,7 +108,7 @@ namespace ft{
              typedef Red_black_tree_iters <const T>                     const_iterator;
              typedef ft::reverse_iterator <iterator>                    reverse_iterator;
              typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
-             typedef typename Alloc::template rebind< type_name >::other   _node_alloc;
+             //typedef typename Alloc::template rebind< type_name >::other   _node_alloc;
             
 
 
@@ -172,7 +172,7 @@ namespace ft{
         }
         ~Red_black_tree(){ clear(root);}
 
-        Node TNULLNode()
+        type_name TNULLNode()
         {
             TNULL = new type_name;
             TNULL->color = 0;
@@ -586,7 +586,7 @@ namespace ft{
 
 
             //****insert method 2:
-            void insert(value_type data)
+            ft__pair<iterator, bool> insert(value_type data)
             {
                 type_name *node = new type_name;
                 node->parent = nullptr;
@@ -641,6 +641,23 @@ namespace ft{
 
             }
 
+            // insert functions
+            iterator insert (terator key, value_type &value)
+            {
+                (void) key;
+                return insert(value).first;
+
+            }
+            template<class _InputIterator>
+            void insert(_InputIterator first, _InputIterator second)
+            {
+                while(first != second)
+                {
+                    insert(*first);
+                    first++;
+                }
+            }
+            
             void insert_fix(type_name *node)
             {
                 type_name *uncle;
@@ -702,20 +719,7 @@ namespace ft{
                 root->color = 0;
             }
 
-            iterator insert(iterator key, const value_type& value)
-            {
-                (void) key;
-                return insert(value).first;
-            }
-            template <class InputIterator>
-            void insert(InputIterator first, InputIterator last)
-            {
-                while(first != last)
-                {
-                    insert(*first);
-                    first++;
-                }
-            }
+          
 
             void printHelper(type_name *root, string txt, int i)
             {
@@ -772,6 +776,81 @@ namespace ft{
                 return NBnode;
             }
             size_type max_size(){}
+
+            //iterators
+            iterator begin()
+            {
+                type_name *First_elem;
+                if(root == TNULL)
+                {
+                    return iterator(TNULL);
+                }
+                First_elem = root;
+                while(First_elem != TNULL && First_elem->left != TNULL)
+                {
+                    First_elem = First_elem->left;
+                }
+                return iterator(first_elem);
+
+            }
+            const_iterator cbegin() const
+            {
+                type_name *First_elem;
+                if(root == TNULL)
+                {
+                    return iterator(TNULL);
+                }
+                First_elem = root;
+                while(First_elem != TNULL && First_elem->left != TNULL)
+                {
+                    First_elem = First_elem->left;
+                }
+                return iterator(first_elem);
+            }
+            iterator end()
+            {
+                type_name *last_elem;
+                if(root == TNULL)
+                {
+                    return iterator(TNULL);
+                }
+                last_elem = root;
+                while(last_elem != TNULL && last_elem->right!= TNULL)
+                {
+                    last_elem = last_elem->right;
+                }
+                return iterator(last_elem);
+            }
+            const_iterator cend() const
+            {
+                type_name *last_elem;
+                if(root == TNULL)
+                {
+                    return iterator(TNULL);
+                }
+                last_elem = root;
+                while(last_elem != TNULL && last_elem->right!= TNULL)
+                {
+                    last_elem = last_elem->right;
+                }
+                return iterator(last_elem);
+            }
+            reverse_iterator rbegin() {
+                return reverse_iterator(end());
+            }
+            reverse_iterator rend()
+            {
+                return reverse_iterator(begin());
+            }
+            const_reverse_iterator rbegin() const
+            {
+                return reverse_iterator(cend());
+            }
+            const_reverse_iterator rend() const
+            {
+                return reverse_iterator(cbegin());
+            }
+
 
 
 };

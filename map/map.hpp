@@ -21,6 +21,9 @@
 
 #include "../Red_black_Tree/Red_black_tree.hpp"
 #include "../Red_black_Tree/Red_black_tree_iter.hpp"
+#include "../pair.hpp"
+#include "../vector/vector_iterator.hpp"
+#include "../vector/vector_reverse_iterator.hpp"
 
 
 namespace ft
@@ -29,59 +32,72 @@ namespace ft
     class map
     {
         public:
-            typedef T                                           mapped_type;
-            typedef Key                                         key_type;
-            typedef std::pair<const Key, T>                     value_type;
-            typedef Compare                                     key_compare;
-            typedef Allocator                                   allocator_type;
-            typedef size_t                                      size_type;
+            typedef Key                                                         key_type;
+            typedef T                                                           mapped_type;
+            typedef ft::pair<const Key_type,mapped_type>                        value_type;
+            typedef Compare                                                     key_compare;
+            typedef Allocator                                                   allocator_type;
+            typedef value_type&                                                 reference;
+            typedef const value_type&                                           const_reference;
+            //Member class: i declared it here because if i put our class directly here we told me that 
+            // value_type is undefined 
+            class                                                                value_compare;
         
-        
-        
-            typedef typename allocator_type::reference                  reference;
-            typedef typename allocator_type::const_reference            const_reference;
-            typedef typename  allocator_type::pointer                   pointer;
-            typedef typename  allocator_type::const_pointer             const_pointer;
-    
-            typedef typename Red_black_tree::iterator             iterator;
-            typedef typename Red_black_tree::const_iterator       const_iterator;
+            typedef typename allocator_type::pointer                             pointer;
+            typedef typename allocator_type::const_pointer                       const_pointer;
+            typedef typename allocator_type::size_type                           size_type;
+            typedef typename iterator_traits<iterator>::difference_type          difference_type
 
-            typedef Node <value_type>               Node;
+            // typedef typename allocator_type::reference                            reference;
+            // typedef typename allocator_type::const_reference                      const_reference;
+        private:
+            typedef Red_black_tree<value_type, value_compare, allocator_type>                     Ttree;
+
+        public:
+            typedef typename Red_black_tree::iterator                              iterator;
+            typedef typename Red_black_tree::const_iterator                        const_iterator;
+            typedef ft::reverse_iterator <iterator>                                reverse_iterator;
+            typedef ft::reverse_iterator <const_iterator>                          const_reverse_iterator;
+
+
+            typedef Node <value_type>                                               Node;
 
         private:
 
-            Red_black_tree              _R_B_Ttree;
+            Ttree                       _R_B_Ttree;
             key_compare                 _compare;
             allocator_type              _alloc;
 
         // Member classes
-
-        class value_compare
-        {
-            friend class map;
-            protected:
-                key_compare comp;
-            value_compare(key_compare c)
+        public:
+            class value_compare
             {
-                comp(c);
-            }
-            bool operator()(const value_type& __x, const value_type& __y)const
-            {
-                return comp(__x.first, __y.first);
-            }
-        }        
+                friend class map;
+                protected:
+                    key_compare comp;
+                    value_compare(key_compare c)
+                    {
+                        comp(c);
+                    }
+                public:
+                    bool operator()(const value_type& __x, const value_type& __y)const
+                    {
+                        return comp(__x.first, __y.first);
+                    }
+            };    
             // ***********Member functions:
 
             // constructers:
             //default constructer
-            map(){}
+            //map(){}
             //constructer with parameters
-            explicit map(const key_compare & __comp, const allocator_type& __a)
+            explicit map(const key_compare & __comp = key_compare(), const allocator_type& __a  = allocator_type())
             {
                     _compare(__comp);
                     _alloc(__a);
-                    Red_black_tree(__comp);
+                    _R_B_Ttree(__comp);
             }
+            
             // copy constructer
 
             map(map const & obj)
@@ -91,19 +107,20 @@ namespace ft
                  _alloc(obj._alloc);
             }
 
-            template <class _InputIterator>
+            // template <class _InputIterator>
             map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare())
             {
-                    Red_black_tree(_comp);
+                    _R_B_Ttree(_comp);
                     insert(_first, _last);
             }
-            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp, const allocator_type& __alloc)
+            template <class _InputIterator>
+            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare(), const allocator_type& __alloc = allocator_type())
             {
-                Red_black_tree(_comp);
+                _R_B_Ttree(_comp);
                 _alloc(__alloc);
-                insert(_first,_last);
+                _R_B_Ttree.insert(_first,_last);
             }
-            //Assignement operator
+            // //Assignement operator
 
             map& operator=(const map& obj)
             {
@@ -117,18 +134,40 @@ namespace ft
                 return *this;
             }
             ~map(){}
+
             allocator_type get_allocator() const
             {
                 return _R_B_Ttree._alloc;
             }
 
-            // Element access
-            mapped_type& operator[](const key_type& )
-            {
-                // Overloading [] operator to access elements in array style
-            }
+            //Element access
+            // mapped_type& operator[](const key_type& )
+            // {
+            //     // Overloading [] operator to access elements in array style
+            // }
+            mapped_type& 	operator[] ( const key_type& key )
+            {	
+                return (*(insert(ft::make_pair( key, mapped_type() )).first)).second;			
+            };
 
-                // Iterators
+
+            //*******Modifiers
+            // ft::pair<iterator, bool> insert (value_type const &_value)
+            // {
+            //         return _R_B_Ttree.insert(_value);
+            // }
+            iterator insert(const_iterator __pos, value_type &value)
+            {
+                return _R_B_Ttree.insert(__pos, value);
+            }
+            // template <class _InputIterator>
+            // void insert(_InputIterator first, _InputIterator last)
+            // {
+            //     R_B_Ttree.insert(first, last);
+            // }
+
+
+                //************ Iterators
                 iterator begin()
                 {
                     return _R_B_Ttree.begin();
@@ -153,25 +192,23 @@ namespace ft
                 {
                     return _R_B_Ttree.rend();
                 }
-            //Capacity
-            bool empty() const
-            {
-                return _R_B_Ttree.empty();
-            }
-            size_type size() const{
-                return _R_B_Ttree.size();
-            }
 
-            szie_type max_size() const{
-                return _R_B_Ttree.max_size();
-            }
 
-            //*** Modifiers
-            //insert
-            pair<iterator, bool> insert (value_type const & value)
-            {
-                return _R_B_Ttree.insert(value);
-            }
+
+            //************ //Capacity
+            // bool empty() const
+            // {
+            //     return _R_B_Ttree.empty();
+            // }
+            // size_type size() const{
+            //     return _R_B_Ttree.size();
+            // }
+
+            // szie_type max_size() const{
+            //     return _R_B_Ttree.max_size();
+            // }
+
+            
 
 
 
