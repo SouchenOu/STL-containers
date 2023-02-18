@@ -166,7 +166,16 @@ namespace ft
                 return _R_B_Ttree.max_size();
             }
 
-            // Modifiers
+            //*** Modifiers
+            //insert
+            pair<iterator, bool> insert (value_type const & value)
+            {
+                return _R_B_Ttree.insert(value);
+            }
+
+
+
+
 
         
 

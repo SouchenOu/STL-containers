@@ -36,11 +36,11 @@ namespace ft{
     struct Node
     {
         typedef T                           value_type;
-        value_type                           data;
+        value_type                          data;
         int                                 color;
         Node<value_type>                    *left;
         Node<value_type>                    *right;
-        Node<value_type>                     *parent;
+        Node<value_type>                    *parent;
 
         //default constructer
          Node(){
@@ -108,7 +108,7 @@ namespace ft{
              typedef Red_black_tree_iters <const T>                     const_iterator;
              typedef ft::reverse_iterator <iterator>                    reverse_iterator;
              typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
-             typedef typename Alloc::template rebind< type_name >::other
+             typedef typename Alloc::template rebind< type_name >::other   _node_alloc;
             
 
 
@@ -117,8 +117,8 @@ namespace ft{
             type_name       *TNULL;
             Compare         _comp;
             allocator_type _alloc;
-            size_type      height;
-            node
+            size_type      NBnode;
+          
             
 
         public:
@@ -616,7 +616,8 @@ namespace ft{
                 {
                     root = node;
                     root->color = 0;
-                    return ;
+                    NBnode++;
+                    return ft::make_pair(iterator(root), true);
                 }
                 else if(node->data < y->data)
                 {
@@ -628,9 +629,10 @@ namespace ft{
 
                 if(node->parent->parent == nullptr)
                 {
-                    return ;
+                    NBnode++;
+                    return ft::make_pair(iterator(node->parent->parent), false);
                 }
-                
+                NBnode++;
                 insert_fix(node);
                 // cout << "after inserting\n";
                 // cout << node->left->data <<"\n";
@@ -653,6 +655,7 @@ namespace ft{
                         {
                             uncle->color = 0;
                             node->parent->color = 0;
+                            //condition root
                             node->parent->parent->color = 1;
                             node = node->parent->parent;
                         }else if(uncle->color == 0)
@@ -699,7 +702,20 @@ namespace ft{
                 root->color = 0;
             }
 
-
+            iterator insert(iterator key, const value_type& value)
+            {
+                (void) key;
+                return insert(value).first;
+            }
+            template <class InputIterator>
+            void insert(InputIterator first, InputIterator last)
+            {
+                while(first != last)
+                {
+                    insert(*first);
+                    first++;
+                }
+            }
 
             void printHelper(type_name *root, string txt, int i)
             {
@@ -743,9 +759,9 @@ namespace ft{
 
             bool empty() const
             {
-                if(height == 0)
+                if(NBnode == 0)
                     return 1;
-                else if(height != 0)
+                else if(NBnode != 0)
                 {
                     return 0;
                 }
@@ -753,7 +769,7 @@ namespace ft{
             }
             size_type size()
             {
-                return height;
+                return NBnode;
             }
             size_type max_size(){}
 

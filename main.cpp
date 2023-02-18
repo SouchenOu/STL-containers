@@ -5,88 +5,125 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: souchen <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 11:34:46 by souchen           #+#    #+#             */
-/*   Updated: 2023/01/31 11:34:53 by souchen          ###   ########.fr       */
+/*   Created: 2023/02/18 13:23:59 by souchen           #+#    #+#             */
+/*   Updated: 2023/02/18 13:24:00 by souchen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.hpp"
+
 #include <iostream>
 #include <string>
-#include <vector>
+#include <deque>
+#if 1 //CREATE A REAL STL EXAMPLE
+	#include <map>
+	#include <stack>
+	#include <vector>
+	namespace ft = std;
+#else
+	#include <map.hpp>
+	#include <stack.hpp>
+	#include <vector.hpp>
+#endif
 
-using std::cout;
+#include <stdlib.h>
 
-int main() 
+#define MAX_RAM 4294967296
+#define BUFFER_SIZE 4096
+struct Buffer
 {
-    ft::vector<int> vect1;
-    vector<int> vectTest1;
-    //ft::vector<int> vect2(1 , 2 , 100);
-    ft::vector<int>::iterator i;
-    int nb = 1;
-    for (int i = 0; i < 10; i++)
-    {
-      nb = nb + 1;
-      std::cout << nb << "\n";
-      vect1.push_back(nb);
-      vectTest1.push_back(nb);
-    }
+	int idx;
+	char buff[BUFFER_SIZE];
+};
 
 
-    std::cout << "***************start test ************\n";
+#define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
-    std::cout << "size() function ------>" << endl;
-    std::cout << "size of our vector = " << vect1.size() << endl;
-    std::cout << "size to test = " << vectTest1.size() << endl;
+template<typename T>
+class MutantStack : public ft::stack<T>
+{
+public:
+	MutantStack() {}
+	MutantStack(const MutantStack<T>& src) { *this = src; }
+	MutantStack<T>& operator=(const MutantStack<T>& rhs) 
+	{
+		this->c = rhs.c;
+		return *this;
+	}
+	~MutantStack() {}
 
-    cout << "*********************************************\n";
+	typedef typename ft::stack<T>::container_type::iterator iterator;
 
-    std::cout << "max_size() function ---->" << endl;
-    std::cout << "max_size of out vector = " << vect1.max_size() << endl;
-    std::cout << "max size to test = " << vectTest1.max_size() << endl;
+	iterator begin() { return this->c.begin(); }
+	iterator end() { return this->c.end(); }
+};
 
-    cout << "*********************************************\n";
+int main(int argc, char** argv) {
+	if (argc != 2)
+	{
+		std::cerr << "Usage: ./test seed" << std::endl;
+		std::cerr << "Provide a seed please" << std::endl;
+		std::cerr << "Count value:" << COUNT << std::endl;
+		return 1;
+	}
+	const int seed = atoi(argv[1]);
+	srand(seed);
 
-    std::cout << "capacity befaure resinzing :-->" << vect1.capacity() << endl;
-    std::cout << "capacity befaure resinzing :-->" << vectTest1.capacity() << endl;
+	ft::vector<std::string> vector_str;
+	ft::vector<int> vector_int;
+	ft::stack<int> stack_int;
+	ft::vector<Buffer> vector_buffer;
+	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
+	ft::map<int, int> map_int;
 
-    cout << "*********************************************\n";
+	for (int i = 0; i < COUNT; i++)
+	{
+		vector_buffer.push_back(Buffer());
+	}
 
-    std::cout << "resize function ---->" << endl;
+	for (int i = 0; i < COUNT; i++)
+	{
+		const int idx = rand() % COUNT;
+		vector_buffer[idx].idx = 5;
+	}
+	ft::vector<Buffer>().swap(vector_buffer);
 
-    vect1.resize(20,20);;
-    vectTest1.resize(20,20);
-    std::cout << "resize func of our vector-->" << vect1.size() << endl;
-    std::cout << "resize function to test--->" << vectTest1.size() <<endl;
-    std::cout << "capacity func of our vector-->" << vect1.capacity() << endl;
-    std::cout << "capacity function to test--->" << vectTest1.capacity() <<endl;
+	try
+	{
+		for (int i = 0; i < COUNT; i++)
+		{
+			const int idx = rand() % COUNT;
+			vector_buffer.at(idx);
+			std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
+		}
+	}
+	catch(const std::exception& e)
+	{
+		//NORMAL ! :P
+	}
+	
+	for (int i = 0; i < COUNT; ++i)
+	{
+		map_int.insert(ft::make_pair(rand(), rand()));
+	}
 
-    cout << "*********************************************\n";
+	int sum = 0;
+	for (int i = 0; i < 10000; i++)
+	{
+		int access = rand();
+		sum += map_int[access];
+	}
+	std::cout << "should be constant with the same seed: " << sum << std::endl;
 
-    std::cout << "at() function--------->" << endl;
-    std::cout << "at() function of our vector is --> " << vect1.at(4) <<endl;
-    std::cout << "at() function to test --->" << vectTest1.at(4) << endl;
-
-    cout << "*********************************************\n";
-
-    cout << "function reserve --->" << endl;
-    vect1.reserve(50);
-    vectTest1.reserve(50);
-    std::cout<< "size after reserve function of our vector--->" << vect1.size() << endl;
-    std::cout << "capacity after reserve function of our vector-->" << vect1.capacity() << endl;
-    std::cout<< "size after reserve function to test--->" << vectTest1.size() << endl;
-    std::cout << "capacity after reserve function to test-->" << vectTest1.capacity() << endl;
-   
-
-
-
-
-    // for (int i = 0; i < 100; i++)
-    // {
-    //   std::cout << vect1[i] << "\n";
-    // }
-    // for(i = vect2.begin(); i != vect2.end(); ++i)
-    // {
-    //   cout << *i << " ";
-    // }
+	{
+		ft::map<int, int> copy = map_int;
+	}
+	MutantStack<char> iterable_stack;
+	for (char letter = 'a'; letter <= 'z'; letter++)
+		iterable_stack.push(letter);
+	for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
+	{
+		std::cout << *it;
+	}
+	std::cout << std::endl;
+	return (0);
 }
