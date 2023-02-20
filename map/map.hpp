@@ -19,16 +19,19 @@
 # include <algorithm>
 
 
-#include "../Red_black_Tree/Red_black_tree.hpp"
-#include "../Red_black_Tree/Red_black_tree_iter.hpp"
-#include "../pair.hpp"
-#include "../vector/vector_iterator.hpp"
-#include "../vector/vector_reverse_iterator.hpp"
+# include "../Red_black_Tree/Red_black_tree.hpp"
+# include "../Red_black_Tree/Red_black_tree_iter.hpp"
+# include "../pair.hpp"
+# include "../vector/vector_iterator.hpp"
+# include "../vector/vector_reverse_iterator.hpp"
+//# include "../make_pair.hpp"
+# include "../equal.hpp"
+# include "../lexicographical_compare.hpp"
 
 
 namespace ft
 {
-    template<class Key, class T, class Compare = std::less< Key>,class Allocator = std::allocator<std::pair<const Key,T>>>
+    template<class Key, class T, class Compare = std::less< Key>,class Allocator = std::allocator<ft::pair<const Key,T > > >
     class map
     {
         public:
@@ -37,8 +40,8 @@ namespace ft
             typedef ft::pair<const key_type,mapped_type>                        value_type;
             typedef Compare                                                     key_compare;
             typedef Allocator                                                   allocator_type;
-            typedef value_type&                                                 reference;
-            typedef const value_type&                                           const_reference;
+            // typedef value_type&                                                 reference;
+            // typedef const value_type&                                           const_reference;
             //Member class: i declared it here because if i put our class directly here we told me that 
             // value_type is undefined 
             class                                                                value_compare;
@@ -46,7 +49,6 @@ namespace ft
             typedef typename allocator_type::pointer                             pointer;
             typedef typename allocator_type::const_pointer                       const_pointer;
             typedef typename allocator_type::size_type                           size_type;
-            typedef typename iterator_traits<iterator>::difference_type          difference_type
 
             // typedef typename allocator_type::reference                            reference;
             // typedef typename allocator_type::const_reference                      const_reference;
@@ -54,10 +56,12 @@ namespace ft
             typedef Red_black_tree<value_type, value_compare, allocator_type>                     Ttree;
 
         public:
-            typedef typename Red_black_tree::iterator                              iterator;
-            typedef typename Red_black_tree::const_iterator                        const_iterator;
-            typedef ft::reverse_iterator <iterator>                                reverse_iterator;
-            typedef ft::reverse_iterator <const_iterator>                          const_reverse_iterator;
+            typedef typename Ttree::iterator                                            iterator;
+            typedef typename Ttree::const_iterator                                      const_iterator;
+            typedef ft::reverse_iterator < iterator >                                   reverse_iterator;
+            typedef ft::reverse_iterator < const_iterator >                             const_reverse_iterator;
+            typedef typename iterator_traits< iterator >::difference_type               difference_type;
+
 
 
             typedef Node <value_type>                                               Node;
@@ -75,10 +79,8 @@ namespace ft
                 friend class map;
                 protected:
                     key_compare comp;
-                    value_compare(key_compare c)
-                    {
-                        comp(c);
-                    }
+                    value_compare(key_compare c): comp(c){}
+                    
                 public:
                     bool operator()(const value_type& __x, const value_type& __y)const
                     {
@@ -91,40 +93,28 @@ namespace ft
             //default constructer
             //map(){}
             //constructer with parameters
-            explicit map(const key_compare & __comp = key_compare(), const allocator_type& __a  = allocator_type())
-            {
-                    _compare(__comp);
-                    _alloc(__a);
-                    _R_B_Ttree(__comp);
-            }
+            explicit map(const key_compare & __comp = key_compare(), const allocator_type& __a  = allocator_type()):_R_B_Ttree(__comp,__a),_compare(__comp),_alloc(__a){};
             
             // copy constructer
 
-            map(map const & obj)
-            {
-                 _R_B_Ttree(obj._R_B_Ttree);
-                 _compare(obj._compare);
-                 _alloc(obj._alloc);
-            }
+            map(map const & obj):_R_B_Ttree(obj._R_B_Ttree),_compare(obj._compare),_alloc(obj._alloc)
+            {};
+            
 
-            // template <class _InputIterator>
-            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare())
+            template <class _InputIterator>
+            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare()): _R_B_Ttree(_comp),_compare(_comp)
             {
-                    _R_B_Ttree(_comp);
-                    insert(_first, _last);
+                    _R_B_Ttree.insert(_first, _last);
             }
             template <class _InputIterator>
-            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare(), const allocator_type& __alloc = allocator_type())
+            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare(), const allocator_type& __alloc = allocator_type()):_R_B_Ttree(_comp),_alloc(__alloc)
             {
-                _R_B_Ttree(_comp);
-                _alloc(__alloc);
                 _R_B_Ttree.insert(_first,_last);
             }
             // //Assignement operator
 
-            map& operator=(const map& obj)
+            map& operator= (const map& obj)
             {
-                _R_B_Ttree(obj._R_B_Ttree);
                 if(this != &obj)
                 {
                     _R_B_Ttree(obj._R_B_Ttree);
@@ -147,40 +137,22 @@ namespace ft
             // }
             mapped_type& 	operator[] ( const key_type& key )
             {	
-                return (*(insert(ft::make_pair( key, mapped_type() )).first)).second;			
+                return (*(insert(ft::make_pair( key, mapped_type())).first)).second;			
             };
-
-
-            //*******Modifiers
-            // ft::pair<iterator, bool> insert (value_type const &_value)
-            // {
-            //         return _R_B_Ttree.insert(_value);
-            // }
-            iterator insert(const_iterator __pos, value_type &value)
-            {
-                return _R_B_Ttree.insert(__pos, value);
-            }
-            // template <class _InputIterator>
-            // void insert(_InputIterator first, _InputIterator last)
-            // {
-            //     R_B_Ttree.insert(first, last);
-            // }
-
-
-                //************ Iterators
+            //************ Iterators
                 iterator begin()
                 {
                     return _R_B_Ttree.begin();
                 }
-                const_iterator cbegin() const 
+                const_iterator begin() const 
                 {
-                    return _R_B_Ttree.cbegin();
+                    return _R_B_Ttree.begin();
                 }
-                iterator cend()
+                iterator end()
                 {
-                    return _R_B_Ttree.cend();
+                    return _R_B_Ttree.end();
                 }
-                const_iterator end()
+                const_iterator end() const
                 {
                     return _R_B_Ttree.end();
                 }
@@ -188,11 +160,37 @@ namespace ft
                 {
                     return _R_B_Ttree.rbegin();
                 }
+                const_reverse_iterator rbegin() const
+                {
+                    return _R_B_Ttree.rbegin();
+                }
                 reverse_iterator rend()
                 {
                     return _R_B_Ttree.rend();
                 }
+                const_reverse_iterator rend() const
+                {
+                    return _R_B_Ttree.rend();
+                }
 
+
+            //*******Modifiers
+            ft::pair<iterator, bool> insert (value_type const &_value)
+            {
+                    return _R_B_Ttree.insert(_value);
+            }
+            iterator insert(iterator __pos, value_type &value)
+            {
+                return _R_B_Ttree.insert(__pos, value);
+            }
+            template <class _InputIterator>
+            void insert(_InputIterator first, _InputIterator last)
+            {
+                _R_B_Ttree.insert(first, last);
+            }
+
+
+                
 
 
             //************ //Capacity
@@ -217,6 +215,49 @@ namespace ft
         
 
     };
+    // No member function
+
+    template <class T, class Allocator>
+
+    bool operator == (const map<T, Allocator>& obj1, const map<T, Allocator>& obj2)
+    {
+        if(obj1.size() != obj2.size())
+        {
+            return false;
+        }else if(obj1.size() == obj2.size())
+        {
+            return ft::equal(obj1.begin(), obj1.end(), obj2.begin());
+        }
+        
+    }
+    template <class T, class Allocator>
+    bool operator != (const map< T, Allocator> &obj1, const map<T, Allocator> & obj2)
+    {
+        return (obj1 != obj2 );
+    }
+
+    template <class T, class Allocator>
+    bool operator < (const map<T, Allocator> &obj1, const map <T, Allocator> &obj2)
+    {
+        return ft::lexicographical_compare(obj1.begin(), obj1.end(), obj2.begin(), obj2.end());
+    }
+    template <class T, class Allocator>
+    bool operator <= (const map<T, Allocator> &obj1, const map <T, Allocator> &obj2)
+    {
+        return !(obj1 < obj2);
+    }
+    template <class T, class Allocator>
+    bool operator > (const map<T, Allocator> &obj1, const map <T, Allocator> &obj2)
+    {
+        return (obj1 < obj2);
+    }
+    template <class T, class Allocator>
+    bool operator >= (const map<T, Allocator> &obj1, const map <T, Allocator> &obj2)
+    {
+        return !(obj1 < obj2);
+    }
+
+
 			 		 
 	
 }

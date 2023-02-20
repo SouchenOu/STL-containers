@@ -23,58 +23,59 @@ namespace ft
 	template <typename type1, typename type2>
     class pair
     {
-        typedef type1 first_type;
-        typedef type2 second_type;
+        public:
+            typedef type1 first_type;
+            typedef type2 second_type;
 
 
-        first_type  a;
-        second_type b;
+            first_type  first;
+            second_type second;
 
-        //default constructer
-        pair(){}
-        //copy constructer
-        template<class U, class V> pair (const pair<U,V>& pr)
-        {
-            a = pr.a;
-            b = pr.b;
-        }
-        // initialisition constructor
-
-        pair (const first_type& a, const second_type& b)
-        {
-                a(a);
-                b(b);
-        }
+            pair() : first(),second(){};
         
-        //destructur
+            //copy constructer
+            template<class U, class V> 
+            pair (const pair< U,V >& pr): first(pr.first), second(pr.second){};
+        
+            // initialisition constructor
 
-        ~pair(){}
-        //assignement operator:
-        pair& operator= (const pair& pr)
-        {
-            if(&pr == this)
+            pair (const first_type& a, const second_type& b):first(a),second(b){};
+       
+        
+            //destructur
+
+            ~pair(){}
+            //assignement operator:
+            pair& operator = (pair const& pr)
             {
-                return (*this);
+                if(&pr == this)
+                {
+                    return (*this);
+                }
+                first = pr.first;
+                second = pr.second;
             }
-            a(a);
-            b(b);
-        }
 
     };
+    template <class type1, class type2>
+    pair<type1,type2> make_pair (type1 a, type2 b)
+    {
+            return (pair<type1,type2>(a,b));
+    }
     template <typename type1, typename type2>
     bool operator == (const pair <type1,type2> &obj1, const pair <type1,type2> &obj2)
     {
-        return(obj1.a == obj2.a  && obj1.b == obj2.b);
+        return(obj1.first == obj2.first  && obj1.second == obj2.second);
     }
     template <typename type1, typename type2>
     bool operator != (const pair <type1, type2> &obj1, const pair <type1, type2> &obj2)
     {
-        return (obj1.a != obj2.a && obj1.b != obj2.b);
+        return (obj1.first != obj2.first && obj1.second != obj2.second);
     }
     template<typename type1, typename type2>
     bool operator < (const pair <type1,type2> &obj1, const pair <type1, type2> &obj2)
     {
-        return (obj1.a < obj2.a || obj1.b < obj2.b);
+        return (obj1.first < obj2.first || obj1.second < obj2.second);
     }
      template<typename type1, typename type2>
     bool operator <= (const pair <type1,type2> &obj1, const pair <type1, type2> &obj2)

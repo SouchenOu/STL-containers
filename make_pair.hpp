@@ -11,20 +11,20 @@
 /* ************************************************************************** */
 
 
-#ifndef MAKE_PAIR_HPP
-# define MAKE_PAIR_HPP
+// #ifndef MAKE_PAIR_HPP
+// # define MAKE_PAIR_HPP
 
-#include "pair.hpp"
+// #include "pair.hpp"
 
 
-namespace ft{
+// namespace ft{
 
-        template <class T1, class T2>
-        pair<T1,T2> make_pair (T1 a, T2 b)
-        {
-            return (pair<T1,T2>(a,b));
-        }
+//         template <class T1, class T2>
+//         pair<T1,T2> make_pair (T1 a, T2 b)
+//         {
+//             return (pair<T1,T2>(a,b));
+//         }
 
-};
+// };
 
-#endif
+// #endif

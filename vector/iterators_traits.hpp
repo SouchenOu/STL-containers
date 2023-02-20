@@ -13,28 +13,32 @@
 #ifndef ITERATORS_TRAITS_HPP
 # define ITERATORS_TRAITS_HPP
 
+
+#include "vector_iterator.hpp"
+#include "vector_reverse_iterator.hpp"
+
 namespace ft{
 
 
 // here in template we can write class or typename
-	template < class U >
+	template < class iterator >
 	struct iterator_traits
 	{
 		//	Type to express the result of subtracting one iterator from another
-		typedef typename U::difference_type			difference_type;
+		typedef typename iterator::difference_type			difference_type;
 		//The type of the element the iterator can point to.
-		typedef typename U::value_type				value_type;
+		typedef typename iterator::value_type				value_type;
 		//The type of a pointer to an element the iterator can point to.
-		typedef typename U::pointer					pointer;
+		typedef typename iterator::pointer					pointer;
 		//The type of a reference to an element the iterator can point to.
-		typedef typename U::reference				reference;
+		typedef typename iterator::reference				reference;
 		/*****The iterator category. It can be one of these:
 			input_iterator_tag
 			output_iterator_tag
 			forward_iterator_tag
 			bidirectional_iterator_tag
 			random_access_iterator_tag*/
-		typedef typename U::iterator_category		iterator_category;
+		typedef typename iterator::iterator_category		iterator_category;
 	};
 
 	template <class T>

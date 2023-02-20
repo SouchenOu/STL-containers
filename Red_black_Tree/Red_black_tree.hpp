@@ -22,7 +22,11 @@
 # include "Red_black_tree_iter.hpp"
 # include "../vector/vector_iterator.hpp"
 # include "../vector/vector_reverse_iterator.hpp"
-
+# include "../pair.hpp"
+# include "../make_pair.hpp"
+# include "../lexicographical_compare.hpp"
+# include "../equal.hpp"
+# include "../enable_if.hpp"
 
 
 using namespace std;
@@ -43,41 +47,25 @@ namespace ft{
     //     Node                                *parent;
 
     //     //default constructer
-    //      Node(){
-    //         this->data = 0;
-    //         this->left = nullptr;
-    //         this->right =nullptr;
-    //         this->color = 1;//(with red color)
-    //      }
+    //      Node():data(0),left(0),right(0),color(1){};
+            
     //      // constructor with parameter
-    //      Node(value_type const &data, Node *parent)
-    //      {
-    //         this->data(data);
-    //         parent(parent);
-    //         left(0);
-    //         right(0);
-    //         color(1);
-    //      }
+    //      Node(value_type const &data, Node *parent):data(data),parent(parent),left(0),right(0),color(1){}
+         
     //      // copy constuctor
-    //      Node(Node const& obj)
-    //      {
-    //         this->color = obj->color;
-    //         this->data = obj->data;
-    //         this->left = obj->left;
-    //         this->right = obj->right;
-    //         this->parent = obj->parent;
-    //      }
+    //      Node(Node const& obj):color( obj.color),data(obj.data),left(obj.left),right(obj.right),parent(obj.parent){}
+        
     //      //assignement operator
 
     //      Node& operator = (Node const& obj)
     //      {
     //         if (this == &obj) 
     //             return *this;
-    //         this->color = obj->color;
-    //         this->data = obj->data;
-    //         this->left = obj->left;
-    //         this->right = obj->right;
-    //         this->parent = obj->parent;
+    //         this->color = obj.color;
+    //         this->data = obj.data;
+    //         this->left = obj.left;
+    //         this->right = obj.right;
+    //         this->parent = obj.color;
             
     //      }
     //      // destructor
@@ -87,7 +75,7 @@ namespace ft{
        
     // };
     // class to represent red-black tree
-    template < class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
+    template < class T, class Compare = std::less< T >, class Alloc = std::allocator<T> >
     class Red_black_tree
     {
         public:
@@ -108,7 +96,7 @@ namespace ft{
              typedef Red_black_tree_iters <const T>                     const_iterator;
              typedef ft::reverse_iterator <iterator>                    reverse_iterator;
              typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
-             //typedef typename Alloc::template rebind< type_name >::other   _node_alloc;
+             typedef typename Alloc::template rebind< type_name >::other   node_alloc;
             
 
 
@@ -118,69 +106,77 @@ namespace ft{
             Compare         _comp;
             allocator_type _alloc;
             size_type      NBnode;
+            node_alloc      For_allocation_Node;
           
             
 
         public:
         //********constructers
         //default constructor
-        Red_black_tree()
-        {
-            // root = NULL;
-            TNULL = new type_name;
-            TNULL->color = 0;
-            TNULL->left = nullptr;
-            TNULL->right = nullptr;
-            root=TNULL;
+        Red_black_tree(void):TNULL(TNULLNode()),_comp(),_alloc(),NBnode(0)
+        {}
+            // Red_black_tree()
+            // {
+            //     // root = NULL;
+            //     TNULL = new type_name;
+            //     TNULL->color = 0;
+            //     TNULL->left = nullptr;
+            //     TNULL->right = nullptr;
+            //     root=TNULL;
                 
-        }
-        // constructor with paremetre
-        explicit Red_black_tree(const value_compare& __comp)
-        {
-            _comp(__comp);
-        }
-        explicit Red_black_tree(const allocator_type& __a)
-        {
-            _alloc(__a);
-        }
-        Red_black_tree(const value_compare& __comp, const allocator_type& __a)
-        {
-            _comp(__comp);
-            _alloc(__a);
-        }
-        // copy constructor
-
-        explicit Red_black_tree(const Red_black_tree& tree)
-        {
-                TNULL(TNULLNode());
-                root = TNULL;
-                _comp(tree._comp);
-                _alloc(tree._alloc);
-                insert(tree.begin(), tree.end());
-        }
-        //Assignement operator
-        Red_black_tree& operator=(const Red_black_tree& tree)
-        {
-            if(this == &tree)
+            // }
+            // constructor with paremetre
+            // explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
+            // explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
+            explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),_comp(__comp),_alloc(__a),NBnode(0)
             {
-                return *this;
+                root = TNULL;
             }
-            _comp(tree._comp);
-            _alloc(tree._alloc);
-            insert(tree.begin(), tree.end());
+            // copy constructor
 
-        }
-        ~Red_black_tree(){ clear(root);}
+            explicit Red_black_tree(Red_black_tree const &tree):TNULL(TNULLNode()),_comp(tree._comp),_alloc(tree._alloc),root(TNULL)
+            {     
+                    insert(tree.begin(), tree.end());
+            }
+            //Assignement operator
+            Red_black_tree& operator=(Red_black_tree const &tree)
+            {
+                if(this == &tree)
+                {
+                    return *this;
+                }
+                _comp = tree._comp;
+                _alloc = tree._alloc;
+                insert(tree.begin(), tree.end());
 
-        type_name TNULLNode()
-        {
-            TNULL = new type_name;
-            TNULL->color = 0;
-            TNULL->left = nullptr;
-            TNULL->right = nullptr;
-            root=TNULL;
-            return TNULL;
-        }
+            }
+            ~Red_black_tree(){ clear(root);}
+
+            type_name *TNULLNode()
+            {
+                TNULL =  For_allocation_Node.allocate(1);
+                TNULL->color = 0;
+                TNULL->left = nullptr;
+                TNULL->right = nullptr;
+                root=TNULL;
+                return TNULL;
+            }
+            void clear(type_name *root)
+            {
+                if(root)
+                {
+                    clear(root->left);
+                    clear(root->right);
+                }
+                root = TNULL;
+            }
+            void delete_node(type_name *Node)
+            {
+                 _alloc.deallocate(Node, 1);
+                  For_allocation_Node.dealocate(Node, 1);
+                  NBnode--;
+
+            }
             //Insert binary search tree
             // type_name *BSTinsert(type_name *root, type_name *new_elem)
             // {
@@ -583,61 +579,76 @@ namespace ft{
     
             // }
 
+            type_name *NewNode(value_type const& data, type_name *parent)
+            {
+                type_name  *new_node = For_allocation_Node.allocate(1);
+                _alloc.construct(&(new_node->data), data);
+                new_node->left = TNULL;
+                new_node->right = TNULL;
+                new_node->parent = parent;
+                new_node->color = 1;
+                NBnode++;
+                return new_node;
 
+            }
 
             //****insert method 2:
-            pair<iterator, bool> insert(value_type data)
+            ft::pair<iterator, bool> insert(value_type data)
             {
-                type_name *node = new type_name;
-                node->parent = nullptr;
-                node->data = data;
-                node->left = TNULL;
-                node->right = TNULL;
-                node->color = 1;
+                // type_name *node = new type_name;
+                // node->parent = nullptr;
+                // node->data = data;
+                // node->left = TNULL;
+                // node->right = TNULL;
+                // node->color = 1;
 
-                type_name *y = nullptr;
+                type_name *y = TNULL;
                 type_name *x = root;
 
                 // while root exist
+                //looking for position of newNode
                 while(x != TNULL)
                 {
                     y = x;
-                    if(node->data < x->data)
+                    if(data < x->data)
                     {
                         x = x->left;
-                    }else if(node->data > x->data)
+                    }else if(data > x->data)
                     {
                         x = x->right;
                     }
+                    else if(data == x->data)
+                    {
+                        return ft::make_pair(iterator(x), false);
+                    }
                 }
-                node->parent = y;
+                //node->parent = y;
                 // our tree is empty
-                if(y == nullptr)
+                if(y == TNULL)
                 {
-                    root = node;
+                    root = NewNode(data,TNULL);
                     root->color = 0;
-                    NBnode++;
-                    return make_pair(iterator(root), true);
+                    return ft::make_pair(iterator(root),true);
                 }
-                else if(node->data < y->data)
+                x = NewNode(data,y);
+                if(data < y->data)
                 {
-                    y->left = node;
-                }else if(node->data > y->data)
+                    y->left = x;
+                }else if(data > y->data)
                 {
-                    y->right = node;
+                    y->right = x;
                 }
 
-                if(node->parent->parent == nullptr)
+                if(x->parent->parent == nullptr)
                 {
-                    NBnode++;
-                    return make_pair(iterator(node->parent->parent), false);
+                    return ft::make_pair(iterator(x),true);
                 }
-                NBnode++;
-                insert_fix(node);
+                insert_fix(x);
                 // cout << "after inserting\n";
                 // cout << node->left->data <<"\n";
                 // cout << node->right->data<<"\n";
                 // cout << node->color << endl;
+                return ft::make_pair(iterator(x),true);
 
             }
 
@@ -793,7 +804,7 @@ namespace ft{
                 return iterator(First_elem);
 
             }
-            const_iterator cbegin() const
+            const_iterator begin() const
             {
                 type_name *First_elem;
                 if(root == TNULL)
@@ -821,7 +832,7 @@ namespace ft{
                 }
                 return iterator(last_elem);
             }
-            const_iterator cend() const
+            const_iterator end() const
             {
                 type_name *last_elem;
                 if(root == TNULL)
@@ -844,11 +855,11 @@ namespace ft{
             }
             const_reverse_iterator rbegin() const
             {
-                return reverse_iterator(cend());
+                return reverse_iterator(end());
             }
             const_reverse_iterator rend() const
             {
-                return reverse_iterator(cbegin());
+                return reverse_iterator(begin());
             }
 
 

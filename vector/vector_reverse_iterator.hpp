@@ -54,7 +54,7 @@ namespace ft{
 		/*****copy constructures*/
 		reverse_iterator(reverse_iterator &obj)
 		{
-			_ptr = _ptr.obj;
+			_ptr = obj._ptr;
 		}
 		/******destructer*/
 		~reverse_iterator(){}
@@ -64,7 +64,7 @@ namespace ft{
 		{
 			if(&obj == this)
 				return(*this);
-			_ptr = _ptr.obj;
+			_ptr = obj._ptr;
 		}
 
 		// **********operations

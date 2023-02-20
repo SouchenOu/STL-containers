@@ -21,24 +21,26 @@ using namespace std;
 
 int main()
 {
-    std::map<int, char> map1;
-    ft::map<int, char> map2;
+    //std::map<int, char> map1;
+    ft::map<char, int> map2;
 
-    map2[1] = 'a';
-    map2.insert( 2, 'b');
-    map1.insert({2, 'b'});
+    //map2['a'] = 1;
+    //map2.insert({ 2, 'b'});
+    //map1.insert({2, 'b'});
+    map2.insert(ft::pair<char,int>('a',12));
 
     // declare iteretor
-    ft::map<int,char>::iterator it;
-    std::map<int,char>::iterator it;
+    ft::map<char,int>::iterator it;
+    //std::map<int,char>::iterator it;
 
-    for(it== map1.begin(); it != map1.end(); it++)
+    for(it= map2.begin(); it != map2.end(); it++)
     {
-        cout << "First ="<< it.first() << endl;
-        cout << "Second =" << it.second() << endl;
+        cout << "here\n" << endl;
+        cout << "First ="<< it->first << endl;
+        cout << "Second =" << it->second << endl;
     }
-
-
-    //while()
+cout << "hello" << endl;
+return 0;
+    // //while()
 
 }

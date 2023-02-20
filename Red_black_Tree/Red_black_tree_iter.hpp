@@ -14,12 +14,15 @@
 # define RED_BLACK_TREE_ITER_HPP
 
 # include "Red_black_tree.hpp"
+# include "../vector/vector_iterator.hpp"
 # include <iostream>
 # include <memory>
 # include <cmath>
 # include <string>
+#include "../pair.hpp"
+#include "../make_pair.hpp"
 
-namespace ft{
+//namespace ft{
 
 template < class T >
     struct Node
@@ -32,41 +35,25 @@ template < class T >
         Node                                *parent;
 
         //default constructer
-         Node(){
-            this->data = 0;
-            this->left = nullptr;
-            this->right =nullptr;
-            this->color = 1;//(with red color)
-         }
+         Node(void) : data(0),left(0),right(0),color(1){};
+            
          // constructor with parameter
-         Node(value_type const &data, Node *parent)
-         {
-            this->data(data);
-            parent(parent);
-            left(0);
-            right(0);
-            color(1);
-         }
+         Node(value_type const &data, Node *parent):data(data),parent(parent),left(0),right(0),color(1){}
+         
          // copy constuctor
-         Node(Node const& obj)
-         {
-            this->color = obj->color;
-            this->data = obj->data;
-            this->left = obj->left;
-            this->right = obj->right;
-            this->parent = obj->parent;
-         }
+         Node(Node const& obj):color( obj.color),data(obj.data),left(obj.left),right(obj.right),parent(obj.parent){}
+        
          //assignement operator
 
          Node& operator = (Node const& obj)
          {
             if (this == &obj) 
                 return *this;
-            this->color = obj->color;
-            this->data = obj->data;
-            this->left = obj->left;
-            this->right = obj->right;
-            this->parent = obj->parent;
+            this->color = obj.color;
+            this->data = obj.data;
+            this->left = obj.left;
+            this->right = obj.right;
+            this->parent = obj.color;
             
          }
          // destructor
@@ -76,47 +63,45 @@ template < class T >
        
     };
 
-template<typename T>
+template<typename U>
 class Red_black_tree_iters
 {
     
     public:
-        typedef T                                   value_type;
+        typedef U                                   value_type;
         typedef std::ptrdiff_t                      difference_type;
-        typedef T*                                  pointer;
-        typedef const T*                            const_pointer;
-        typedef T&                                  reference;
-        typedef const T&                            const_reference;
+        typedef U*                                  pointer;
+        typedef const U*                            const_pointer;
+        typedef U&                                  reference;
+        typedef const U&                            const_reference;
         typedef std::bidirectional_iterator_tag     iterator_category;
 
-        typedef Red_black_tree_iters< T >           iterator;
-        typedef Red_black_tree_iters<const T >      const_iterator;
-        typedef Node< T >                           Node_tree;
-        typedef Node<const T>                       const_Node_tree;
+        typedef Red_black_tree_iters< U >                   iterator;
+        typedef Red_black_tree_iters<const U >              const_iterator;
+        typedef Node< value_type >                           Node_tree;
+        typedef Node<const value_type>                       const_Node_tree;
 
         // ***********constructers
         // default constructers
 
-        Red_black_tree_iters()
-        {
-            _Node =  NULL;
-        }
+        Red_black_tree_iters(void):_Node(NULL){};
+       
         // copy constructer
-        Red_black_tree_iters(Node_tree &obj)
-        {
-            _Node = obj;
-        }
+        Red_black_tree_iters(Node_tree *obj):_Node(obj){};
+       
 
-        Red_black_tree_iters(Red_black_tree_iters const& obj)
-        {
-            _Node = obj._Node;
-        }
+        Red_black_tree_iters(Red_black_tree_iters const& obj): _Node(obj._Node){};
+       
         // Assignement operator
         Red_black_tree_iters&  operator = (Red_black_tree_iters const& obj)
         {
-            if (this == &obj) 
-                return *this;
+        
             _Node = obj._Node;
+            return *this;
+        }
+        operator        const_iterator() const 
+        {       
+            return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
         }
 
         //Comparison Operators
@@ -152,29 +137,28 @@ class Red_black_tree_iters
 
             if(_Node == nullptr)
             {
-                _Node = Red_black_tree->root;
-                if(_Node == nullptr)
-                {
-                   return *this;
-                }
-                // move to the smallest value in the tree,
-                // which is the first node inorder
-                while(_Node->left != nullptr)
-                {
-                    _Node = _Node->left;
-                }
+                return *this;
+                // if(_Node == nullptr)
+                // {
+                //    return *this;
+                // }
+                // // move to the smallest value in the tree,
+                // // which is the first node inorder
+                // while(_Node->left != nullptr)
+                // {
+                //     _Node = _Node->left;
+                
 
             }
-            else
-                if(_Node->right != NULL)
-                {
+            else if(_Node && _Node->right)
+            {
                     _Node = _Node->right;
                     while(_Node && _Node->left)
                     {
-                        _Node = _Node->parent;
+                        _Node = _Node->left;
                     }
             }
-            else if(_Node->right == NULL)
+            else
             {
                 // have already processed the left subtree, and
                 // there is no right subtree. move up the tree,
@@ -183,9 +167,9 @@ class Red_black_tree_iters
                 // is the successor. if parent is NULL, the original node
                 // was the last node inorder, and its successor
                 // is the end of the list
-                Node_tree OurNode = _Node;
+                Node_tree *OurNode = _Node;
                 _Node = _Node->parent;
-                while(_Node != TNULL && _Node->right == OurNode)
+                while(_Node && _Node->right == OurNode)
                 {
                     OurNode = _Node;
                     _Node = _Node->parent;
@@ -198,31 +182,31 @@ class Red_black_tree_iters
         {
             if(_Node == nullptr)
             {
-                _Node = Red_black_tree->root;
-                if(_Node == nullptr)
-                {
-                    return *this;
-                }
-                // move to the smallest value in the tree,
-                // which is the first node inorder
-                while(_Node->right != nullptr)
-                {
-                    _Node = _Node->right;
-                }
+                return *this;
+                // _Node = Red_black_tree->root;
+                // if(_Node == nullptr)
+                // {
+                //     return *this;
+                // }
+                // // move to the smallest value in the tree,
+                // // which is the first node inorder
+                // while(_Node->right != nullptr)
+                // {
+                //     _Node = _Node->right;
+                
 
             }
-            else
-                if(_Node->left)
-                {
+            else if(_Node && _Node->left)
+            {
                     _Node = _Node->left;
                     while(_Node && _Node->right)
                     {
-                        _Node = _Node->parent;
+                        _Node = _Node->right;
                     }
             }
-            else if(!_Node->left)
+            else
             {
-                Node_tree OurNode = _Node;;
+                Node_tree *OurNode = _Node;;
                 _Node = _Node->parent;
                 while(_Node && _Node->left == OurNode)
                 {
@@ -232,7 +216,28 @@ class Red_black_tree_iters
             }
             return *this;
         }
+        Red_black_tree_iters operator ++(int)
+        {
+            Red_black_tree_iters p = *this;
+            operator++();
+            return p;
+        }
 
+        Red_black_tree_iters operator --(int)
+        {
+            Red_black_tree_iters p = *this;
+            operator--();
+            return p;
+        }
+        pointer			operator->()
+        {       
+            return &_Node->data;                   
+        };
+        const_pointer	operator->() const
+        {
+            return &_Node->data;
+             
+        };
         private:
             Node_tree*                                   _Node;
 
@@ -241,6 +246,6 @@ class Red_black_tree_iters
 
 };
 
-};
+//};
 
 #endif
