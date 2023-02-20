@@ -92,10 +92,10 @@ namespace ft{
              typedef typename allocator_type::reference                 reference;
              typedef typename allocator_type::const_reference           const_reference;
 
-             typedef Red_black_tree_iters <T>                           iterator;
-             typedef Red_black_tree_iters <const T>                     const_iterator;
-             typedef ft::reverse_iterator <iterator>                    reverse_iterator;
-             typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
+             typedef Red_black_tree_iters <T>                           Iterator;
+             typedef Red_black_tree_iters <const T>                     const_Iterator;
+             typedef ft::reverse_iterator <Iterator>                    reverse_iterator;
+             typedef ft::reverse_iterator <const_Iterator>              const_reverse_iterator;
              typedef typename Alloc::template rebind< type_name >::other   node_alloc;
             
 
@@ -794,57 +794,58 @@ namespace ft{
                 type_name *First_elem;
                 if(root == TNULL)
                 {
-                    return iterator(TNULL);
+                    return Iterator(TNULL);
                 }
                 First_elem = root;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
                 }
-                return iterator(First_elem);
+                return Iterator(First_elem);
 
             }
-            const_iterator begin() const
+            const_Iterator begin() const
             {
+                cout << "here yes\n";
                 type_name *First_elem;
                 if(root == TNULL)
                 {
-                    return iterator(TNULL);
+                    return Iterator(TNULL);
                 }
                 First_elem = root;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
                 }
-                return iterator(First_elem);
+                return Iterator(First_elem);
             }
-            iterator end()
+            Iterator end()
             {
                 type_name *last_elem;
                 if(root == TNULL)
                 {
-                    return iterator(TNULL);
+                    return Iterator(TNULL);
                 }
                 last_elem = root;
                 while(last_elem != TNULL && last_elem->right!= TNULL)
                 {
                     last_elem = last_elem->right;
                 }
-                return iterator(last_elem);
+                return Iterator(last_elem);
             }
-            const_iterator end() const
+            const_Iterator end() const
             {
                 type_name *last_elem;
                 if(root == TNULL)
                 {
-                    return iterator(TNULL);
+                    return Iterator(TNULL);
                 }
                 last_elem = root;
                 while(last_elem != TNULL && last_elem->right!= TNULL)
                 {
                     last_elem = last_elem->right;
                 }
-                return iterator(last_elem);
+                return Iterator(last_elem);
             }
             reverse_iterator rbegin() {
                 return reverse_iterator(end());

@@ -30,14 +30,15 @@ int main()
     map2.insert(ft::pair<char,int>('a',12));
 
     // declare iteretor
-    ft::map<char,int>::iterator it;
+    ft::map<char,int>::iterator it = map2.begin();
     //std::map<int,char>::iterator it;
 
-    for(it= map2.begin(); it != map2.end(); it++)
+    while(it != map2.end())
     {
         cout << "here\n" << endl;
         cout << "First ="<< it->first << endl;
         cout << "Second =" << it->second << endl;
+        it++;
     }
 cout << "hello" << endl;
 return 0;
