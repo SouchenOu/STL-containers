@@ -137,7 +137,7 @@ namespace ft
             // }
             mapped_type& 	operator[] ( const key_type& key )
             {	
-                return (*(insert(ft::make_pair( key, mapped_type())).first)).second;			
+                return (*((this->insert(make_pair(key,mapped_type()))).first_type));			
             };
             //************ Iterators
                 iterator begin()
@@ -175,6 +175,7 @@ namespace ft
 
 
             //*******Modifiers
+            //insert
             ft::pair<iterator, bool> insert (value_type const &_value)
             {
                     return _R_B_Ttree.insert(_value);
@@ -188,6 +189,69 @@ namespace ft
             {
                 _R_B_Ttree.insert(first, last);
             }
+
+            //erase
+            void erase(iterator position)
+            {
+                _R_B_Ttree.erase(position._Node);
+            }
+
+            size_type erase(const key_type &key)
+            {
+                _R_B_Ttree.erase(key);
+            }
+            void erase(iterator first, iterator last)
+            {
+                _R_B_Ttree.erase(first,last);
+            }
+
+            // function find
+            iterator find(const key_type& key)
+            {
+                return _R_B_Ttree.find(key);
+            }
+
+            const_iterator find(const key_type& key) const
+            {
+                return _R_B_Ttree.find(key);
+            }
+
+
+            //lowerBound and upper bound
+
+            iterator lower_bound(key_type const& key)
+            {
+                return _R_B_Ttree.lower_bound(key);
+            }
+            iterator lower_bound(key_type const &key) const
+            {
+                return _R_B_Ttree.lower_bound(key);
+            }
+            //upper_bound
+
+            iterator upper_bound(key_type const &key)
+            {
+                return _R_B_Ttree.upper_bound(key);
+            }
+            iterator upper_bound(key_type const &key) const
+            {
+                return _R_B_Ttree.upper_bound(key);
+            }
+
+
+
+            //count
+            size_type count(key_type const& key) const
+            {
+                if( (_R_B_Ttree.search(_R_B_Ttree.get_root(), key)) == 0 )
+                    return 0;
+                else
+                    return 1;
+            }
+             
+
+
+
 
 
                 

@@ -24,10 +24,10 @@ int main()
     //std::map<int, char> map1;
     ft::map<char, int> map2;
 
-    //map2['a'] = 1;
+    map2['a'] = 1;
     //map2.insert({ 2, 'b'});
     //map1.insert({2, 'b'});
-    map2.insert(ft::pair<char,int>('a',12));
+    map2.insert(ft::pair<char,int>('b',12));
 
     // declare iteretor
     ft::map<char,int>::iterator it = map2.begin();

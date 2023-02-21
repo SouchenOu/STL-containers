@@ -92,10 +92,10 @@ namespace ft{
              typedef typename allocator_type::reference                 reference;
              typedef typename allocator_type::const_reference           const_reference;
 
-             typedef Red_black_tree_iters <T>                           Iterator;
-             typedef Red_black_tree_iters <const T>                     const_Iterator;
-             typedef ft::reverse_iterator <Iterator>                    reverse_iterator;
-             typedef ft::reverse_iterator <const_Iterator>              const_reverse_iterator;
+             typedef Red_black_tree_iters <T>                           iterator;
+             typedef Red_black_tree_iters <const T>                     const_iterator;
+             typedef ft::reverse_iterator <iterator>                    reverse_iterator;
+             typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
              typedef typename Alloc::template rebind< type_name >::other   node_alloc;
             
 
@@ -152,6 +152,14 @@ namespace ft{
             }
             ~Red_black_tree(){ clear(root);}
 
+
+
+            //getters
+
+            type_name get_root() const
+            {
+                return root;
+            }
             type_name *TNULLNode()
             {
                 TNULL =  For_allocation_Node.allocate(1);
@@ -730,7 +738,33 @@ namespace ft{
                 root->color = 0;
             }
 
+          //erase
+
+          void erase(value_type const &value)
+          {
+            type_name *del_node = search(root,value);
+            if(del_node)
+                delete_node(del_node->data);
+            else if(!del_node)
+                return 0;
+            return 1;
+          }
+          void erase(iterator first, iterator second)
+          {
+                while(first != second)
+                    erase(*first++);
+          }
           
+          // find
+
+
+            iterator find(const value_type& value) const
+            {
+                type_name *node = search(root, value);
+                if(node)
+                    return iterator(node);
+                return iterater(max_element(root));
+            }   
 
             void printHelper(type_name *root, string txt, int i)
             {
@@ -794,58 +828,58 @@ namespace ft{
                 type_name *First_elem;
                 if(root == TNULL)
                 {
-                    return Iterator(TNULL);
+                    return iterator(TNULL);
                 }
                 First_elem = root;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
                 }
-                return Iterator(First_elem);
+                return iterator(First_elem);
 
             }
-            const_Iterator begin() const
+            const_iterator begin() const
             {
                 cout << "here yes\n";
                 type_name *First_elem;
                 if(root == TNULL)
                 {
-                    return Iterator(TNULL);
+                    return iterator(TNULL);
                 }
                 First_elem = root;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
                 }
-                return Iterator(First_elem);
+                return iterator(First_elem);
             }
-            Iterator end()
+            iterator end()
             {
                 type_name *last_elem;
                 if(root == TNULL)
                 {
-                    return Iterator(TNULL);
+                    return iterator(TNULL);
                 }
                 last_elem = root;
                 while(last_elem != TNULL && last_elem->right!= TNULL)
                 {
                     last_elem = last_elem->right;
                 }
-                return Iterator(last_elem);
+                return iterator(last_elem);
             }
-            const_Iterator end() const
+            const_iterator end() const
             {
                 type_name *last_elem;
                 if(root == TNULL)
                 {
-                    return Iterator(TNULL);
+                    return iterator(TNULL);
                 }
                 last_elem = root;
                 while(last_elem != TNULL && last_elem->right!= TNULL)
                 {
                     last_elem = last_elem->right;
                 }
-                return Iterator(last_elem);
+                return iterator(last_elem);
             }
             reverse_iterator rbegin() {
                 return reverse_iterator(end());
@@ -861,6 +895,57 @@ namespace ft{
             const_reverse_iterator rend() const
             {
                 return reverse_iterator(begin());
+            }
+
+            //search function
+            type_name *search(type_name *node, const value_type& value)
+            {
+                while(node != TNULL)
+                {
+                    if(value < node->data)
+                    {
+                        node = node->left;
+                    }else if(value > node->data)
+                    {
+                        node = node->right;
+                    }else
+                        return node; 
+
+                }
+                return 0;
+            }
+
+            // lower_bound && upper_bound
+            type_name *lower_bound(const value_type& value)
+            {
+                type_name *node = root;
+                type_name *lower_node = TNULL;
+                while(node != TNULL)
+                {
+                    if(node->data == value)
+                    {
+                        lower_node = node;
+                        node = node->left;
+                    }else
+                        node = node->right;
+                }
+                return lower_node;
+            }
+            type_name *upper_node(const value_type& value)
+            {
+                type_name *node = root;
+                type_name *upper_node = TNULL;
+
+                while(node != TNULL)
+                {
+                    if(value == node->data)
+                    {
+                        upper_node = node;
+                        node= node->left;
+                    }else
+                        node = node->right;
+                }
+                return upper_node;
             }
 
 
