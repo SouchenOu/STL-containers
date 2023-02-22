@@ -250,25 +250,18 @@ namespace ft
             }
              
 
-
-
-
-
-                
-
-
             //************ //Capacity
-            // bool empty() const
-            // {
-            //     return _R_B_Ttree.empty();
-            // }
-            // size_type size() const{
-            //     return _R_B_Ttree.size();
-            // }
+            bool empty() const
+            {
+                return _R_B_Ttree.empty();
+            }
+            size_type size() const{
+                return _R_B_Ttree.size();
+            }
 
-            // szie_type max_size() const{
-            //     return _R_B_Ttree.max_size();
-            // }
+            size_type max_size() const{
+                return _R_B_Ttree.max_size();
+            }
 
             
 

@@ -126,8 +126,8 @@ namespace ft{
                 
             // }
             // constructor with paremetre
-            // explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
-            // explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
+            explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
+            explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
             explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),_comp(__comp),_alloc(__a),NBnode(0)
             {
                 root = TNULL;
