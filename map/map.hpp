@@ -21,12 +21,13 @@
 
 # include "../Red_black_Tree/Red_black_tree.hpp"
 # include "../Red_black_Tree/Red_black_tree_iter.hpp"
-# include "../pair.hpp"
 # include "../vector/vector_iterator.hpp"
 # include "../vector/vector_reverse_iterator.hpp"
 //# include "../make_pair.hpp"
 # include "../equal.hpp"
 # include "../lexicographical_compare.hpp"
+
+#include "../pair.hpp"
 
 
 namespace ft
@@ -101,15 +102,15 @@ namespace ft
             {};
             
 
+            // template <class _InputIterator>
+            // map(_InputIterator _first, _InputIterator _last, key_compare const & _comp = key_compare()): _R_B_Ttree(_comp),_compare(_comp)
+            // {
+            //         _R_B_Ttree.insert(_first, _last);
+            // }
             template <class _InputIterator>
-            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare()): _R_B_Ttree(_comp),_compare(_comp)
+            map(_InputIterator first, _InputIterator last,key_compare const& comp = key_compare(),  allocator_type const& alloc = allocator_type()):_R_B_Ttree(comp,alloc),_compare(comp)
             {
-                    _R_B_Ttree.insert(_first, _last);
-            }
-            template <class _InputIterator>
-            map(_InputIterator _first, _InputIterator _last, const key_compare& _comp = key_compare(), const allocator_type& __alloc = allocator_type()):_R_B_Ttree(_comp),_alloc(__alloc)
-            {
-                _R_B_Ttree.insert(_first,_last);
+                _R_B_Ttree.insert(first,last);
             }
             // //Assignement operator
 
@@ -117,13 +118,13 @@ namespace ft
             {
                 if(this != &obj)
                 {
-                    _R_B_Ttree(obj._R_B_Ttree);
+                    _R_B_Ttree = obj._R_B_Ttree;
                     _compare = obj._compare;
                     _alloc = obj._alloc;
                 }
                 return *this;
             }
-            ~map(){}
+            virtual ~map(){}
 
             allocator_type get_allocator() const
             {
@@ -137,7 +138,7 @@ namespace ft
             // }
             mapped_type& 	operator[] ( const key_type& key )
             {	
-                return (*((this->insert(make_pair(key,mapped_type()))).first_type));			
+                return (*(insert(ft::make_pair( key, mapped_type() )).first)).second;				
             };
             //************ Iterators
                 iterator begin()
@@ -180,7 +181,7 @@ namespace ft
             {
                     return _R_B_Ttree.insert(_value);
             }
-            iterator insert(iterator __pos, value_type &value)
+            iterator insert(iterator __pos, const value_type &value)
             {
                 return _R_B_Ttree.insert(__pos, value);
             }

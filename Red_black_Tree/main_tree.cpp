@@ -25,7 +25,9 @@
 //     tree.insert(75);
 //     tree.insert(57);
 
+//     cout << "Our tree befaure delete element 40\n";
 //     tree.printTree();
+//     cout << "Our tree after delete element 40\n";
 //     tree.delete_node(40);
 //     cout << "After deleting\n";
 //     tree.printTree();

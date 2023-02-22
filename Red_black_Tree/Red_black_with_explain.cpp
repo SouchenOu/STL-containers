@@ -36,7 +36,45 @@ namespace ft{
     #define red     1   
     #define black   0
 
-    
+    // template < class T >
+    // struct Node
+    // {
+    //     typedef T                           value_type;
+    //     value_type                          data;
+    //     int                                 color;
+    //     Node                                *left;
+    //     Node                                *right;
+    //     Node                                *parent;
+
+    //     //default constructer
+    //      Node():data(0),left(0),right(0),color(1){};
+            
+    //      // constructor with parameter
+    //      Node(value_type const &data, Node *parent):data(data),parent(parent),left(0),right(0),color(1){}
+         
+    //      // copy constuctor
+    //      Node(Node const& obj):color( obj.color),data(obj.data),left(obj.left),right(obj.right),parent(obj.parent){}
+        
+    //      //assignement operator
+
+    //      Node& operator = (Node const& obj)
+    //      {
+    //         if (this == &obj) 
+    //             return *this;
+    //         this->color = obj.color;
+    //         this->data = obj.data;
+    //         this->left = obj.left;
+    //         this->right = obj.right;
+    //         this->parent = obj.color;
+            
+    //      }
+    //      // destructor
+
+    //      ~Node(){}
+
+       
+    // };
+    // class to represent red-black tree
     template < class T, class Compare = std::less< T >, class Alloc = std::allocator<T> >
     class Red_black_tree
     {
@@ -75,7 +113,19 @@ namespace ft{
         public:
         //********constructers
         //default constructor
-            Red_black_tree(void):TNULL(TNULLNode()),_comp(),_alloc(),NBnode(0){}
+        Red_black_tree(void):TNULL(TNULLNode()),_comp(),_alloc(),NBnode(0)
+        {}
+            // Red_black_tree()
+            // {
+            //     // root = NULL;
+            //     TNULL = new type_name;
+            //     TNULL->color = 0;
+            //     TNULL->left = nullptr;
+            //     TNULL->right = nullptr;
+            //     root=TNULL;
+                
+            // }
+            // constructor with paremetre
             explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
             explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
             explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),_comp(__comp),_alloc(__a),NBnode(0)
@@ -83,6 +133,7 @@ namespace ft{
                 root = TNULL;
             }
             // copy constructor
+
             explicit Red_black_tree(Red_black_tree const &tree):TNULL(TNULLNode()),_comp(tree._comp),_alloc(tree._alloc),root(TNULL)
             {     
                     insert(tree.begin(), tree.end());
@@ -101,7 +152,10 @@ namespace ft{
             }
             ~Red_black_tree(){ clear(root);}
 
+
+
             //getters
+
             type_name get_root() const
             {
                 return root;
@@ -110,10 +164,8 @@ namespace ft{
             {
                 TNULL =  For_allocation_Node.allocate(1);
                 TNULL->color = 0;
-                TNULL->left = 0;
-                TNULL->right = 0;
-                TNULL->parent = 0;
-                //TNULL->data = 0;
+                TNULL->left = nullptr;
+                TNULL->right = nullptr;
                 root=TNULL;
                 return TNULL;
             }
@@ -133,7 +185,70 @@ namespace ft{
                   NBnode--;
 
             }
-            
+            //Insert binary search tree
+            // type_name *BSTinsert(type_name *root, type_name *new_elem)
+            // {
+            //     // if our tree is empty
+            //     if(root == NULL)
+            //     {
+            //         return new_elem;
+            //     }
+            //     if(new_elem->data < root->data)
+            //     {
+            //         root->left = BSTinsert(root->left, new_elem);
+            //         root->left->parent = root;
+            //     }
+            //     else if(new_elem->data > root->data)
+            //     {
+            //         root->right = BSTinsert(root->right, new_elem);
+            //         root->right->parent = root;
+            //     }
+            //     return root;
+            // }
+            //******************** rotations 
+            // left rotation
+            // void rotateleft(type_name *&root, type_name *&elem)
+            // {
+            //     type_name *elem_right = elem->right;
+            //     elem->right = elem_right->left;
+
+            //     if(elem->right != NULL)
+            //     {
+            //         root = elem_right;
+            //     }else if(elem == elem->parent->left)
+            //     {
+            //         elem->parent->left = elem_right;
+            //     }else {
+            //         elem->parent->right = elem->right;
+            //     }
+            //     elem_right->left = elem;
+            //     elem->parent = elem_right;
+            // }
+            // // right rotation
+
+            // void rotateRight(type_name *&root, type_name *&elem)
+            // {
+            //     type_name *elem_left = elem->left;
+            //     elem->left = elem_left->right;
+            //     if(elem->left != NULL)
+            //     {
+            //         elem->left->parent = elem;
+            //     }
+            //     elem_left->parent = elem->parent;
+            //     if(elem->parent == NULL)
+            //     {
+            //         root = elem_left;
+            //     }else if(elem == elem->parent->left)
+            //     {
+            //         elem->parent->left = elem_left;
+            //     }else
+            //         elem->parent->right = elem_left;
+
+            //     elem_left->right = elem;
+            //     elem->parent = elem_left;
+            // }
+
+
             //Method 2
             void rotateleft(type_name *node)
             {
@@ -144,10 +259,9 @@ namespace ft{
                     r->left->parent = node;
                 }
                 r->parent = node->parent;
-                if(node->parent == TNULL)
+                if(node->parent == nullptr)
                 {
                     this->root = r;
-                   
                 }
                 else if(node == node->parent->left)
                 {
@@ -352,8 +466,7 @@ namespace ft{
                     x = elem_delete->left;
                     replace(elem_delete, elem_delete->left);
                 }
-                
-                
+                // sinon if it hase two shild
                 else
                 {
                     // i should shoose which path to follow ( right or left) 
@@ -387,6 +500,92 @@ namespace ft{
                 
 
             }
+
+            // delete fix for red black tree
+            
+            
+            // balance out binary search tree
+            // void balance_red_black_tree(type_name *&root, type_name *&new_elem)
+            // {
+            //     type_name *parent_new = NULL;
+            //     type_name *Grand_parent = NULL;
+            //     while((new_elem != root) && (new_elem->color == 1) && (new_elem->parent->color == 1))
+            //     {
+            //         parent_new = new_elem->parent;
+            //         Grand_parent = new_elem->parent->parent;
+            //         ///*********CASE 1****************=**/
+            //         // the first case is if parent of the new element is left child of grand_parent
+            //         if(parent_new == Grand_parent->left)
+            //         {
+            //             type_name *Uncle = Grand_parent->right;
+            //             // here we should check two cases 
+            //             // if the color of uncle is red then recolor 
+            //             // if the color of uncle is black or if the uncle nexiste pas the do suitable rotation and recolor
+            //             if(Uncle != NULL &&  Uncle->color == 1)
+            //             {
+            //                 Grand_parent->color = 1;
+            //                 parent_new->color = 0;
+            //                 Uncle->color = 0;
+            //                 new_elem = Grand_parent;
+            //             }else if(Uncle == NULL || Uncle->color == 0)
+            //             {
+            //                 // then check the position of new element
+            //                 // if our newElem is right elem of the parent of new_elem (that means that we need--> LR rotation)
+            //                 // if our newElem is left elem of the parent of new_elem (that means we need just right rotation (because we have left, left)) 
+            //                 if(new_elem == parent_new->right)
+            //                 {
+            //                     rotateleft(root,parent_new);
+            //                     new_elem = parent_new;
+            //                     parent_new = new_elem->parent;
+            //                 }
+            //                     rotateRight(root, Grand_parent);
+            //                     //then swap
+            //                     swap(parent_new->color, Grand_parent->color);
+            //                     new_elem = parent_new;
+            //             }
+
+            //         }
+            //         //**************Case 2****************/
+            //         //if parent of our new element is right child of grand parent
+            //         else{
+            //             type_name *Uncle = Grand_parent->left;
+            //             if((Uncle != NULL) && Uncle->color == 1)
+            //             {
+            //                 Grand_parent->color = 1;
+            //                 parent_new->color = 0;
+            //                 Uncle->color = 0;
+            //                 new_elem = Grand_parent;
+            //             }else if(Uncle == NULL || Uncle->color == 0)
+            //             {
+            //                 // here again we will have two cases 
+            //                 // if our rotation is(right, left) then we should applicate (RL) rotation
+
+            //                 if(new_elem == parent_new->left)
+            //                 {
+            //                     rotateRight(root, parent_new);
+            //                     new_elem = parent_new;
+            //                     parent_new = new_elem->parent;
+            //                 }
+            //                 // if our rotation is (right, right) then we should applicate just (L) rotation
+            //                 rotateleft(root, Grand_parent);
+            //                 //then swap
+            //                 swap(parent_new->color, Grand_parent->color);
+            //                 new_elem = parent_new;
+            //             }
+            //         }
+            //         root->color = 0;
+
+            //     }
+            // }
+            // // Insert function
+            // void insert(value_type data)
+            // {
+            //     type_name *new_elem = new type_name(data);
+            //     root = BSTinsert(root, new_elem);
+            //     //balance and check if its red_black_tree
+            //     balance_red_black_tree(root,new_elem);
+    
+            // }
 
             type_name *NewNode(value_type const& data, type_name *parent)
             {
@@ -453,7 +652,10 @@ namespace ft{
                     return ft::make_pair(iterator(x),true);
                 }
                 insert_fix(x);
-               
+                // cout << "after inserting\n";
+                // cout << node->left->data <<"\n";
+                // cout << node->right->data<<"\n";
+                // cout << node->color << endl;
                 return ft::make_pair(iterator(x),true);
 
             }
@@ -538,7 +740,7 @@ namespace ft{
 
           //erase
 
-          size_type erase(value_type const &value)
+          void erase(value_type const &value)
           {
             type_name *del_node = search(root,value);
             if(del_node)
@@ -565,7 +767,7 @@ namespace ft{
             void printHelper(type_name *root, string txt, int i)
             {
                 string color;
-                if(root != TNULL)
+                if(root)
                 {
                     cout << txt;
                     if(i == 1)
