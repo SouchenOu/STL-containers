@@ -38,14 +38,14 @@ and the function template is not a function on its own only when we supply a tem
 which means a type to it then it becomes a full function, so in the case of overload resolution the  compiler tries to speciales our function template
 for the given set of argument types, it preferes more specialized more specific function template 
 and then take all this specialised function template and regular functions and picks the best one 
-but if no suitable function is found (its not an error --> no error is issued -- SFINAE)
+but if no suitable function is found (its not an error --> no error is issued -- SFINAE)*/
 
---> we will have essues (error) just if no variable function can be found or two equaly good functions
+//--> we will have essues (error) just if no variable function can be found or two equaly good functions
 
 //allocator : allocator to use for all memory allocations of this container
 // what is the difference between size and capacity and max_size
-/******
- * size :  This is the number of actual objects held in the vector their storage space when needed or when requested with member resize.
+/******/
+ /* size :  This is the number of actual objects held in the vector their storage space when needed or when requested with member resize.
  * 
  * 
  * 
@@ -60,7 +60,7 @@ namespace ft
 
         private:
    
-            T                *_value;
+            T                   *_value;
             size_t              _capacity;
             size_t              _current;
             Alloc               _alloc;
@@ -68,7 +68,7 @@ namespace ft
         public:
       
             typedef size_t                                          size_type;
-            typedef T                                            value_type;
+            typedef T                                               value_type;
             typedef Alloc                                           allocator_type;
             typedef ptrdiff_t                                       difference_type;
             typedef typename allocator_type::pointer                pointer;
@@ -122,7 +122,7 @@ namespace ft
 		    }
             ~vector()
 		    {
-	    	    clear();
+	    	    //clear();
 			    _alloc.deallocate(_value, _capacity);	
 		    }
         
@@ -203,14 +203,14 @@ namespace ft
             //     }
             // }
           
-          // i still have a problem here in capacity au cas ou (n > _capacity)
             void resize (size_type n, value_type val = value_type())
             {
                 if (n < _current)
                 {
-                    size_type i = n + 1;
-                    while (_current > i)
+                    size_type i = n;
+                    while (_current >= i)
                     {
+                        //_alloc.destroy(&(_value[_current]));
                         _alloc.destroy((_value + _current));
                         _current--;
                     }
@@ -223,6 +223,7 @@ namespace ft
                     size_type j = _current + 1;
                     while (j < n)
                     {
+                        //_alloc.construct(&(_value[j]), val);
                         _alloc.construct((_value + j), val);
                         j++; 
                     }
@@ -251,6 +252,27 @@ namespace ft
                     return ;
                 }
             }
+             // function reserve()
+            void	reserve(size_type n)
+			{
+				if (n <= _capacity)
+                {
+                    return ;
+                }
+				if (n > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
+                // the capacity should be equal to n (that why we should allocate n place in memory)
+				value_type	*_new = _alloc.allocate(n);
+				for (size_type i = 0; i < _current; i++)
+				{
+					//_alloc.construct(&_new[i], _value[i]);
+                    _new[i] = _value[i];
+					//_alloc.destroy(&_value[i]);
+				}
+				//_alloc.deallocate(_value, _capacity);
+				_value= _new;
+				_capacity = n;
+			}
            
            //Element access *****************
            //element access
@@ -296,37 +318,12 @@ namespace ft
             }
             reference back()
             {
-                return _value[_capacity - 1];
+                return _value[_current - 1];
             }
             const_reference back() const
             {
-                return _value[_capacity - 1];
+                return _value[_current - 1];
             }
-
-
-            // function reserve()
-            void	reserve(size_type n)
-			{
-				if (n <= _capacity)
-                {
-                    return ;
-                }
-				if (n > max_size())
-					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
-                // the capacity should be equal to n (that why we should allocate n place in memory)
-				value_type	*_new = _alloc.allocate(n);
-				for (size_type i = 0; i < _current; i++)
-				{
-					//_alloc.construct(&_new[i], _value[i]);
-                    _new[i] = _value[i];
-					//_alloc.destroy(&_value[i]);
-				}
-				//_alloc.deallocate(_value, _capacity);
-				_value= _new;
-				_capacity = n;
-			}
-
-            
              //***************************Modifiers*/
             template <class InputIterator>
 			void		assign( InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
@@ -340,7 +337,11 @@ namespace ft
 					_alloc.construct(_value + i, *first++);
 				_current = n;
 			}
-            
+            void		clear()
+            {		
+                erase(begin(), end()); 							
+                
+            }
            
             //Method 2*/
 			void		assign( size_type count, const value_type& val )
@@ -407,11 +408,7 @@ namespace ft
                 _current--;		
             }
             
-            void		clear()
-            {		
-                erase(begin(), end()); 							
-                
-            }
+           
 
 
 			iterator	insert(iterator position, const value_type& val)
@@ -446,7 +443,7 @@ namespace ft
 				size_type			i = ft::distance(first, last);
 
 				if ((_current + i) > _capacity)
-					reserve(_current + j);
+					reserve(_current + i);
 				for (size_type j = i + _current - 1; j > pos + i - 1; j--)
 				{
 					_alloc.construct(&_value[j], _value[j - i]);
@@ -464,7 +461,7 @@ namespace ft
 				size_type			value_pos = position - begin();
 
 				_current = _current - 1;
-				_alloc.destroy(&_value[val]);
+				_alloc.destroy(&_value[value_pos]);
 				for (size_type i = value_pos; i < _current; i++)
 				{
 					_alloc.construct(&_value[i], _value[i + 1]);
@@ -490,15 +487,12 @@ namespace ft
 				_current -= nb_element;
 				return last - nb_element;
 			}
+           
             //still swap , emplace and emplace_back
             
 
             //swap
-            template <class T, class Alloc>
-            void swap(vector<T, Alloc> vect1, vector<T, Alloc> vect2)
-            {
-                vect1.swap(vect2);
-            }
+        
             void swap(vector& x)
             {
                 swap(_alloc,x._alloc);
@@ -511,13 +505,16 @@ namespace ft
             {
                 return _alloc;
             }
-            void clear()
-            {
-                erase(begin(), end();)
-            }
+           
 
     };
 
+
+            template <class Type, class Alloc>
+            void swap(vector<Type, Alloc> vect1, vector<Type, Alloc> vect2)
+            {
+                vect1.swap(vect2);
+            }
  /*****Non member function :*/
 
             template <class Type, class Alloc>

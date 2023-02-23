@@ -72,17 +72,23 @@ namespace ft
 			// operations :
 			iterator operator=(const iterator &obj)
 			{
-				if(&obj == this)
-					return(*this);
+				
 				_ptr = obj._ptr;
+				return *this;
 
+			}
+			//getter
+			pointer get_ptr() const
+			{
+				return _ptr;
 			}
 			//diffrence_type is Alias of one of the fundamental signed integer types.
 			// ptrdiff_t
 			iterator operator+(difference_type nb) const
 			{
-				_ptr = _ptr + nb;
-				return _ptr;
+				// _ptr = _ptr + nb;
+				// return _ptr;
+				return iterator(_ptr + nb);
 				//return *this;
 			}
 			iterator& operator++()
@@ -90,12 +96,12 @@ namespace ft
 				_ptr = _ptr + 1;
 				return *this;
 			}
-			iterator& operator++(int)
+			iterator operator++(int)
 			{
-				iterator tmp;
-				tmp = *this;
-				(*this) ++;
-				return (tmp);
+				iterator (tmp) = *this;
+				//tmp = *this;
+				_ptr = _ptr + 1;
+				return tmp;
 			}
 			iterator operator+=(difference_type nb)
 			{
@@ -105,20 +111,22 @@ namespace ft
 
 			iterator operator-(difference_type nb) const
 			{
-				_ptr = _ptr - nb;
-				return (_ptr);
+				// _ptr = _ptr - nb;
+				// return (_ptr);
+				return iterator(_ptr - nb);
 			}
 			iterator operator--()
 			{
 				_ptr = _ptr -1;
-				return _ptr;
+				return *this;
 			}
 			iterator operator--(int)
 			{
-				iterator tmp;
-				tmp = *this;
-				(*this)--;
-				return (tmp);
+				iterator (tmp);
+				// tmp = *this;
+				// (*this)--;
+				_ptr--;
+				return tmp;
 			}
 			iterator operator-=(difference_type nb)
 			{
@@ -137,11 +145,12 @@ namespace ft
 			}
 			pointer operator->()
 			{
-				return (_ptr);
+				return &(operator*());
 			}
 			const_pointer operator->() const
 			{
-				return (_ptr);
+				//return (_ptr);
+				return &(operator*());
 			}
 			reference operator[] (difference_type nb)
 			{
@@ -179,6 +188,11 @@ namespace ft
 			}
 
 	};
+	template <class Iterator1, class Iterator2>
+	typename iterator<Iterator1>::difference_type operator - ( const iterator<Iterator1>& obj1, const iterator<Iterator2>& obj2 )
+	{		
+		return  obj1.get_ptr() - obj2.get_ptr(); 
+	}
 	
 
 };
