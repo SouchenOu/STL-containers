@@ -474,7 +474,7 @@ namespace ft
 				return iterator(&_value[value_pos]);
 			}
 
-            iterator	erase( iterator first, iterator last )
+            iterator	erase( iterator first, iterator last)
 			{
 				size_type			nb_element = last - first;
 

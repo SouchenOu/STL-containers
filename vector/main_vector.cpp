@@ -25,7 +25,7 @@ int main()
     ft::vector<int> vect1;
     std::vector<int> vectTest1;
 
-    ft::vector<int> vect2;
+    std::vector<int> vect2;
 
     vect2.push_back(100);
     vect2.push_back(200);
@@ -36,15 +36,19 @@ int main()
     
     //ft::vector<int> vect2(1 , 2 , 100);
     ft::vector<int>::iterator i;
-    ft::vector<int>::iterator i2;
+    std::vector<int>::iterator i2;
     ft::vector<int>::iterator i3;
     i3 = vect2.begin() + 1;
     for (int i = 0; i < 10; i++)
     {
+        //push_back function
       vect1.push_back(i);
       vectTest1.push_back(i);
     }
+    //pop_back function
+    vect1.pop_back(); // delete the last element -->9
     std::cout << "Print vector \n";
+    
     for(i = vect1.begin(); i != vect1.end(); i++)
     {
         std::cout << "Our vect element -->" << *i << std::endl;
@@ -89,7 +93,7 @@ int main()
     }
     std::cout << "Test vector after resizing \n";
 
-    for(i2 = vect1.begin(); i2 != vect1.end(); i2++)
+    for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
     {
         std::cout << "Test element -->" << *i2 << std::endl;
     }
@@ -131,8 +135,7 @@ int main()
     {
         std::cout << "Our vect element -->" << *i << std::endl;
     }
-    std::cout << "Print vect test after assigning new elements\n";
-    for(i2 = vect1.begin(); i2 != vect1.end(); i2++)
+    for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
     {
         std::cout << "Test element -->" << *i2 << std::endl;
     }
@@ -144,13 +147,53 @@ int main()
     std::cout << "Function assign with iterator*******\n";
 
     vect1.assign(i3,vect2.end());
+    vectTest1.assign(i3,vect2.end());
 
     for(i = vect1.begin(); i != vect1.end(); i++)
     {
         std::cout << "Our vect element -->" << *i << std::endl;
     }
-    std::cout << "Print vect test after assigning new elements\n";
-    for(i2 = vect1.begin(); i2 != vect1.end(); i2++)
+    for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
+    {
+        std::cout << "Test element -->" << *i2 << std::endl;
+    }
+
+
+    std::cout << "Erase function with one iterator*******\n";
+
+    vect1.erase(vect1.begin());//--> //remove the first element
+    vectTest1.erase(vectTest1.begin());
+    
+    for(i = vect1.begin(); i != vect1.end(); i++)
+    {
+        std::cout << "Our vect element -->" << *i << std::endl;
+    }
+   for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
+    {
+        std::cout << "Test element -->" << *i2 << std::endl;
+    }
+    std::cout << "Erase function with two iterators\n";
+
+    vect1.erase(vect1.begin() + 1, vect1.begin() + 3);
+    vectTest1.erase(vectTest1.begin() + 1, vectTest1.begin() + 3);
+    for(i = vect1.begin(); i != vect1.end(); i++)
+    {
+        std::cout << "Our vect element -->" << *i << std::endl;
+    }
+    for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
+    {
+        std::cout << "Test element -->" << *i2 << std::endl;
+    }
+
+    std::cout << "swap() function\n";
+
+    vect1.swap(vect2);
+    vectTest1.swap(vect1);
+     for(i = vect1.begin(); i != vect1.end(); i++)
+    {
+        std::cout << "Our vect element -->" << *i << std::endl;
+    }
+    for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
     {
         std::cout << "Test element -->" << *i2 << std::endl;
     }
