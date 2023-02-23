@@ -17,6 +17,7 @@
 #include "vector_iterator.hpp"
 #include "vector_reverse_iterator.hpp"
 #include "../is_integral.hpp"
+#include "../enable_if.hpp"
 
 namespace ft{
 
