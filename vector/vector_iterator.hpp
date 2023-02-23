@@ -16,7 +16,8 @@
 # include <vector>
 # include <cstddef>
 # include <iterator>
-//# include "enable_if.hpp"
+#include "iterators_traits.hpp"
+
 
 
 /*****The iterator_traits class template comes with a default definition that obtains these types from the iterator type itself (see below). It is also specialized for pointers (T*) and pointers to const (const T*).****/
@@ -193,6 +194,19 @@ namespace ft
 	{		
 		return  obj1.get_ptr() - obj2.get_ptr(); 
 	}
+	template<typename InputIterator>
+	typename ft::iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
+	{
+		typename ft::iterator_traits<InputIterator>::difference_type dis = 0;
+
+		while (first != last)
+		{	
+			 dis++;
+			 first++;	
+		};
+		return dis;
+	}
+
 	
 
 };

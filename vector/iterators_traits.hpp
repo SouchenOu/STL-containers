@@ -15,7 +15,6 @@
 
 
 #include "vector_iterator.hpp"
-#include "vector_reverse_iterator.hpp"
 #include "../is_integral.hpp"
 #include "../enable_if.hpp"
 
@@ -62,22 +61,23 @@ namespace ft{
 		typedef const T&									reference;
 		typedef std::random_access_iterator_tag				iterator_category;
 	};
+	
+	// template<typename InputIterator>
+	// typename iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last,
+	// 	typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
+	// {
+	// 	typename iterator_traits<InputIterator>::difference_type dis = 0;
+
+	// 	while (first != last)
+	// 	{	
+	// 		 dis++;
+	// 		 first++;	
+	// 	};
+	// 	return dis;
+	// }
 
 
-	template<typename InputIterator>
-	typename iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last,
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
-	{
-		typename iterator_traits<InputIterator>::difference_type dis = 0;
-
-		while (first != last)
-		{	
-			 dis++;
-			 first++;	
-		};
-		return dis;
-	}
-
+	
 
 };
 

@@ -37,6 +37,8 @@ int main()
     //ft::vector<int> vect2(1 , 2 , 100);
     ft::vector<int>::iterator i;
     ft::vector<int>::iterator i2;
+    ft::vector<int>::iterator i3;
+    i3 = vect2.begin() + 1;
     for (int i = 0; i < 10; i++)
     {
       vect1.push_back(i);
@@ -119,7 +121,7 @@ int main()
     std::cout<< "Front() for vect test-->" << vectTest1.front() << std::endl;
     std::cout << "Back() for vect test-->" << vectTest1.back() << std::endl;
 
-    // std::cout << "**********Function assign()******\n";
+    std::cout << "**********Function assign() with integral******\n";
 
     vect1.assign(50,70);
     vectTest1.assign(50,70);
@@ -139,7 +141,19 @@ int main()
     std::cout << "capacity func of our vector-->" << vect1.capacity() << std::endl;
     std::cout << "capacity function to test--->" << vectTest1.capacity() <<std::endl;
 
+    std::cout << "Function assign with iterator*******\n";
 
+    vect1.assign(i3,vect2.end());
+
+    for(i = vect1.begin(); i != vect1.end(); i++)
+    {
+        std::cout << "Our vect element -->" << *i << std::endl;
+    }
+    std::cout << "Print vect test after assigning new elements\n";
+    for(i2 = vect1.begin(); i2 != vect1.end(); i2++)
+    {
+        std::cout << "Test element -->" << *i2 << std::endl;
+    }
 
 
     // // for (int i = 0; i < 100; i++)

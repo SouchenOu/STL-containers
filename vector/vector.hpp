@@ -23,6 +23,9 @@
 # include "vector_iterator.hpp"
 # include "vector_reverse_iterator.hpp"
 # include "../equal.hpp"
+#include "../is_integral.hpp"
+
+# include "iterators_traits.hpp"
 
 /*enable_if : if we have two oveloaded functions or more the compiler shoose the suitable one
 / for example if we have a function foo() with difference type, the compiler  takes all these functions foo()
@@ -108,7 +111,7 @@ namespace ft
 
             //Input iterators are iterators that can be used in sequential input operations, where each value pointed by the iterator is read only once and then the iterator is incremented.
             template <class InputIterator> 
-            vector (InputIterator first, InputIterator last,const allocator_type& alloc = allocator_type(),typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0): _alloc(alloc), _capacity(0),_current(0),_value(NULL)
+            vector (InputIterator first, InputIterator last,const allocator_type& alloc,typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type): _alloc(alloc), _capacity(0),_current(0),_value(NULL)
             {
                 insert(begin(), first, last);	
             }    
@@ -326,7 +329,8 @@ namespace ft
             }
              //***************************Modifiers*/
             template <class InputIterator>
-			void		assign( InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0 )
+            //typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0
+			void		assign( InputIterator first, InputIterator last,typename std::enable_if<!std::is_integral<InputIterator>::value>::type* = 0)
 			{
 				size_type	n = ft::distance(first, last);
 

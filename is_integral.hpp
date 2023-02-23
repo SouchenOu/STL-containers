@@ -28,10 +28,12 @@ namespace ft
     template <class T> 
     struct is_integral
     {
-            typedef     T   value_type;
+            typedef     T   type_value;
 
             //The value of std::numeric_limits<T>::is_integer is true for all integer arithmetic types T and false otherwise. This constant is meaningful for all specializations.
-            static const bool val_bool = std::numeric_limits<value_type>::is_integer;
+
+            //std::numeric_limits<value_type> :: Provides information about the properties of arithmetic types (either integral or floating-point) in the specific platform for which the library compiles.
+            static const bool value = std::numeric_limits<type_value>::is_integer;
             //exp std::cout << "Maximum value for int: " << std::numeric_limits<int>::max() << '\n';
                 //std::cout << "int is signed: " << std::numeric_limits<int>::is_signed << '\n';
     };
@@ -40,3 +42,7 @@ namespace ft
 }
 
 #endif
+
+
+
+
