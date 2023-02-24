@@ -194,18 +194,6 @@ namespace ft
             }
 
 
-            // void resize(size_type n, value_type val = value_type())
-            // {
-            //     while(n < _current)
-            //     {
-            //         pop_back();
-            //     }
-            //     while(n > _current)
-            //     {
-            //         push_back(val);
-            //     }
-            // }
-          
             void resize (size_type n, value_type val = value_type())
             {
                 if (n < _current)
@@ -363,32 +351,6 @@ namespace ft
 				_current = count;
 
 			}
-            // method 3
-            // void assign(size_type count, const size_type& val)
-            // {
-            //     // count here is the capacity of our vector so i should allocate count space
-            //     if(count > _capacity)
-            //     {
-            //         value_type *_new = _alloc.allocate(count);
-            //         for(size_type i = 0; i < count; i++)
-            //         {
-            //             _alloc.construct(&_new[i], val);
-            //             _alloc.destroy(&_value[i]);
-            //         }
-            //         _alloc.deallocate(_value , _capacity);
-            //         _value = _new;
-            //         _capacity = count;
-            //         _current = count;
-            //     }else{
-            //         for (size_type i = 0; i < count; i++)	
-            //             _alloc.construct(_value + i, val);
-			// 	    _current = count;
-            //     }
-                
-
-            // }
-
-
             void		push_back(const value_type& val)
 			{
                 size_type new_capacity;
@@ -461,25 +423,52 @@ namespace ft
 					return position;
             }
            template <class InputIterator>
-			void	insert( iterator position, InputIterator first, InputIterator last,
+			iterator	insert( iterator position, InputIterator first, InputIterator last,
 							typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
 			{
 				size_type			pos = position - begin();
-				size_type			i = ft::distance(first, last);
+				size_type		    n = ft::distance(first, last);
+                size_type           i = 0;
+                size_type           k;
+                size_type           m = 0;
+                size_type           j = 0;
+                value_type *tmp = _alloc.allocate(_capacity);
 
 				if ((_current + i) > _capacity)
-					reserve(_current + i);
-				for (size_type j = i + _current - 1; j > pos + i - 1; j--)
-				{
-					_alloc.construct(&_value[j], _value[j - i]);
-					_alloc.destroy(&_value[j - i]);
-				}
-				for (size_type m = pos; m < pos + i; m++)
-				{
-					_alloc.construct(&_value[m], *first);
-					first++;
-					_current++;
-				}
+                {
+                    reserve(_current + i);
+                }
+                while(m < _current)
+                {
+                    tmp[m] = _value[m];
+                    m++;
+                }
+				if ((_current + n) > _capacity)
+                {
+                    reserve(_current + n);
+                }
+                while(i < pos)
+                {
+                    i++;
+                }
+                k = i;
+                while(j < n)
+                {
+                    _alloc.destroy(&_value[i]);
+                    _alloc.construct(&_value[i],*first);
+                    j++;
+                    i++;
+                    first++;
+                    _current++;
+                }
+                while(tmp[k])
+                {
+                    _alloc.construct(&_value[i],tmp[k]);
+                    k++;
+                    i++;
+                }
+				return position;
+
 			}
             iterator				erase( iterator position )
 			{

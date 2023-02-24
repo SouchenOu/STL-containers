@@ -210,9 +210,12 @@ int main()
     std::cout << "Insert() function with two element in parameter**********\n";
     ft::vector<int> vector;
     std::vector<int> vectorTest;
+    std::vector<int> vectInsertTest;
+    ft::vector<int> vectInsert;
     ft::vector<int>::iterator iter1;
     std::vector<int>::iterator iter2;
     std::vector<int>::iterator iterTest;
+
     vector.push_back(110);
     vector.push_back(120);
     vector.push_back(130);
@@ -231,6 +234,15 @@ int main()
     vectorTest.push_back(170);
     vectorTest.push_back(180);
     vectorTest.push_back(190);
+    vectInsertTest.push_back(1000);
+    vectInsertTest.push_back(2000);
+    vectInsertTest.push_back(3000);
+    vectInsertTest.push_back(4000);
+    vectInsertTest.push_back(5000);
+    vectInsertTest.push_back(6000);
+    vectInsertTest.push_back(7000);
+    vectInsertTest.push_back(8000);
+    vectInsertTest.push_back(9000);
     iter1 = vector.begin() + 3;
     iter2 = vectorTest.begin() + 3;
     iter1 = vector.insert(iter1,200);
@@ -256,8 +268,21 @@ int main()
     {
         std::cout << "Test element -->" << *iterTest << std::endl;
     }
+    std::cout << "insert() with 3 iterators\n";
+    iterTest = vectorTest.begin()+2;
+    iter1 = vector.begin() + 2;
+    vectorTest.insert(iterTest,vectInsertTest.begin(), vectInsertTest.end());
+    vector.insert(iter1,vectInsertTest.begin(), vectInsertTest.end());
+    for(i = vector.begin(); i != vector.end(); i++)
+    {
+        std::cout << "Our vect element -->" << *i << std::endl;
+    }
+    for(iterTest = vectorTest.begin(); iterTest != vectorTest.end(); iterTest++)
+    {
+        std::cout << "Test element -->" << *iterTest << std::endl;
+    }
 
-
+//******** I should testing vector_reverse_iterator 
 
     
 }
