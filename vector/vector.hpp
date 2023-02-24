@@ -424,23 +424,41 @@ namespace ft
             iterator insert(iterator position, size_type n, const value_type& val)
             {
                 size_type			pos = position - begin();
-
-				// if ((_current + n) > _capacity)
-                // {
-                //     reserve(_current + n);
-                // }
-					
-				// for (size_type i = n + _current - 1; i > pos + n - 1; i--)
-				// {
-				// 	_alloc.construct(&_value[i], _value[i - n]);
-				// 	_alloc.destroy(&_value[i - n]);
-				// }
-				// for (size_type j = pos; j < pos + n; j++)
-				// {
-				// 	_alloc.construct(&_value[j], val);
-				// 	_current++;
-				// }
-                return position;
+                size_type i = 0;
+                size_type k;
+                size_type m = 0;
+                size_type j = 0;
+                value_type *tmp = _alloc.allocate(_capacity);
+                //tmp = _value;
+                while(m < _current)
+                {
+                    tmp[m] = _value[m];
+                    m++;
+                }
+				if ((_current + n) > _capacity)
+                {
+                    reserve(_current + n);
+                }
+                while(i < pos)
+                {
+                    i++;
+                }
+                k = i;
+                while(j < n)
+                {
+                    _alloc.destroy(&_value[i]);
+                    _alloc.construct(&_value[i],val);
+                    j++;
+                    i++;
+                    _current++;
+                }
+                while(tmp[k])
+                {
+                    _alloc.construct(&_value[i],tmp[k]);
+                    k++;
+                    i++;
+                }
+					return position;
             }
            template <class InputIterator>
 			void	insert( iterator position, InputIterator first, InputIterator last,
