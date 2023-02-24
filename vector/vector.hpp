@@ -418,26 +418,29 @@ namespace ft
 			iterator	insert(iterator position, const value_type& val)
 			{
 			
-                _value[position] = val;
-                _current++;
-				return begin() + position;
+				insert(position, 1, val);
+				return position;
 			}
-            void insert(iterator position, size_type n, const value_type& val)
+            iterator insert(iterator position, size_type n, const value_type& val)
             {
                 size_type			pos = position - begin();
 
-				if ((_current + n) > _capacity)
-					reserve(_current + n);
-				for (size_type i = n + _current - 1; i > pos + n - 1; i--)
-				{
-					_alloc.construct(&_value[i], _value[i - n]);
-					_alloc.destroy(&_value[i - n]);
-				}
-				for (size_type j = pos; j < pos + n; j++)
-				{
-					_alloc.construct(&_value[j], val);
-					_current++;
-				}
+				// if ((_current + n) > _capacity)
+                // {
+                //     reserve(_current + n);
+                // }
+					
+				// for (size_type i = n + _current - 1; i > pos + n - 1; i--)
+				// {
+				// 	_alloc.construct(&_value[i], _value[i - n]);
+				// 	_alloc.destroy(&_value[i - n]);
+				// }
+				// for (size_type j = pos; j < pos + n; j++)
+				// {
+				// 	_alloc.construct(&_value[j], val);
+				// 	_current++;
+				// }
+                return position;
             }
            template <class InputIterator>
 			void	insert( iterator position, InputIterator first, InputIterator last,
@@ -497,14 +500,14 @@ namespace ft
 
             //swap
         
-            void swap(vector& x)
-            {
-                swap(_alloc,x._alloc);
-                swap(_capacity,x._capacity);
-                swap(_value, x._value);
-                swap(_current,x._current);
+            // void swap(vector& x)
+            // {
+            //     ft::swap(_alloc,x._alloc);
+            //     ft::swap(_capacity,x._capacity);
+            //     ft::swap(_value, x._value);
+            //     ft::swap(_current,x._current);
 
-            }
+            // }
             allocator_type get_allocator() const
             {
                 return _alloc;
@@ -514,47 +517,47 @@ namespace ft
     };
 
 
-            template <class Type, class Alloc>
-            void swap(vector<Type, Alloc> vect1, vector<Type, Alloc> vect2)
-            {
-                vect1.swap(vect2);
-            }
+            // template <class T, class Alloc>
+            // void swap(vector<T, Alloc> &vect1, vector<T, Alloc>& vect2)
+            // {
+            //     vect1.swap(vect2);
+            // }
  /*****Non member function :*/
 
-            template <class Type, class Alloc>
-	        bool	operator == (const vector<Type,Alloc>& obj1, const vector<Type,Alloc>& obj2)
+            template <class T, class Alloc>
+	        bool	operator == (const vector<T,Alloc>& obj1, const vector<T,Alloc>& obj2)
 	        {
 		        if (obj1.size() != obj2.size())	
                     return false;
 		        return ft::equal(obj1.begin(), obj1.end(), obj2.begin());
 	    
             }
-            template <class Type, class Alloc>
-            bool operator !=(const vector<Type, Alloc> &obj1, const vector<Type, Alloc> &obj2)
+            template <class T, class Alloc>
+            bool operator !=(const vector<T, Alloc> &obj1, const vector<T, Alloc> &obj2)
             {
                     return(obj1 != obj2);
             }
             
-            template <class Type, class Alloc>
-            bool operator > (const vector<Type, Alloc> &obj1, const vector<Type, Alloc> &obj2)
+            template <class T, class Alloc>
+            bool operator > (const vector<T, Alloc> &obj1, const vector<T, Alloc> &obj2)
             {
                     return(obj1 > obj2);
             }
             
-            template <class Type, class Alloc>
-            bool operator >= (const vector<Type,Alloc> &obj1, const vector<Type, Alloc> &obj2)
+            template <class T, class Alloc>
+            bool operator >= (const vector<T,Alloc> &obj1, const vector<T, Alloc> &obj2)
             {
                 return (obj1 >= obj2);
             }
 
-            template <class Type, class Alloc>
-            bool operator < (const vector<Type,Alloc> &obj1, const vector<Type, Alloc> &obj2)
+            template <class T, class Alloc>
+            bool operator < (const vector<T,Alloc> &obj1, const vector<T, Alloc> &obj2)
             {
                 return (obj1 < obj2);
             }
 
-            template <class Type, class Alloc>
-            bool operator <= (const vector<Type, Alloc> &obj1, const vector<Type,Alloc> &obj2)
+            template <class T, class Alloc>
+            bool operator <= (const vector<T, Alloc> &obj1, const vector<T,Alloc> &obj2)
             {
                 return (obj1 <= obj2);
             }

@@ -71,7 +71,7 @@ namespace ft
 			{}
 
 			// operations :
-			iterator operator=(const iterator &obj)
+			iterator operator=( const iterator &obj)
 			{
 				
 				_ptr = obj._ptr;
@@ -194,6 +194,11 @@ namespace ft
 	{		
 		return  obj1.get_ptr() - obj2.get_ptr(); 
 	}
+	template <class Iterator1>
+	iterator<Iterator1>	operator + (const iterator<Iterator1>& iter1,const iterator<Iterator1>& iter2 )	
+	{
+		return  iter1 + iter2;			
+	};
 	template<typename InputIterator>
 	typename ft::iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
 	{

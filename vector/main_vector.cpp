@@ -25,7 +25,8 @@ int main()
     ft::vector<int> vect1;
     std::vector<int> vectTest1;
 
-    std::vector<int> vect2;
+    ft::vector<int> vect2;
+    std::vector<int> vect3;
 
     vect2.push_back(100);
     vect2.push_back(200);
@@ -33,12 +34,20 @@ int main()
     vect2.push_back(400);
     vect2.push_back(500);
 
+    vect3.push_back(100);
+    vect3.push_back(200);
+    vect3.push_back(300);
+    vect3.push_back(400);
+    vect3.push_back(500);
+
+
     
     //ft::vector<int> vect2(1 , 2 , 100);
     ft::vector<int>::iterator i;
     std::vector<int>::iterator i2;
     ft::vector<int>::iterator i3;
-    i3 = vect2.begin() + 1;
+    i3 = vect2.begin()+1;
+    //i2 = vect2.begin()+1;
     for (int i = 0; i < 10; i++)
     {
         //push_back function
@@ -185,26 +194,70 @@ int main()
         std::cout << "Test element -->" << *i2 << std::endl;
     }
 
-    std::cout << "swap() function\n";
+    // std::cout << "swap() function\n";
 
-    vect1.swap(vect2);
-    vectTest1.swap(vect1);
-     for(i = vect1.begin(); i != vect1.end(); i++)
+    // vect1.swap(vect2);
+    // vectTest1.swap(vect3);
+    //  for(i = vect1.begin(); i != vect1.end(); i++)
+    // {
+    //     std::cout << "Our vect element -->" << *i << std::endl;
+    // }
+    // for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
+    // {
+    //     std::cout << "Test element -->" << *i2 << std::endl;
+    // }
+
+    std::cout << "Insert() function with two element in parameter**********\n";
+    ft::vector<int> vector;
+    std::vector<int> vectorTest;
+    ft::vector<int>::iterator iter1;
+    std::vector<int>::iterator iter2;
+    std::vector<int>::iterator iterTest;
+    vector.push_back(110);
+    vector.push_back(120);
+    vector.push_back(130);
+    vector.push_back(140);
+    vector.push_back(150);
+    vector.push_back(160);
+    vector.push_back(170);
+    vector.push_back(180);
+    vector.push_back(190);
+    vectorTest.push_back(110);
+    vectorTest.push_back(120);
+    vectorTest.push_back(130);
+    vectorTest.push_back(140);
+    vectorTest.push_back(150);
+    vectorTest.push_back(160);
+    vectorTest.push_back(170);
+    vectorTest.push_back(180);
+    vectorTest.push_back(190);
+    iter1 = vector.begin() + 3;
+    iter2 = vectorTest.begin() + 3;
+    iter1 = vector.insert(iter1,200);
+    iter2 = vectorTest.insert(iter2, 200);
+    for(i = vector.begin(); i != vector.end(); i++)
     {
         std::cout << "Our vect element -->" << *i << std::endl;
     }
-    for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
+    std::cout << "Test for vector test-->" << *iter2 << std::endl;
+    std::cout << "Test our vector-->" << *iter1 << std::endl;
+    std::cout << "insert() with 3 element in parameter\n";
+
+    iter1 = vector.insert(iter1,4,444);
+    iter2 = vectorTest.insert(iter2,4, 444);
+
+    std::cout << "Our vector-->" <<*iter1<<std::endl;
+    std::cout << "Test vector-->" << *iter2 << std::endl;
+    for(i = vector.begin(); i != vector.end(); i++)
     {
-        std::cout << "Test element -->" << *i2 << std::endl;
+        std::cout << "Our vect element -->" << *i << std::endl;
+    }
+    for(iterTest = vectorTest.begin(); iterTest != vectorTest.end(); iterTest++)
+    {
+        std::cout << "Test element -->" << *iterTest << std::endl;
     }
 
 
-    // // for (int i = 0; i < 100; i++)
-    // // {
-    // //   std::cout << vect1[i] << "\n";
-    // // }
-    // // for(i = vect2.begin(); i != vect2.end(); ++i)
-    // // {
-    // //   cout << *i << " ";
-    // // }
+
+    
 }
