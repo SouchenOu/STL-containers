@@ -402,7 +402,7 @@ namespace ft{
             }
 
             //****insert method 2:
-            ft::pair<iterator, bool> insert(value_type data)
+            ft::pair<iterator, bool> insert(value_type const& data)
             {
                 // type_name *node = new type_name;
                 // node->parent = nullptr;
@@ -459,7 +459,7 @@ namespace ft{
             }
 
             // insert functions
-            iterator insert (iterator key, value_type &value)
+            iterator insert (iterator key, const value_type &value)
             {
                 (void) key;
                 return insert(value).first;

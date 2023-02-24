@@ -136,11 +136,11 @@ namespace ft
             // {
             //     // Overloading [] operator to access elements in array style
             // }
-            mapped_type& 	operator[] ( const key_type& key )
+            mapped_type& 	operator[] ( const key_type& k )
             {	
-                return (*(insert(ft::make_pair( key, mapped_type() )).first)).second;				
-            };
-            //************ Iterators
+                return (*(insert(ft::make_pair( k, mapped_type() )).first)).second;			
+            }
+            // //************ Iterators
                 iterator begin()
                 {
                     return _R_B_Ttree.begin();
@@ -181,15 +181,15 @@ namespace ft
             {
                     return _R_B_Ttree.insert(_value);
             }
-            iterator insert(iterator __pos, const value_type &value)
-            {
-                return _R_B_Ttree.insert(__pos, value);
-            }
-            template <class _InputIterator>
-            void insert(_InputIterator first, _InputIterator last)
-            {
-                _R_B_Ttree.insert(first, last);
-            }
+            // iterator insert(iterator __pos, const value_type &value)
+            // {
+            //     return _R_B_Ttree.insert(__pos, value);
+            // }
+            // template <class _InputIterator>
+            // void insert(_InputIterator first, _InputIterator last)
+            // {
+            //     _R_B_Ttree.insert(first, last);
+            // }
 
             //erase
             void erase(iterator position)
