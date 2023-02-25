@@ -23,11 +23,15 @@ int main()
 {
     //std::map<int, char> map1;
     ft::map<char, int> map2;
+    std::map<char,int> mapTest;
 
-    map2['a'] = 1;
+    //map2['e'] = 1;
     //map2.insert({ 2, 'b'});
     //map1.insert({2, 'b'});
-    //map2.insert(ft::pair<char,int>('b',12));
+    map2.insert(ft::pair<char,int>('b',12));
+    map2.insert(ft::pair<char,int>('d',13));
+    map2.insert(ft::pair<char,int>('c',110));
+    //mapTest.insert(ft::pair<char,int>('b',12));
 
     // declare iteretor
     // ft::map<char,int>::iterator it = map2.begin();
@@ -35,19 +39,23 @@ int main()
 
     // while(it != map2.end())
     // {
-    //     cout << "here\n" << endl;
+    //     cout << "here\n" << endl; 
     //     cout << "First ="<< it->first << endl;
     //     cout << "Second =" << it->second << endl;
     //     it++;
     // }
+    // for(std::map<char,int>::iterator it2 = mapTest.begin();it2 != mapTest.end(); it2++)
+    // {
+    //     cout << "I enter here\n";
+    //     cout << "First elem -->"<< it2->first << endl;
+    //     cout << "Second element -->" << it2->second << endl;
+    // }
     for(ft::map<char,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
     {
-        cout << "I enter here\n";
+       
         cout << "First elem -->"<< it1->first << endl;
         cout << "Second element -->" << it1->second << endl;
     }
-        cout << "hello" << endl;
         return 0;
-    // //while()
 
 }

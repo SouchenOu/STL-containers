@@ -38,7 +38,7 @@ namespace ft
         public:
             typedef Key                                                         key_type;
             typedef T                                                           mapped_type;
-            typedef ft::pair<const key_type,mapped_type>                        value_type;
+            typedef ft::pair<const Key,T>                                       value_type;
             typedef Compare                                                     key_compare;
             typedef Allocator                                                   allocator_type;
             // typedef value_type&                                                 reference;
@@ -136,10 +136,14 @@ namespace ft
             // {
             //     // Overloading [] operator to access elements in array style
             // }
+            // mapped_type& 	operator[] ( const key_type& k )
+            // {	
+            //     return (*(insert(ft::make_pair( k, mapped_type() )).first)).second;			
+            // }
             mapped_type& 	operator[] ( const key_type& k )
             {	
-                return (*(insert(ft::make_pair( k, mapped_type() )).first)).second;			
-            }
+                return (*(insert(ft::make_pair( k, mapped_type() )).first)).second;	
+            };
             // //************ Iterators
                 iterator begin()
                 {
@@ -177,19 +181,20 @@ namespace ft
 
             //*******Modifiers
             //insert
-            ft::pair<iterator, bool> insert (value_type const &_value)
+            ft::pair<iterator, bool> insert (value_type const&_value)
             {
+                //cout << _value.first << endl;
                     return _R_B_Ttree.insert(_value);
             }
-            // iterator insert(iterator __pos, const value_type &value)
-            // {
-            //     return _R_B_Ttree.insert(__pos, value);
-            // }
-            // template <class _InputIterator>
-            // void insert(_InputIterator first, _InputIterator last)
-            // {
-            //     _R_B_Ttree.insert(first, last);
-            // }
+            iterator insert(iterator __pos, const value_type &value)
+            {
+                return _R_B_Ttree.insert(__pos, value);
+            }
+            template <class _InputIterator>
+            void insert(_InputIterator first, _InputIterator last)
+            {
+                _R_B_Ttree.insert(first, last);
+            }
 
             //erase
             void erase(iterator position)
@@ -314,6 +319,12 @@ namespace ft
     {
         return !(obj1 < obj2);
     }
+    // template<class T, class Allocator>
+    // ostream& operator<< (ostream& os, const map<T, Allocator> & m)
+    // {
+    //     os << m.value_type;
+    //     //os << m.Node->root;
+    // }
 
 
 			 		 

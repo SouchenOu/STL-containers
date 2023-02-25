@@ -48,7 +48,6 @@ namespace ft{
             typedef Node<value_type>                                   type_name;
 
 
-
              typedef typename allocator_type::pointer                   pointer;
              typedef typename allocator_type::const_pointer             const_pointer;
              typedef typename allocator_type::reference                 reference;
@@ -62,7 +61,7 @@ namespace ft{
             
 
 
-        private:
+        public:
             type_name       *root;
             type_name       *TNULL;
             Compare         _comp;
@@ -75,18 +74,24 @@ namespace ft{
         public:
         //********constructers
         //default constructor
-            Red_black_tree(void):TNULL(TNULLNode()),_comp(),_alloc(),NBnode(0){}
-            explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
-            explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
+            // Red_black_tree(void):TNULL(TNULLNode()),_comp(),_alloc(),NBnode(0){
+            //     std::cout << "out here\n";
+            // }
+            // explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
+            // explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
             explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),_comp(__comp),_alloc(__a),NBnode(0)
             {
+                
+                
                 root = TNULL;
+                TNULL->color = 0;
             }
             // copy constructor
             explicit Red_black_tree(Red_black_tree const &tree):TNULL(TNULLNode()),_comp(tree._comp),_alloc(tree._alloc),root(TNULL)
             {     
                     insert(tree.begin(), tree.end());
             }
+           
             //Assignement operator
             Red_black_tree& operator=(Red_black_tree const &tree)
             {
@@ -108,14 +113,15 @@ namespace ft{
             }
             type_name *TNULLNode()
             {
-                TNULL =  For_allocation_Node.allocate(1);
-                TNULL->color = 0;
-                TNULL->left = 0;
-                TNULL->right = 0;
-                TNULL->parent = 0;
-                //TNULL->data = 0;
-                root=TNULL;
-                return TNULL;
+                type_name *node_new =  For_allocation_Node.allocate(1);
+                node_new->color = 0;
+                node_new->left = nullptr;
+                node_new->right = nullptr;
+                node_new->parent = 0;
+                node_new->leaf = 0;
+                //node_new->data = 0;
+                //root=node_new;
+                return node_new;
             }
             void clear(type_name *root)
             {
@@ -388,7 +394,7 @@ namespace ft{
 
             }
 
-            type_name *NewNode(value_type const& data, type_name *parent)
+            type_name *NewNode(value_type const& data, type_name *parent, int leaf)
             {
                 type_name  *new_node = For_allocation_Node.allocate(1);
                 _alloc.construct(&(new_node->data), data);
@@ -396,11 +402,12 @@ namespace ft{
                 new_node->right = TNULL;
                 new_node->parent = parent;
                 new_node->color = 1;
+                new_node->leaf = leaf;
                 NBnode++;
                 return new_node;
 
             }
-
+           
             //****insert method 2:
             ft::pair<iterator, bool> insert(value_type const& data)
             {
@@ -410,10 +417,10 @@ namespace ft{
                 // node->left = TNULL;
                 // node->right = TNULL;
                 // node->color = 1;
-
+                //std::cout << data << "\n";
                 type_name *y = TNULL;
                 type_name *x = root;
-
+                
                 // while root exist
                 //looking for position of newNode
                 while(x != TNULL)
@@ -435,11 +442,11 @@ namespace ft{
                 // our tree is empty
                 if(y == TNULL)
                 {
-                    root = NewNode(data,TNULL);
+                    root = NewNode(data,TNULL,2);
                     root->color = 0;
                     return ft::make_pair(iterator(root),true);
                 }
-                x = NewNode(data,y);
+                x = NewNode(data,y,1);
                 if(data < y->data)
                 {
                     y->left = x;
@@ -448,18 +455,20 @@ namespace ft{
                     y->right = x;
                 }
 
-                if(x->parent->parent == nullptr)
+                if(x->parent == root)
                 {
                     return ft::make_pair(iterator(x),true);
                 }
                 insert_fix(x);
-               
+                
                 return ft::make_pair(iterator(x),true);
 
             }
+        
+
 
             // insert functions
-            iterator insert (iterator key, const value_type &value)
+            iterator insert (const_iterator key, const value_type &value)
             {
                 (void) key;
                 return insert(value).first;
@@ -627,6 +636,10 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 First_elem = root;
+                // std::cout << "testing here\n";
+                // std::cout << "data-->"<<First_elem->data << std::endl;
+                // std::cout << "his right-->"<<First_elem->right->data << std::endl;
+                // std::cout << "his left-->"<<First_elem->right->right->data << std::endl;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
@@ -636,7 +649,6 @@ namespace ft{
             }
             const_iterator begin() const
             {
-                cout << "here yes\n";
                 type_name *First_elem;
                 if(root == TNULL)
                 {
@@ -657,7 +669,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->right!= TNULL)
+                while(last_elem != TNULL && last_elem->leaf)
                 {
                     last_elem = last_elem->right;
                 }
@@ -747,6 +759,15 @@ namespace ft{
 
 
 };
+
+// template<class T, class Allocation>
+// ostream& operator<<(ostream& os, const Red_black_tree<T, Allocation>& tree)
+// {
+//     os << tree.root->data << endl;
+// }
+
+
+
 
 
 

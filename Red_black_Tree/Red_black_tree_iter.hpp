@@ -33,15 +33,16 @@ template < class T >
         Node                                *left;
         Node                                *right;
         Node                                *parent;
+        int                                 leaf;
 
         //default constructer
          Node(void) : data(0),left(0),right(0),color(1){};
-            
+        
          // constructor with parameter
-         Node(value_type const &data, Node *parent):data(data),parent(parent),left(0),right(0),color(1){}
+         Node(value_type const &data, Node *parent, int leaf):data(data),parent(parent),left(0),right(0),color(1), leaf(leaf){}
          
          // copy constuctor
-         Node(Node const& obj):color( obj.color),data(obj.data),left(obj.left),right(obj.right),parent(obj.parent){}
+         Node(Node const& obj):color( obj.color),data(obj.data),left(obj.left),right(obj.right),parent(obj.parent), leaf(obj.leaf){}
         
          //assignement operator
 
@@ -54,6 +55,7 @@ template < class T >
             this->left = obj.left;
             this->right = obj.right;
             this->parent = obj.color;
+            this->leaf = obj.leaf;
             
          }
          // destructor
@@ -134,8 +136,7 @@ class Red_black_tree_iters
 
         Red_black_tree_iters &operator ++ () 
         {
-
-            if(_Node == nullptr)
+            if(!_Node->leaf)
             {
                 return *this;
                 // if(_Node == nullptr)
@@ -150,12 +151,16 @@ class Red_black_tree_iters
                 
 
             }
-            else if(_Node && _Node->right)
+            if(_Node && _Node->right && _Node->right->leaf)
             {
+                //cout << "her nooop\n";
                     _Node = _Node->right;
-                    while(_Node && _Node->left)
+                    //cout << _Node->data << endl;
+                    while(_Node && _Node->left && _Node->left->leaf)
                     {
                         _Node = _Node->left;
+
+                        
                     }
             }
             else
@@ -169,12 +174,13 @@ class Red_black_tree_iters
                 // is the end of the list
                 Node_tree *OurNode = _Node;
                 _Node = _Node->parent;
-                while(_Node && _Node->right == OurNode)
+                while(_Node && _Node->right == OurNode && _Node->leaf)
                 {
                     OurNode = _Node;
                     _Node = _Node->parent;
                 }
             }
+            cout << "Our node is ->" << _Node->data << std::endl;
             return *this;
 
         }
@@ -218,14 +224,15 @@ class Red_black_tree_iters
         }
         Red_black_tree_iters operator ++(int)
         {
-            Red_black_tree_iters p = *this;
+            Red_black_tree_iters p(*this);
+            cout << "fois\n";
             operator++();
             return p;
         }
 
         Red_black_tree_iters operator --(int)
         {
-            Red_black_tree_iters p = *this;
+            Red_black_tree_iters p (*this);
             operator--();
             return p;
         }
@@ -246,6 +253,18 @@ class Red_black_tree_iters
 
 };
 
-//};
+// template <class T>
+// ostream &operator << (ostream &out, const Node<T> &node)
+// {
+//     out << node.data;
+// }
+
+// //};
+// //  template<class T, class Allocator>
+// //     ostream& operator<< (ostream& os, const map<T, Allocator> & m)
+// //     {
+// //         os << m.value_type;
+// //         //os << m.Node->root;
+// //     }
 
 #endif
