@@ -29,6 +29,24 @@
 
 #include "../pair.hpp"
 
+/*template <class T> struct less;
+Function object class for less-than inequality comparison*/
+
+/*Binary function object class whose call returns whether the its first argument compares less than the second 
+(as returned by operator <).
+
+Generically, function objects are instances of a class with member function 
+operator() defined. This member function allows the object to be used with the same syntax 
+as a function call.
+
+It is defined with the same behavior as:
+
+C++11
+template <class T> struct less : binary_function <T,T,bool> 
+{
+  bool operator() (const T& x, const T& y) const {return x<y;
+}
+};*/
 
 namespace ft
 {
@@ -39,6 +57,7 @@ namespace ft
             typedef Key                                                         key_type;
             typedef T                                                           mapped_type;
             typedef ft::pair<const Key,T>                                       value_type;
+            //key_compare : defaults to: less<key_type>
             typedef Compare                                                     key_compare;
             typedef Allocator                                                   allocator_type;
             // typedef value_type&                                                 reference;
@@ -83,6 +102,8 @@ namespace ft
                     value_compare(key_compare c): comp(c){}
                     
                 public:
+                /*bool operator() (const T& x, const T& y)
+                Member function returning whether the first argument compares less than the second (x<y).*/
                     bool operator()(const value_type& __x, const value_type& __y)const
                     {
                         return comp(__x.first, __y.first);
@@ -129,6 +150,10 @@ namespace ft
             allocator_type get_allocator() const
             {
                 return _R_B_Ttree._alloc;
+            }
+            value_type get_key(const key_type &k)
+            {
+                return ft::make_pair(k, mapped_type());
             }
 
             //Element access
@@ -196,7 +221,7 @@ namespace ft
                 _R_B_Ttree.insert(first, last);
             }
 
-            //erase
+           
             void erase(iterator position)
             {
                 _R_B_Ttree.erase(position._Node);
@@ -214,12 +239,12 @@ namespace ft
             // function find
             iterator find(const key_type& key)
             {
-                return _R_B_Ttree.find(key);
+                return _R_B_Ttree.find(get_key(key));
             }
 
             const_iterator find(const key_type& key) const
             {
-                return _R_B_Ttree.find(key);
+                return _R_B_Ttree.find(get_key(key));
             }
 
 

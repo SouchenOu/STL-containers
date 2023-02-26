@@ -104,16 +104,16 @@ class Red_black_tree_iters
         // Arithmetic operator
         Red_black_tree_iters &operator ++ () 
         {
-            if(_Node->value_test == 0)
+            if(!_Node->value_test)
             {
                 return *this;
             }
-            if(_Node && _Node->right && _Node->right->value_test == 1)
+            if(_Node && _Node->right && _Node->right->value_test)
             {
                 //cout << "her nooop\n";
                     _Node = _Node->right;
                     //cout << _Node->data << endl;
-                    while(_Node && _Node->left && _Node->left->value_test == 1)
+                    while(_Node && _Node->left && _Node->left->value_test)
                     {
                         _Node = _Node->left;
   
@@ -130,7 +130,7 @@ class Red_black_tree_iters
                 // is the end of the list
                 Node_tree *OurNode = _Node;
                 _Node = _Node->parent;
-                while(_Node && _Node->right == OurNode && _Node->value_test == 1)
+                while(_Node && _Node->right == OurNode && _Node->value_test)
                 {
                     OurNode = _Node;
                     _Node = _Node->parent;
@@ -141,14 +141,14 @@ class Red_black_tree_iters
         }
         Red_black_tree_iters &operator-- ()
         {
-            if(_Node->value_test == 0)
+            if(!_Node->value_test)
             {
                 return *this;
             }
-            else if(_Node && _Node->left && _Node->left->value_test == 1)
+            else if(_Node && _Node->left && _Node->left->value_test)
             {
                     _Node = _Node->left;
-                    while(_Node && _Node->right && _Node->right->value_test == 1)
+                    while(_Node && _Node->right && _Node->right->value_test)
                     {
                         _Node = _Node->right;
                     }
@@ -157,7 +157,7 @@ class Red_black_tree_iters
             {
                 Node_tree *OurNode = _Node;;
                 _Node = _Node->parent;
-                while(_Node && _Node->left == OurNode && _Node->value_test == 1)
+                while(_Node && _Node->left == OurNode && _Node->value_test)
                 {
                     OurNode = _Node;
                     _Node = _Node->parent;
@@ -187,6 +187,15 @@ class Red_black_tree_iters
             return &_Node->data;
              
         };
+        // for pointer (for example *first)
+        reference operator*()
+        {
+            return _Node->data;
+        }
+        const_reference operator*() const
+        {
+            return _Node->data;
+        }
        
 
 };
@@ -218,7 +227,10 @@ namespace ft{
              typedef ft::reverse_iterator <iterator>                    reverse_iterator;
              typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
              typedef typename Alloc::template rebind< type_name >::other   node_alloc;
-            
+            /*template <class Type> struct rebind 
+            {
+                typedef allocator<Type> other;
+            };*/
 
 
         public:
@@ -371,7 +383,7 @@ namespace ft{
             /***********the largest element*/
             type_name *max_element(type_name *node)
             {
-                while(node->right != NULL)
+                while(node && node->value_test)
                 {
                     node = node->right;
                 }
@@ -380,7 +392,7 @@ namespace ft{
 
             type_name *min_element(type_name *node)
             {
-                while(node->left != NULL)
+                while(node->left != TNULL)
                 {
                     node = node->left;
                 }
@@ -478,7 +490,7 @@ namespace ft{
             void deleteNodeHelp(type_name *node, value_type data)
             {
                 type_name *elem_delete = TNULL;
-                type_name *x;
+                type_name *x = TNULL;
                 type_name *node_to_delete;
                 // search about our delete_elem
                 while(node != TNULL)
@@ -522,13 +534,13 @@ namespace ft{
                 
                 else
                 {
+                   
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
                     node_to_delete = min_element(elem_delete->right);
                     orig_color = node_to_delete->color;
                     x = node_to_delete->right;
-
-
+                    
                     if(node_to_delete->parent == elem_delete)
                     {
                         x->parent = node_to_delete;
@@ -540,6 +552,7 @@ namespace ft{
                         node_to_delete->right->parent = node_to_delete;
 
                     }
+                   
                     replace(elem_delete, node_to_delete);
                     node_to_delete->left = elem_delete->left;
                     node_to_delete->left->parent = node_to_delete;
@@ -602,7 +615,7 @@ namespace ft{
                 // our tree is empty
                 if(y == TNULL)
                 {
-                    root = NewNode(data,TNULL,1);
+                    root = NewNode(data,TNULL,2);
                     root->color = 0;
                     return ft::make_pair(iterator(root),true);
                 }
@@ -620,29 +633,34 @@ namespace ft{
                     return ft::make_pair(iterator(x),true);
                 }
                 insert_fix(x);
-                
+           
                 return ft::make_pair(iterator(x),true);
 
-            }
+            };
         
 
 
             // insert functions
-            iterator insert (const_iterator key, const value_type &value)
+            iterator insert (iterator key, const value_type &value)
             {
                 (void) key;
                 return insert(value).first;
 
-            }
+            };
             template<class _InputIterator>
-            void insert(_InputIterator first, _InputIterator second)
+            void insert(_InputIterator f, _InputIterator l)
             {
-                while(first != second)
+               
+                while(f != l)
                 {
-                    insert(*first);
-                    first++;
+                    insert(*(f));
+                    f++;
                 }
-            }
+                // for(const_iterator e = end(); f != l ; f++)
+                // {
+                //         insert(*f);
+                // }
+            };
             
             void insert_fix(type_name *node)
             {
@@ -710,6 +728,7 @@ namespace ft{
           size_type erase(value_type const &value)
           {
             type_name *del_node = search(root,value);
+            cout << "del_node-->" << del_node->data << endl;
             if(del_node)
                 delete_node(del_node->data);
             else if(!del_node)
@@ -718,18 +737,35 @@ namespace ft{
           }
           void erase(iterator first, iterator second)
           {
+            cout<< "here to delete\n";
+            cout << "first-->" << *first << endl;
+            cout << "last-->" << *second << endl; // i have some problems here
                 while(first != second)
+                {
+                    //delete_node(*first);
                     erase(*first++);
+                }
+                    
           }
           
           // find
-            iterator find(const value_type& value) const
+            iterator find(const value_type& value) 
+            {
+                type_name *node = search(root, value);
+                if(node)
+                {
+                    return iterator(node);
+                }
+                
+                return iterator(max_element(root));
+            }   
+            const_iterator find(const value_type& value) const
             {
                 type_name *node = search(root, value);
                 if(node)
                     return iterator(node);
-                return iterater(max_element(root));
-            }   
+                return iterator(max_element(root));
+            }
 
             void printHelper(type_name *root, string txt, int i)
             {
@@ -775,17 +811,17 @@ namespace ft{
             {
                 if(NBnode == 0)
                     return 1;
-                else if(NBnode != 0)
-                {
-                    return 0;
-                }
+                return 0;
 
             }
-            size_type size()
+            size_type size() const
             {
                 return NBnode;
             }
-            size_type max_size(){}
+            size_type max_size() const
+            {
+                    return For_allocation_Node.max_size();
+            }
 
             //iterators
             iterator begin()
@@ -829,7 +865,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->right)
+                while(last_elem  && last_elem->value_test)
                 {
                     last_elem = last_elem->right;
                 }
@@ -843,7 +879,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->right!= TNULL)
+                while(last_elem&& last_elem->right)
                 {
                     last_elem = last_elem->right;
                 }
@@ -870,14 +906,19 @@ namespace ft{
             {
                 while(node != TNULL)
                 {
-                    if(value < node->data)
+                    // cout << "data node\n" << node->data << endl;
+                    // cout << "value-->" << value << endl;
+                    if(_comp(value,node->data))
                     {
                         node = node->left;
-                    }else if(value > node->data)
+                    }else if(_comp(node->data,value))
                     {
                         node = node->right;
                     }else
+                    {
                         return node; 
+                    }
+                        
 
                 }
                 return 0;

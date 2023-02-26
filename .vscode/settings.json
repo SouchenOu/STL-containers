@@ -19,7 +19,14 @@
         "string_view": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
-        "__node_handle": "cpp"
+        "__node_handle": "cpp",
+        "__functional_03": "cpp",
+        "__functional_base_03": "cpp",
+        "__string": "cpp",
+        "algorithm": "cpp",
+        "memory_resource": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
