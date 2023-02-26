@@ -19,7 +19,7 @@
 # include <cmath>
 # include <string>
 
-# include "Red_black_tree_iter.hpp"
+# include "Node.hpp"
 # include "../vector/vector_iterator.hpp"
 # include "../vector/vector_reverse_iterator.hpp"
 # include "../pair.hpp"
@@ -30,13 +30,173 @@
 
 
 using namespace std;
+
+
+template<typename U>
+class Red_black_tree_iters
+{
+    
+    
+    public:
+        typedef U                                   value_type;
+        typedef std::ptrdiff_t                      difference_type;
+        typedef U*                                  pointer;
+        typedef const U*                            const_pointer;
+        typedef U&                                  reference;
+        typedef const U&                            const_reference;
+        typedef std::bidirectional_iterator_tag     iterator_category;
+
+        typedef Red_black_tree_iters< U >                   iterator;
+        typedef Red_black_tree_iters<const U >              const_iterator;
+        typedef Node< value_type >                           Node_tree;
+        typedef Node<const value_type>                       const_Node_tree;
+    private:
+            Node_tree*                                   _Node;
+        // ***********constructers
+        // default constructers
+    public:
+        Red_black_tree_iters(void):_Node(NULL){};
+       
+        // copy constructer
+        Red_black_tree_iters(Node_tree *obj):_Node(obj){};
+       
+
+        Red_black_tree_iters(Red_black_tree_iters const& obj): _Node(obj._Node){};
+       
+        // Assignement operator
+        Red_black_tree_iters&  operator = (Red_black_tree_iters const& obj)
+        {
+        
+            _Node = obj._Node;
+            return *this;
+        }
+        // operator        const_iterator() const 
+        // {       
+        //     return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
+        // }
+
+        //Comparison Operators
+        bool operator == (Red_black_tree_iters const& obj)
+        {
+            return _Node == obj._Node;
+        }
+        bool operator != (Red_black_tree_iters const & obj)
+        {
+            return _Node != obj._Node;
+        }
+        bool operator > (Red_black_tree_iters const &obj)
+        {
+            return _Node > obj._Node;
+        }
+        bool operator >= (Red_black_tree_iters const &obj)
+        {
+            return _Node >= obj._Node;
+        }
+        bool operator < (Red_black_tree_iters const &obj)
+        {
+            return _Node < obj._Node;
+        }
+        bool operator <= (Red_black_tree_iters const &obj)
+        {
+            return _Node <= obj._Node;
+        }
+
+        // Arithmetic operator
+        Red_black_tree_iters &operator ++ () 
+        {
+            if(_Node->value_test == 0)
+            {
+                return *this;
+            }
+            if(_Node && _Node->right && _Node->right->value_test == 1)
+            {
+                //cout << "her nooop\n";
+                    _Node = _Node->right;
+                    //cout << _Node->data << endl;
+                    while(_Node && _Node->left && _Node->left->value_test == 1)
+                    {
+                        _Node = _Node->left;
+  
+                    }
+            }
+            else
+            {
+                // have already processed the left subtree, and
+                // there is no right subtree. move up the tree,
+                // looking for a parent for which nodePtr is a left child,
+                // stopping if the parent becomes NULL. a non-NULL parent
+                // is the successor. if parent is NULL, the original node
+                // was the last node inorder, and its successor
+                // is the end of the list
+                Node_tree *OurNode = _Node;
+                _Node = _Node->parent;
+                while(_Node && _Node->right == OurNode && _Node->value_test == 1)
+                {
+                    OurNode = _Node;
+                    _Node = _Node->parent;
+                }
+            }
+            return *this;
+
+        }
+        Red_black_tree_iters &operator-- ()
+        {
+            if(_Node->value_test == 0)
+            {
+                return *this;
+            }
+            else if(_Node && _Node->left && _Node->left->value_test == 1)
+            {
+                    _Node = _Node->left;
+                    while(_Node && _Node->right && _Node->right->value_test == 1)
+                    {
+                        _Node = _Node->right;
+                    }
+            }
+            else
+            {
+                Node_tree *OurNode = _Node;;
+                _Node = _Node->parent;
+                while(_Node && _Node->left == OurNode && _Node->value_test == 1)
+                {
+                    OurNode = _Node;
+                    _Node = _Node->parent;
+                }
+            }
+            return *this;
+        }
+        Red_black_tree_iters operator ++(int)
+        {
+            Red_black_tree_iters p(*this);
+            operator++();
+            return p;
+        }
+
+        Red_black_tree_iters operator --(int)
+        {
+            Red_black_tree_iters p (*this);
+            operator--();
+            return p;
+        }
+        pointer			operator->()
+        {       
+            return &_Node->data;                   
+        };
+        const_pointer	operator->() const
+        {
+            return &_Node->data;
+             
+        };
+       
+
+};
+
 namespace ft{
 
 
     #define red     1   
     #define black   0
 
-    
     template < class T, class Compare = std::less< T >, class Alloc = std::allocator<T> >
     class Red_black_tree
     {
@@ -118,7 +278,7 @@ namespace ft{
                 node_new->left = nullptr;
                 node_new->right = nullptr;
                 node_new->parent = 0;
-                node_new->leaf = 0;
+                node_new->value_test = 0;
                 //node_new->data = 0;
                 //root=node_new;
                 return node_new;
@@ -343,7 +503,7 @@ namespace ft{
 
                 // start instructions to delete 
 
-                /************Here if it is a leaf node or just have one child*/
+                /************Here if it is a value_test node or just have one child*/
                 // if delete_elem has no right element so we will replace it with his left element
                 node_to_delete = elem_delete;
                 bool orig_color = node_to_delete->color;
@@ -394,7 +554,7 @@ namespace ft{
 
             }
 
-            type_name *NewNode(value_type const& data, type_name *parent, int leaf)
+            type_name *NewNode(value_type const& data, type_name *parent, int value_test)
             {
                 type_name  *new_node = For_allocation_Node.allocate(1);
                 _alloc.construct(&(new_node->data), data);
@@ -402,7 +562,7 @@ namespace ft{
                 new_node->right = TNULL;
                 new_node->parent = parent;
                 new_node->color = 1;
-                new_node->leaf = leaf;
+                new_node->value_test = value_test;
                 NBnode++;
                 return new_node;
 
@@ -442,7 +602,7 @@ namespace ft{
                 // our tree is empty
                 if(y == TNULL)
                 {
-                    root = NewNode(data,TNULL,2);
+                    root = NewNode(data,TNULL,1);
                     root->color = 0;
                     return ft::make_pair(iterator(root),true);
                 }
@@ -669,7 +829,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->leaf)
+                while(last_elem != TNULL && last_elem->right)
                 {
                     last_elem = last_elem->right;
                 }
@@ -760,6 +920,13 @@ namespace ft{
 
 };
 
+
+
+};
+
+
+
+
 // template<class T, class Allocation>
 // ostream& operator<<(ostream& os, const Red_black_tree<T, Allocation>& tree)
 // {
@@ -773,6 +940,6 @@ namespace ft{
 
 
 
-}
+
 
 #endif

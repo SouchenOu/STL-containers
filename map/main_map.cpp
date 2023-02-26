@@ -31,6 +31,12 @@ int main()
     map2.insert(ft::pair<char,int>('b',12));
     map2.insert(ft::pair<char,int>('d',13));
     map2.insert(ft::pair<char,int>('c',110));
+    //std::pair<std::map<char, int>::iterator,bool> ret;
+    //ret = map2.insert(ft::pair<char,int>('z', 500));
+    // if(ret.second == false)
+    // {
+    //     std::cout << ret.first->second<< "\n";
+    // }
     //mapTest.insert(ft::pair<char,int>('b',12));
 
     // declare iteretor

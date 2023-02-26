@@ -20,10 +20,10 @@
 
 
 # include "../Red_black_Tree/Red_black_tree.hpp"
-# include "../Red_black_Tree/Red_black_tree_iter.hpp"
+# include "../Red_black_Tree/Node.hpp"
 # include "../vector/vector_iterator.hpp"
 # include "../vector/vector_reverse_iterator.hpp"
-//# include "../make_pair.hpp"
+# include "../make_pair.hpp"
 # include "../equal.hpp"
 # include "../lexicographical_compare.hpp"
 
@@ -65,7 +65,7 @@ namespace ft
 
 
 
-            typedef Node <value_type>                                               Node;
+            typedef Node <value_type>                                                    Node;
 
         private:
 
@@ -124,7 +124,7 @@ namespace ft
                 }
                 return *this;
             }
-            virtual ~map(){}
+            ~map(){}
 
             allocator_type get_allocator() const
             {

@@ -121,44 +121,58 @@ namespace ft
 			T1				first;
 			T2			second;
 
-			pair()	:	first(),
-						second()	{};
+			pair():first(),second()	{};
 					
 			template < class U1, class U2 >
-			pair(const pair< U1,U2 > & p):	first(p.first),
-											second(p.second) {};
+			pair(const pair< U1,U2 > & p):first(p.first),second(p.second) {};
 
-			pair(T1 const & a, T2 const & b):	first(a),second(b) {}
+			pair(T1 const & a, T2 const & b):first(a),second(b) {}
 
-			pair&		operator = ( pair const& p )
+			pair&		operator = ( pair const& obj )
 			{
-				first = p.first;
-                second = p.second;
+				first = obj.first;
+                second = obj.second;
 				return *this;
 			}
 			~pair() {};
 	};
 
-	template < typename T1, typename T2 >
-	pair< T1, T2 > make_pair ( T1 x, T2 y )										{	return pair< T1, T2 >( x, y );	}
 
 	template < typename T1, typename T2 >
-	bool	operator == ( const pair< T1, T2 > & l, const pair< T1, T2 > & r )	{ return l.first == r.first && l.second == r.second; }
+	bool	operator == ( const pair< T1, T2 >&obj1, const pair< T1, T2 > &obj2 )
+	{ 
+		return obj1.first == obj2.first && obj1.second == obj2.second; 
+	}
 
 	template < typename T1, typename T2 >
-	bool	operator != ( const pair< T1, T2 > & l, const pair< T1, T2 > & r )	{ return !(l == r); }
+	bool	operator != ( const pair< T1, T2 >&obj1, const pair< T1, T2 > &obj2 )
+	{ 
+		return !(obj1 == obj2); 
+	}
 
 	template < typename T1, typename T2 >
-	bool	operator < ( const pair< T1, T2 > & l, const pair< T1, T2 > & r )	{ return l.first < r.first || (!(r.first < l.first) && l.second < r.second); }
+	bool	operator < ( const pair< T1, T2 >&obj1, const pair< T1, T2 > &obj2 )
+	{ 
+		return obj1.first < obj2.first || (!(obj2.first < obj1.first) && obj1.second < obj2.second); 
+	}
 
 	template < typename T1, typename T2 >
-	bool	operator <= ( const pair< T1, T2 > & l, const pair< T1, T2 > & r )	{ return !(r < l); }
+	bool	operator <= ( const pair< T1, T2 >&obj1, const pair< T1, T2 > &obj2 )	
+	{ 
+		return !(obj2 < obj1); 
+	}
 
 	template < typename T1, typename T2 >
-	bool	operator > ( const pair< T1, T2 > & l, const pair< T1, T2 > & r )	{ return r < l; }
+	bool	operator > ( const pair< T1, T2 >&obj1, const pair< T1, T2 > &obj2 )
+	{ 
+		return obj2 < obj1; 
+	}
 
 	template < typename T1, typename T2 >
-	bool	operator >= ( const pair< T1, T2 > & l, const pair< T1, T2 > & r )	{ return !(l < r); }
+	bool	operator >= ( const pair< T1, T2 >&obj1, const pair< T1, T2 > &obj2 )
+	{ 
+		return !(obj1 < obj2); 
+	}
     template < typename T1, typename T2 >
 	ostream	& operator << (ostream &out, const pair<T1,T2> &p)
     {
