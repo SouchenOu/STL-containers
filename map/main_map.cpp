@@ -34,8 +34,8 @@ int main()
     map2.insert(ft::pair<std::string,int>("two",13));
     map2.insert(ft::pair<std::string,int>("three",110));
     map2.insert(ft::pair<std::string,int>("four",210));
-    // map2.insert(ft::pair<std::string,int>("five",310));
-    // map2.insert(ft::pair<std::string,int>("six",410));
+    map2.insert(ft::pair<std::string,int>("five",310));
+    map2.insert(ft::pair<std::string,int>("upen",410));
     // map test
     mapTest2.insert(std::pair<std::string,int>("one",12));
     mapTest2.insert(std::pair<std::string,int>("two",13));
@@ -85,12 +85,13 @@ int main()
     std::cout << "************Modifiers ***(insert, erase, swap, clear, emplace,emplace_hint)**\n";
     std::cout << "erase() function **********************\n";
     ft::map<std::string,int>::iterator iter;
+    ft::map<std::string,int>::iterator iter2;
     iter = map2.find("three");
+    
     map2.erase(iter, map2.end()); 
      std::cout << "Printing first map*******\n";
     for(ft::map<std::string,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
     {
-       
         cout << "First elem -->"<< it1->first << endl;
         cout << "Second element -->" << it1->second << endl;
     }

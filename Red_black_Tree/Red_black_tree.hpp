@@ -304,10 +304,10 @@ namespace ft{
                 }
                 root = TNULL;
             }
-            void delete_node(type_name *Node)
+            void delete_node_free(type_name *Node)
             {
-                 _alloc.deallocate(Node, 1);
-                  For_allocation_Node.dealocate(Node, 1);
+                 _alloc.destroy(&(Node->data));
+                  For_allocation_Node.deallocate(Node, 1);
                   NBnode--;
 
             }
@@ -366,7 +366,7 @@ namespace ft{
             void replace(type_name *elem_del, type_name *elem_rep)
             {
                 // if it is a root element 
-                if(elem_del->parent == nullptr)
+                if(elem_del->parent == TNULL)
                 {
                     root = elem_rep;
                 }
@@ -403,7 +403,6 @@ namespace ft{
             void deletefix(type_name *node)
             {
                 type_name *suibling;
-                
                 while(node != root && node->color == 0)
                 {
                     if(node == node->parent->left)
@@ -534,18 +533,17 @@ namespace ft{
                 
                 else
                 {
-                   
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
                     node_to_delete = min_element(elem_delete->right);
                     orig_color = node_to_delete->color;
                     x = node_to_delete->right;
                     
-                    if(node_to_delete->parent == elem_delete)
+                    if(node_to_delete->parent == elem_delete && node_to_delete->right == TNULL)
                     {
-                        x->parent = node_to_delete;
+                        x = node_to_delete;
                     }
-                    else if(node_to_delete->parent != elem_delete) 
+                    else
                     {
                         replace(node_to_delete, node_to_delete->right);
                         node_to_delete->right = elem_delete->right;
@@ -556,16 +554,17 @@ namespace ft{
                     replace(elem_delete, node_to_delete);
                     node_to_delete->left = elem_delete->left;
                     node_to_delete->left->parent = node_to_delete;
-                    node_to_delete->color = elem_delete->color;
+                    node_to_delete->color = elem_delete->color;\
                 }
-                delete elem_delete;
+                // delete elem_delete;
                 if(node_to_delete->color == 0)
                 {
                     deletefix(x);
                 }
-                
+                delete_node_free(elem_delete);
 
             }
+         
 
             type_name *NewNode(value_type const& data, type_name *parent, int value_test)
             {
@@ -728,7 +727,6 @@ namespace ft{
           size_type erase(value_type const &value)
           {
             type_name *del_node = search(root,value);
-            cout << "del_node-->" << del_node->data << endl;
             if(del_node)
                 delete_node(del_node->data);
             else if(!del_node)
@@ -737,9 +735,7 @@ namespace ft{
           }
           void erase(iterator first, iterator second)
           {
-            cout<< "here to delete\n";
-            cout << "first-->" << *first << endl;
-            cout << "last-->" << *second << endl; // i have some problems here
+            
                 while(first != second)
                 {
                     //delete_node(*first);
@@ -865,7 +861,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem  && last_elem->value_test)
+                while(last_elem != TNULL  && last_elem->value_test && last_elem->right != TNULL)
                 {
                     last_elem = last_elem->right;
                 }
@@ -879,7 +875,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem&& last_elem->right)
+                while(last_elem != TNULL && last_elem->value_test && last_elem->right != TNULL)
                 {
                     last_elem = last_elem->right;
                 }

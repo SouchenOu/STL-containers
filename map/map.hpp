@@ -224,11 +224,13 @@ namespace ft
            
             void erase(iterator position)
             {
+                cout << "her no\n";
                 _R_B_Ttree.erase(position._Node);
             }
 
             size_type erase(const key_type &key)
             {
+                cout << "her no\n";
                 _R_B_Ttree.erase(key);
             }
             void erase(iterator first, iterator last)
