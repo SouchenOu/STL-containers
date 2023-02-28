@@ -74,7 +74,7 @@ namespace ft
 			iterator operator=( const iterator &obj)
 			{
 				
-				_ptr = obj._ptr;
+				_ptr = obj.get_ptr();
 				return *this;
 
 			}
@@ -89,7 +89,7 @@ namespace ft
 			{
 				// _ptr = _ptr + nb;
 				// return _ptr;
-				return iterator(_ptr + nb);
+				return iterator(get_ptr() + nb);
 				//return *this;
 			}
 			iterator& operator++()
@@ -114,7 +114,7 @@ namespace ft
 			{
 				// _ptr = _ptr - nb;
 				// return (_ptr);
-				return iterator(_ptr - nb);
+				return iterator(get_ptr() - nb);
 			}
 			iterator operator--()
 			{
@@ -123,7 +123,7 @@ namespace ft
 			}
 			iterator operator--(int)
 			{
-				iterator (tmp);
+				iterator (tmp) = *this;
 				// tmp = *this;
 				// (*this)--;
 				_ptr--;
@@ -155,12 +155,12 @@ namespace ft
 			}
 			reference operator[] (difference_type nb)
 			{
-				return _ptr[nb];
+				return get_ptr()[nb];
 
 			}
 			const_reference operator[](difference_type nb) const
 			{
-				return _ptr[nb];
+				return get_ptr()[nb];
 			}
 			// equal
 			friend bool  operator == (const iterator& it1, const iterator& it2)

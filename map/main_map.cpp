@@ -21,31 +21,41 @@ using namespace std;
 
 int main()
 {
-    //std::map<int, char> map1;
+    ft::map<std::string, char> map1;
     ft::map<std::string, int> map2;
-    std::map<std::string,int> mapTest1;
+    // std::map<std::string,int> mapTest1;
     std::map<std::string, int> mapTest2;
     ft::map<std::string, int> map3;
+    // map1
 
-    //map2['e'] = 1;
-    //map2.insert({ 2, 'b'});
-    //map1.insert({2, 'b'});
+    map3.insert(ft::pair<std::string,int>("ab",12));
+    map3.insert(ft::pair<std::string,int>("bc",13));
+    map3.insert(ft::pair<std::string,int>("de",110));
+    map3.insert(ft::pair<std::string,int>("ef",210));
+    map3.insert(ft::pair<std::string,int>("gh",310));
+    map3.insert(ft::pair<std::string,int>("ij",410));
+    map3.insert(ft::pair<std::string,int>("kl",510));
+    map3["mn"] = 2000;
+    // map 2
     map2.insert(ft::pair<std::string,int>("one",12));
     map2.insert(ft::pair<std::string,int>("two",13));
     map2.insert(ft::pair<std::string,int>("three",110));
     map2.insert(ft::pair<std::string,int>("four",210));
     map2.insert(ft::pair<std::string,int>("five",310));
-    map2.insert(ft::pair<std::string,int>("upen",410));
-    // map test
+    map2.insert(ft::pair<std::string,int>("twelve",410));
+    map2.insert(ft::pair<std::string,int>("eleven",510));
+    //map2["six"] = 2000;
+    // // map test
     mapTest2.insert(std::pair<std::string,int>("one",12));
     mapTest2.insert(std::pair<std::string,int>("two",13));
     mapTest2.insert(std::pair<std::string,int>("three",110));
     mapTest2.insert(std::pair<std::string,int>("four",210));
-    // mapTest2.insert(std::pair<std::string,int>("five",310));
-    // mapTest2.insert(std::pair<std::string,int>("six",410));
+    mapTest2.insert(std::pair<std::string,int>("five",310));
+    mapTest2.insert(std::pair<std::string,int>("twelve",410));
+    mapTest2.insert(std::pair<std::string,int>("eleven",510));
 
     map3.insert(map2.begin() , map2.find("three"));
-    //mapTest1.insert(mapTest2.begin(), mapTest2.find('e'));
+    // //mapTest1.insert(mapTest2.begin(), mapTest2.find('e'));
 
 
 
@@ -56,19 +66,19 @@ int main()
         cout << "First elem -->"<< it1->first << endl;
         cout << "Second element -->" << it1->second << endl;
     }
-      std::cout<< "Printing second map*******\n";
-    for(ft::map<std::string,int>::iterator it2 = map3.begin();it2 != map3.end(); it2++)
-    {
+    // //   std::cout<< "Printing second map*******\n";
+    // // // for(ft::map<std::string,int>::iterator it2 = map3.begin();it2 != map3.end(); it2++)
+    // // // {
        
-        cout << "First elem -->"<< it2->first << endl;
-        cout << "Second element -->" << it2->second << endl;
+    // // //     cout << "First elem -->"<< it2->first << endl;
+    // // //     cout << "Second element -->" << it2->second << endl;
+    // // // }
+    cout << "For testing std::map*************************\n";
+    for(std::map<std::string,int>::iterator it3 = mapTest2.begin();it3 != mapTest2.end(); it3++)
+    {
+        cout << "First elem -->"<< it3->first << endl;
+        cout << "Second element -->" << it3->second << endl;
     }
-    // cout << "For testing std::map*************************\n";
-    // for(std::map<char,int>::iterator it2 = mapTest1.begin();it2 != mapTest1.end(); it2++)
-    // {
-    //     cout << "First elem -->"<< it2->first << endl;
-    //     cout << "Second element -->" << it2->second << endl;
-    // }
 
     std::cout << "*****capacity (empty, size, max_size)************************\n";
     std::cout << "ft::map************************************************************\n";
@@ -82,21 +92,89 @@ int main()
 
 
 
-    std::cout << "************Modifiers ***(insert, erase, swap, clear, emplace,emplace_hint)**\n";
-    std::cout << "erase() function **********************\n";
-    ft::map<std::string,int>::iterator iter;
-    ft::map<std::string,int>::iterator iter2;
-    iter = map2.find("three");
+    // std::cout << "************Modifiers ***(insert, erase, swap, clear, emplace,emplace_hint)**\n";
+    // std::cout << "erase() function **********************\n";
+    // ft::map<std::string,int>::iterator iter;
+    // std::map<std::string,int>::iterator iter2;
+    // iter = map2.find("three");
+    // iter2 =  mapTest2.find("three");
+    // map2.erase(iter);
+    // mapTest2.erase(iter2);
+    // // //map2.erase(iter, map2.end()); 
+    //  std::cout << "Printing first map*******\n";
+    // for(ft::map<std::string,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
+    // {
+    //     cout << "First elem -->"<< it1->first << endl;
+    //     cout << "Second element -->" << it1->second << endl;
+    // }
+    // cout << "For testing std::map*************************\n";
+    // for(std::map<std::string,int>::iterator it3 = mapTest2.begin();it3 != mapTest2.end(); it3++)
+    // {
+    //     cout << "First elem -->"<< it3->first << endl;
+    //     cout << "Second element -->" << it3->second << endl;
+    // }
+    // std::cout << "swap function ***********\n";
+    // map2.swap(map1);
+
+    // std::cout << "clear function***************\n";
+
+    // map2.clear();
+    // mapTest2.clear();
+    // std::cout << "Printing first map*******\n";
+    // for(ft::map<std::string,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
+    // {
+    //     cout << "First elem -->"<< it1->first << endl;
+    //     cout << "Second element -->" << it1->second << endl;
+    // }
+    // cout << "For testing std::map*************************\n";
+    // for(std::map<std::string,int>::iterator it3 = mapTest2.begin();it3 != mapTest2.end(); it3++)
+    // {
+    //     cout << "First elem -->"<< it3->first << endl;
+    //     cout << "Second element -->" << it3->second << endl;
+    // }
+    std::cout << "key_compare()*******\n";
+    cout << "map_test ********\n";
+    std::map<std::string, int>::key_compare mycomp1 = mapTest2.key_comp();
+
+    std::string highest1 = mapTest2.rbegin()->first; // last element
+    cout << "height-->" << highest1 << endl;
+    std::map<std::string, int>::iterator iter1 = mapTest2.begin(); // first element
+    do{
+        std::cout << iter1->first << "=>" << iter1->second << endl;
+
+    }while(mycomp1((*iter1++).first, highest1));
+
+    cout << "our map*********\n";
+    ft::map<std::string, int>::key_compare mycomp2 = map2.key_comp();
+
+    std::string highest2 = map2.rbegin()->first; // last element
+    cout << "height-->" << highest2 << endl;
+    ft::map<std::string, int>::iterator iter2 = map2.begin(); // first element
+    do{
+        std::cout << iter2->first << "=>" << iter2->second << endl;
+
+    }while(mycomp2((*iter2++).first, highest2));
     
-    map2.erase(iter, map2.end()); 
-     std::cout << "Printing first map*******\n";
-    for(ft::map<std::string,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
-    {
-        cout << "First elem -->"<< it1->first << endl;
-        cout << "Second element -->" << it1->second << endl;
-    }
-    
-    
+
+    //reverse_iterator
+    cout << "reverse iters*****\n";
+    ft::map<std::string, int>::reverse_iterator rit;
+    rit = map2.rbegin();
+    *rit++;
+    cout << "first-->"<<rit->first << endl;
+    // for(rit=map2.rbegin(); rit!= map2.rend();rit++)
+    // {
+    //     cout << "here\n";
+    //     break ;
+    //     //std::cout << rit->first << "=>" << rit->second << endl;
+    // }
+    // cout << "reverse iters*****\n";
+    // ft::map<std::string, int>::iterator rit1;
+    // for(rit1=map2.begin(); rit1!= map2.end();rit1++)
+    // {
+    //     std::cout << rit1->first << "=>" << rit1->second << endl;
+    // }
+
     return 0;
 
 }

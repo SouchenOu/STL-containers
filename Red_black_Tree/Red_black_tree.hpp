@@ -27,6 +27,7 @@
 # include "../lexicographical_compare.hpp"
 # include "../equal.hpp"
 # include "../enable_if.hpp"
+#include "../map/map.hpp"
 
 
 using namespace std;
@@ -69,6 +70,11 @@ class Red_black_tree_iters
         
             _Node = obj._Node;
             return *this;
+        }
+        // getters
+        Node_tree     *get_node() const
+        {
+            return _Node;
         }
         // operator        const_iterator() const 
         // {       
@@ -271,43 +277,56 @@ namespace ft{
                 {
                     return *this;
                 }
+                clear(root);
                 _comp = tree._comp;
                 _alloc = tree._alloc;
                 insert(tree.begin(), tree.end());
 
             }
-            ~Red_black_tree(){ clear(root);}
+            ~Red_black_tree()
+            { 
+                clear(root);
+                free_null_node(TNULL);
+            }
 
             //getters
-            type_name get_root() const
+            type_name *get_root() const
             {
                 return root;
+            }
+           
+            void        free_null_node(type_name *node)
+            {              
+                For_allocation_Node.deallocate(node, 1); 
+                NBnode--; 
             }
             type_name *TNULLNode()
             {
                 type_name *node_new =  For_allocation_Node.allocate(1);
                 node_new->color = 0;
-                node_new->left = nullptr;
-                node_new->right = nullptr;
+                node_new->left = TNULL;
+                node_new->right = TNULL;
                 node_new->parent = 0;
                 node_new->value_test = 0;
                 //node_new->data = 0;
                 //root=node_new;
                 return node_new;
             }
-            void clear(type_name *root)
+            void clear(type_name *node)
             {
-                if(root)
+                if(node && node->value_test)
                 {
-                    clear(root->left);
-                    clear(root->right);
+                    clear(node->left);
+                    clear(node->right);
+                    delete_node_free(node);
                 }
-                root = TNULL;
+                node = TNULL;
             }
             void delete_node_free(type_name *Node)
             {
-                 _alloc.destroy(&(Node->data));
+                //_alloc.destroy(&(Node->data));
                   For_allocation_Node.deallocate(Node, 1);
+                  _alloc.destroy(&(Node->data));
                   NBnode--;
 
             }
@@ -481,53 +500,54 @@ namespace ft{
                 node->color = 0;
             }
             //********Delete in red_black_tree********/
-            void delete_node(value_type data)
+            void erase(type_name *node)
             {
-                 deleteNodeHelp(this->root, data);
+                 deleteNodeHelp(node);
             }
 
-            void deleteNodeHelp(type_name *node, value_type data)
+            void deleteNodeHelp(type_name *node)
             {
-                type_name *elem_delete = TNULL;
-                type_name *x = TNULL;
-                type_name *node_to_delete;
+                type_name *elem_delete = node;
+                type_name *x;
+                // search about it***/
+                //type_name *node_to_delete;
                 // search about our delete_elem
-                while(node != TNULL)
-                {
-                    if(node->data == data)
-                    {
-                        elem_delete = node;
-                    }
-                    if(node->data <= data)
-                    {
-                        node = node->right;
-                    }
-                    else {
-                        node = node->left;
-                    }
-                }
-                if(elem_delete == TNULL)
-                {
-                    cout << "there is no node with this data\n";
-                    return ;
-                }
+                // while(root != TNULL)
+                // {
+                //     if(node->data == data)
+                //     {
+                //         elem_delete = node;
+                //     }
+                //     if(node->data <= data)
+                //     {
+                //         node = node->right;
+                //     }
+                //     else {
+                //         node = node->left;
+                //     }
+                // }
+                // if(elem_delete == TNULL)
+                // {
+                //     cout << "there is no node with this data\n";
+                //     return ;
+                // }
 
                 // start instructions to delete 
 
                 /************Here if it is a value_test node or just have one child*/
                 // if delete_elem has no right element so we will replace it with his left element
-                node_to_delete = elem_delete;
-                bool orig_color = node_to_delete->color;
-                if(elem_delete->left == TNULL)
+                //node_to_delete = elem_delete;
+                bool orig_color = node->color;
+                if(node->left == TNULL)
                 {
-                    x = elem_delete->right;
-                    replace(elem_delete, elem_delete->right);
+                    x = node->right;
+                    replace(node, node->right);
                 }
                 //if our delete_element has no left elem we will replace it by his right element
-                else if(elem_delete->right == TNULL)
+                else if(node->right == TNULL)
                 {
-                    x = elem_delete->left;
-                    replace(elem_delete, elem_delete->left);
+                    x = node->left;
+                    replace(node, node->left);
                 }
                 
                 
@@ -535,34 +555,34 @@ namespace ft{
                 {
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
-                    node_to_delete = min_element(elem_delete->right);
-                    orig_color = node_to_delete->color;
-                    x = node_to_delete->right;
+                    elem_delete = min_element(elem_delete->right);
+                    orig_color = elem_delete->color;
+                    x = elem_delete->right;
                     
-                    if(node_to_delete->parent == elem_delete && node_to_delete->right == TNULL)
+                    if(elem_delete->parent == node) 
                     {
-                        x = node_to_delete;
+                        x->parent = elem_delete;;
                     }
                     else
                     {
-                        replace(node_to_delete, node_to_delete->right);
-                        node_to_delete->right = elem_delete->right;
-                        node_to_delete->right->parent = node_to_delete;
-
+                        replace(elem_delete, elem_delete->right);
+                        elem_delete->right = node->right;
+                        elem_delete->right->parent = elem_delete;
                     }
                    
-                    replace(elem_delete, node_to_delete);
-                    node_to_delete->left = elem_delete->left;
-                    node_to_delete->left->parent = node_to_delete;
-                    node_to_delete->color = elem_delete->color;\
+                    replace(node, elem_delete);
+                    elem_delete->left = node->left;
+                    elem_delete->left->parent = elem_delete;
+                    elem_delete->color = node->color;
                 }
                 // delete elem_delete;
-                if(node_to_delete->color == 0)
+                if(orig_color == 0)
                 {
                     deletefix(x);
                 }
-                delete_node_free(elem_delete);
-
+                _alloc.destroy(&(node->data));
+                For_allocation_Node.deallocate(node, 1);
+                NBnode--;
             }
          
 
@@ -592,7 +612,6 @@ namespace ft{
                 //std::cout << data << "\n";
                 type_name *y = TNULL;
                 type_name *x = root;
-                
                 // while root exist
                 //looking for position of newNode
                 while(x != TNULL)
@@ -626,12 +645,15 @@ namespace ft{
                 {
                     y->right = x;
                 }
+                x->left->parent = x;
+                x->right->parent = x;
 
                 if(x->parent == root)
                 {
                     return ft::make_pair(iterator(x),true);
                 }
                 insert_fix(x);
+               
            
                 return ft::make_pair(iterator(x),true);
 
@@ -728,7 +750,7 @@ namespace ft{
           {
             type_name *del_node = search(root,value);
             if(del_node)
-                delete_node(del_node->data);
+                erase(del_node);
             else if(!del_node)
                 return 0;
             return 1;
@@ -861,7 +883,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL  && last_elem->value_test && last_elem->right != TNULL)
+                while(last_elem != TNULL  && last_elem->value_test)
                 {
                     last_elem = last_elem->right;
                 }
@@ -875,7 +897,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->value_test && last_elem->right != TNULL)
+                while(last_elem != TNULL && last_elem->value_test)
                 {
                     last_elem = last_elem->right;
                 }
@@ -952,11 +974,25 @@ namespace ft{
                 }
                 return upper_node;
             }
+        // swap doesnt work
+        // void	swap(Red_black_tree &tree ) 
+        // {
+		// 	ft::swap(TNULL, tree.TNULL);
+		// 	ft::swap(root, tree.root);
+		// 	ft::swap(_alloc, tree._alloc);
+		// 	ft::swap(For_allocation_Node, tree.For_allocation_Node);
+		// 	ft::swap(_comp, tree._comp);
+		// 	ft::swap(NBnode, tree.NBnode);
+		// }
 
 
 
 };
-
+// template <class T, class Alloc>
+// void	swap(Red_black_tree< T, Alloc >& map1, Red_black_tree< T, Alloc >& map2) 
+// 	{	
+// 		map1.swap(map2);			
+// 	}
 
 
 };

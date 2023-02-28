@@ -224,17 +224,16 @@ namespace ft
            
             void erase(iterator position)
             {
-                cout << "her no\n";
-                _R_B_Ttree.erase(position._Node);
+                _R_B_Ttree.erase((position.get_node()));
             }
 
             size_type erase(const key_type &key)
             {
-                cout << "her no\n";
-                _R_B_Ttree.erase(key);
+                return _R_B_Ttree.erase(get_key(key));
             }
             void erase(iterator first, iterator last)
             {
+
                 _R_B_Ttree.erase(first,last);
             }
 
@@ -295,15 +294,27 @@ namespace ft
             size_type max_size() const{
                 return _R_B_Ttree.max_size();
             }
+                // doesnt work
+            // void swap(map& m)
+		    // {	
+			// 	_R_B_Ttree.swap(m._R_B_Ttree);						
+			// };
+            void clear()
+            {	
+                _R_B_Ttree.clear(_R_B_Ttree.get_root());
+            }
+            //key_compare()
+            key_compare 	key_comp() const
+            {
+                	return this->_compare;
+                    
+            };
+			// value_compare 				value_comp() const
+            // {	
+            //     return value_compare(this->_compare);
+            // };
 
             
-
-
-
-
-
-        
-
     };
     // No member function
 
@@ -345,7 +356,17 @@ namespace ft
     bool operator >= (const map<T, Allocator> &obj1, const map <T, Allocator> &obj2)
     {
         return !(obj1 < obj2);
-    }
+    };
+
+
+    // swap doesnt work..
+    // template <class T, class Alloc>
+	// void	swap(map< T, Alloc >& map1, map< T, Alloc >& map2) 
+	// {	
+	// 	map1.swap(map2);			
+	// }
+
+    
     // template<class T, class Allocator>
     // ostream& operator<< (ostream& os, const map<T, Allocator> & m)
     // {
@@ -356,7 +377,7 @@ namespace ft
 
 			 		 
 	
-}
+};
 
 #endif
 
