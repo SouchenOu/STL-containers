@@ -162,12 +162,13 @@ int main()
     rit = map2.rbegin();
     *rit++;
     cout << "first-->"<<rit->first << endl;
-    // for(rit=map2.rbegin(); rit!= map2.rend();rit++)
-    // {
-    //     cout << "here\n";
-    //     break ;
-    //     //std::cout << rit->first << "=>" << rit->second << endl;
-    // }
+    for(rit=map2.rbegin(); rit!= map2.rend();rit++)
+    {
+        
+        //break ;
+        std::cout << rit->first << "=>" << rit->second << endl;
+        break ;
+    }
     // cout << "reverse iters*****\n";
     // ft::map<std::string, int>::iterator rit1;
     // for(rit1=map2.begin(); rit1!= map2.end();rit1++)

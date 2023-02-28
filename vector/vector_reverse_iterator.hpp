@@ -89,12 +89,13 @@ namespace ft{
 			}
 			reverse_iterator& operator++()
 			{
-				std::cout << "hereee\n";
+				std::cout << "hna\n";
 				--_ptr;
 				return *this;
 			}
 			reverse_iterator operator++(int)
 			{
+				std::cout << "hnaaa\n";
 				reverse_iterator tmp = *this;
 				--_ptr;
 				return (tmp);
@@ -138,6 +139,7 @@ namespace ft{
 			
 			pointer operator->() const
 			{
+				std::cout << "re\n";
 				//return (_ptr);
 				return &(operator*());
 			}
