@@ -46,7 +46,8 @@ namespace ft{
 		{}
 		/****constructer with parameter*/
 		reverse_iterator(iterator_type ptr):_ptr(ptr)
-		{}
+		{
+		}
 		/*****copy constructures*/
 		// reverse_iterator(reverse_iterator &obj)
 		// {
@@ -89,15 +90,13 @@ namespace ft{
 			}
 			reverse_iterator& operator++()
 			{
-				std::cout << "hna\n";
-				--_ptr;
+				_ptr--;
 				return *this;
 			}
 			reverse_iterator operator++(int)
 			{
-				std::cout << "hnaaa\n";
 				reverse_iterator tmp = *this;
-				--_ptr;
+				_ptr--;
 				return (tmp);
 			}
 			reverse_iterator &operator+=(difference_type nb)
@@ -134,12 +133,11 @@ namespace ft{
 			reference			operator*() const
 			{		
 				iterator_type	tmp = _ptr;	
-				return *(--tmp);
+				return *(tmp--);
 			};
 			
 			pointer operator->() const
 			{
-				std::cout << "re\n";
 				//return (_ptr);
 				return &(operator*());
 			}

@@ -259,8 +259,7 @@ namespace ft{
             // explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
             explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),_comp(__comp),_alloc(__a),NBnode(0)
             {
-                
-                
+
                 root = TNULL;
                 TNULL->color = 0;
             }
@@ -273,14 +272,19 @@ namespace ft{
             //Assignement operator
             Red_black_tree& operator=(Red_black_tree const &tree)
             {
-                if(this == &tree)
+                // if(this == &tree)
+                // {
+                //     return *this;
+                // }
+                if(this != &tree)
                 {
-                    return *this;
+                    clear(root);
+                    _comp = tree._comp;
+                    _alloc = tree._alloc;
+                    insert(tree.begin(), tree.end());
                 }
-                clear(root);
-                _comp = tree._comp;
-                _alloc = tree._alloc;
-                insert(tree.begin(), tree.end());
+                return *this;
+                
 
             }
             ~Red_black_tree()
@@ -857,7 +861,8 @@ namespace ft{
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
-                }
+                    
+                } 
                 return iterator(First_elem);
 
             }
@@ -883,9 +888,11 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL  && last_elem->value_test)
+                while(last_elem != TNULL  && last_elem->value_test && last_elem->right != TNULL)
                 {
+                    
                     last_elem = last_elem->right;
+                   
                 }
                 return iterator(last_elem);
             }
@@ -897,7 +904,7 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->value_test)
+                while(last_elem != TNULL && last_elem->value_test && last_elem->right)
                 {
                     last_elem = last_elem->right;
                 }

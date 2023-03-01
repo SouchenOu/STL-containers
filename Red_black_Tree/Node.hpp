@@ -37,10 +37,10 @@ template < class T >
         int                                 value_test;
 
         //default constructer
-         Node(void) : data(0),left(0),right(0),color(1){};
+         Node(void) : data(0),left(0),right(0),color(1),parent(0){};
         
          // constructor with parameter
-         Node(value_type const &data, Node *parent):data(data),parent(parent),left(0),right(0),color(1){}
+         Node(value_type const &data, Node *parent, int value_test):value_test(value_test),data(data),parent(parent),left(0),right(0),color(1){}
          
          // copy constuctor
          Node(Node const& obj):color( obj.color),data(obj.data),left(obj.left),right(obj.right),parent(obj.parent), value_test(obj.value_test){}
@@ -49,14 +49,15 @@ template < class T >
 
          Node& operator = (Node const& obj)
          {
-            if (this == &obj) 
-                return *this;
+            // if (this == &obj) 
+            //     return *this;
             this->color = obj.color;
             this->data = obj.data;
             this->left = obj.left;
             this->right = obj.right;
             this->parent = obj.color;
             this->value_test = obj.value_test;
+            return *this;
             
          }
          // destructor

@@ -159,15 +159,23 @@ int main()
     //reverse_iterator
     cout << "reverse iters*****\n";
     ft::map<std::string, int>::reverse_iterator rit;
-    rit = map2.rbegin();
-    *rit++;
-    cout << "first-->"<<rit->first << endl;
-    for(rit=map2.rbegin(); rit!= map2.rend();rit++)
+    std::map<std::string, int>::reverse_iterator rit2;
+    rit2 = mapTest2.rbegin();
+    //rit = map2.rbegin();
+    //cout << "first-->"<< rit->first << endl;
+    for(rit=map2.rbegin(); rit > map2.rend();rit++)
     {
         
         //break ;
         std::cout << rit->first << "=>" << rit->second << endl;
-        break ;
+    }
+    std::cout << "Test map\n";
+    std::cout << "first-->"<< rit2->first << endl;
+    for(rit2=mapTest2.rbegin(); rit2!= mapTest2.rend();rit2++)
+    {
+        
+        //break ;
+        std::cout << rit2->first << "=>" << rit2->second << endl;
     }
     // cout << "reverse iters*****\n";
     // ft::map<std::string, int>::iterator rit1;
