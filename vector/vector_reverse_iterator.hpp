@@ -96,7 +96,8 @@ namespace ft{
 			reverse_iterator operator++(int)
 			{
 				reverse_iterator tmp = *this;
-				_ptr--;
+				--_ptr;
+				std::cout << "ptr-->" << _ptr->first << std::endl;
 				return (tmp);
 			}
 			reverse_iterator &operator+=(difference_type nb)

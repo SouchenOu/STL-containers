@@ -888,12 +888,13 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 last_elem = root;
-                while(last_elem != TNULL  && last_elem->value_test && last_elem->right != TNULL)
+                while(last_elem != TNULL)
                 {
-                    
                     last_elem = last_elem->right;
                    
                 }
+                //last_elem = last_elem->right;
+                
                 return iterator(last_elem);
             }
             const_iterator end() const
@@ -906,16 +907,46 @@ namespace ft{
                 last_elem = root;
                 while(last_elem != TNULL && last_elem->value_test && last_elem->right)
                 {
+                   
                     last_elem = last_elem->right;
+                   
                 }
+              
+                
                 return iterator(last_elem);
             }
             reverse_iterator rbegin() {
-                return reverse_iterator(end());
+                //return reverse_iterator(end());
+                type_name *last_elem;
+                if(root == TNULL)
+                {
+                    return reverse_iterator(TNULL);
+                }
+                last_elem = root;
+                while(last_elem != TNULL && last_elem->right != TNULL)
+                {
+                   
+                    last_elem = last_elem->right;
+                    
+                }
+                
+                return  reverse_iterator(last_elem);
+
             }
             reverse_iterator rend()
             {
-                return reverse_iterator(begin());
+                type_name *First_elem;
+                if(root == TNULL)
+                {
+                    return reverse_iterator(TNULL);
+                }
+                First_elem = root;
+                while(First_elem != TNULL)
+                {
+                    First_elem = First_elem->left;
+                }
+                return reverse_iterator(First_elem);
+                //return reverse_iterator(begin());
             }
             const_reverse_iterator rbegin() const
             {
