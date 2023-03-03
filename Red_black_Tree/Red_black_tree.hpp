@@ -28,7 +28,7 @@
 # include "../equal.hpp"
 # include "../enable_if.hpp"
 
-
+// # include "../map/map.hpp"
 
 using namespace std;
 
@@ -265,7 +265,7 @@ namespace ft{
                 TNULL->color = 0;
             }
             // copy constructor
-            explicit Red_black_tree(Red_black_tree const &tree):TNULL(TNULLNode()),_comp(tree._comp),_alloc(tree._alloc),root(TNULL)
+            explicit Red_black_tree(Red_black_tree const &tree):TNULL(TNULLNode()),root(TNULL),_comp(tree._comp),_alloc(tree._alloc)
             {     
                     insert(tree.begin(), tree.end());
             }
@@ -279,7 +279,7 @@ namespace ft{
                 // }
                 if(this != &tree)
                 {
-                    clear(root);
+                    clear();
                     _comp = tree._comp;
                     _alloc = tree._alloc;
                     insert(tree.begin(), tree.end());
@@ -290,7 +290,7 @@ namespace ft{
             }
             ~Red_black_tree()
             { 
-                clear(root);
+                clear();
                 free_null_node(TNULL);
             }
 
@@ -317,15 +317,24 @@ namespace ft{
                 //root=node_new;
                 return node_new;
             }
-            void clear(type_name *node)
+            void clear()
             {
-                if(node && node->value_test)
+                NBnode = 0;
+                clear_helper(root);
+                root = TNULL;
+
+            }
+            void clear_helper(type_name *root)
+            {
+                if(root == TNULL)
                 {
-                    clear(node->left);
-                    clear(node->right);
-                    delete_node_free(node);
+                    return;
                 }
-                node = TNULL;
+                clear_helper(root->right);
+                clear_helper(root->left);
+                _alloc.destroy(&(root->data));
+                For_allocation_Node.deallocate(root,1);
+                
             }
             void delete_node_free(type_name *Node)
             {
@@ -420,7 +429,6 @@ namespace ft{
                 while(node->left != TNULL)
                 {
                     node = node->left;
-                    cout << "node left->" << node->data << std::endl;
                 }
                 return node;
             }
@@ -564,7 +572,6 @@ namespace ft{
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
                     elem_delete = min_element(elem_delete->right);
-                    cout << "elem_delete->" << elem_delete->data << endl;
                     orig_color = elem_delete->color;
                     x = elem_delete->right;
                     
@@ -664,7 +671,9 @@ namespace ft{
                     return ft::make_pair(iterator(x),true);
                 }
                 insert_fix(x);
-               
+                // cout << "*******\n";
+                // printTree();
+                // cout << "*******\n";
                 return ft::make_pair(iterator(x),true);
 
             };
@@ -998,12 +1007,15 @@ namespace ft{
                     // cout << "value-->" << value << endl;
                     if(_comp(value,node->data))
                     {
+                        // value > node->data
                         node = node->left;
                     }else if(_comp(node->data,value))
                     {
+                        //value < node->data;
                         node = node->right;
                     }else
                     {
+                        // value == node->data;
                         return node; 
                     }
                         
@@ -1019,7 +1031,7 @@ namespace ft{
                 type_name *lower_node = TNULL;
                 while(node != TNULL)
                 {
-                    if(node->data >= value)
+                    if(!_comp(node->data, value))
                     {
                         lower_node = node;
                         node = node->left;
@@ -1035,7 +1047,7 @@ namespace ft{
 
                 while(node != TNULL)
                 {
-                    if(value < node->data)
+                    if(_comp(value,node->data))
                     {
                         upper_node = node;
                         node= node->left;
@@ -1055,25 +1067,16 @@ namespace ft{
 		// 	ft::swap(NBnode, tree.NBnode);
 		// }
 
-        // at() function
-        // value_type& at (const value_type& k)
-        // {
-        //     type_name *node;
-        //     if(search(root, k) == 0)
-        //     {
-        //         throw std::out_of_range("map ");
-        //     }else
-        //         return node->data;
-        // }
+// template <class T, class Alloc>
+// void	swap(Red_black_tree< T, Alloc >& map1, Red_black_tree< T, Alloc >& map2) 
+// {	
+// 		map1.swap(map2);			
+// }
 
 
 
 };
-// template <class T, class Alloc>
-// void	swap(Red_black_tree< T, Alloc >& map1, Red_black_tree< T, Alloc >& map2) 
-// 	{	
-// 		map1.swap(map2);			
-// 	}
+
 
 
 };

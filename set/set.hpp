@@ -73,7 +73,8 @@ class set
             //copy constructer
             set(const set& obj): Ttree(obj.Ttree)
             {
-                insert(obj.begin(), obj.end());
+                //insert(obj.begin(), obj.end());
+                *this = obj;
             }
 
             // Assignement operator
@@ -160,8 +161,7 @@ class set
                 //erase
                 void erase(iterator position)
                 {
-                    cout << "here\n";
-                    Ttree.erase((position.get_node()));
+                    Ttree.erase(*position);
                 }
 
                 size_type erase(const key_type &key)
@@ -202,14 +202,25 @@ class set
                 }
 
                   //count
-                size_type count(key_type const& key) const
+                size_type count(key_type const& key)
                 {
                     if( (Ttree.search(Ttree.get_root(), key)) == 0 )
                         return 0;
                     else
                         return 1;
                 }
+                //clear
+                void clear()
+                {	
+                    Ttree.clear();
+                }
+                //swap
 
+                // void swap(set& s)
+                // {
+                //      Ttree.swap(s.Ttree);
+                // }
+    
                 //lowerBound and upper bound
 
                 iterator lower_bound(key_type const& key)
@@ -229,6 +240,25 @@ class set
                 iterator upper_bound(key_type const &key) const
                 {
                     return Ttree.upper_bound(key);
+                }
+
+                //equal_range()
+      
+                ft::pair<iterator,iterator> equal_range (const key_type& k)
+                {
+                    iterator iter = iterator(Ttree.find(k));
+                        if (iter == this->end())
+                            return ft::make_pair(iter, iter);
+                        else
+                            return ft::make_pair(iter++, iter);
+                }
+                ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+                {
+                    const_iterator iter = const_iterator(Ttree.find(k));
+                        if (iter == this->end())
+                            return ft::make_pair(iter, iter);
+                        else
+                            return ft::make_pair(ietr, ++iter);
                 }
 
              

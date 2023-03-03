@@ -157,14 +157,6 @@ namespace ft
             }
 
             //Element access
-            // mapped_type& operator[](const key_type& )
-            // {
-            //     // Overloading [] operator to access elements in array style
-            // }
-            // mapped_type& 	operator[] ( const key_type& k )
-            // {	
-            //     return (*(insert(ft::make_pair( k, mapped_type() )).first)).second;			
-            // }
             mapped_type& 	operator[] ( const key_type& k )
             {	
                 return (*(insert(ft::make_pair( k, mapped_type() )).first)).second;	
@@ -298,10 +290,10 @@ namespace ft
             // void swap(map& m)
 		    // {	
 			// 	_R_B_Ttree.swap(m._R_B_Ttree);						
-			// };
+			// }
             void clear()
             {	
-                _R_B_Ttree.clear(_R_B_Ttree.get_root());
+                _R_B_Ttree.clear();
             }
             
             ////Observers:
@@ -315,31 +307,18 @@ namespace ft
             {	
                 return value_compare(this->_compare);
             };
+            //equal_range()
+            ft::pair< iterator, iterator > equal_range (const key_type& k)
+            {	
+                return (ft::make_pair(lower_bound(k), upper_bound(k)));	
+            };
+			ft::pair< const_iterator, const_iterator > equal_range (const key_type& k) const
+            {	
+                return (ft::make_pair(lower_bound(k), upper_bound(k)));	
+            };
 
-            // at()
 
-            // mapped_type& at (const key_type& k)
-            // {
-            //     // if(count(k) == 0)
-            //     //     throw std::out_of_range("map ");
-            //     // else 
-            //     //     return 
-            //         Node *node;
-            //         node = _R_B_Ttree.search(_R_B_Ttree.get_root(), k);
-            //         if(node != NULL)
-            //         {
-            //             return node->data;
-            //         }else
-            //             throw std::out_of_range("map ");
-            // }
-            // // const mapped_type& at (const key_type& k) const
-            // // {
-            // //     _R_B_Ttree.at(k);
-            // // }
-            // mapped_type& at(const key_type& k)
-            // {
-            //     _R_B_Ttree.at(k);
-            // }
+   
 
             
     };

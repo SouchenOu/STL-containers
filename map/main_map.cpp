@@ -46,10 +46,10 @@
 //     map2.insert(ft::pair<std::string,int>("five",310));
 //     map2.insert(ft::pair<std::string,int>("twelve",410));
 //     map2.insert(ft::pair<std::string,int>("eleven",510));
-//     map2["six"] = 2000;
+//     //map2["six"] = 2000;
 //     //map2.insert({"seven", 700});
-//     i1 = map2.find("three");
-//     map2.insert(i1,ft::pair<std::string,int>("seventeen",120)); // should work..
+//     //i1 = map2.find("three");
+//     //map2.insert(i1,ft::pair<std::string,int>("seventeen",120)); // should work..
 //     // // map test
 //     mapTest2.insert(std::pair<std::string,int>("one",12));
 //     mapTest2.insert(std::pair<std::string,int>("two",13));
@@ -97,13 +97,13 @@
 
 
 
-//     std::cout << "************Modifiers ***(insert, erase, swap, clear, emplace,emplace_hint)**\n";
-//     std::cout << "erase() function **********************\n";
+//     std::cout << "***************Modifiers ***(insert, erase, swap, clear, emplace,emplace_hint)**\n";
+//     std::cout << "********************erase()**********************\n";
 //     ft::map<std::string,int>::iterator iter;
 //     std::map<std::string,int>::iterator iter2;
     
-//     iter = map2.find("three");
-//     iter2 =  mapTest2.find("three");
+//     iter = map2.find("four");
+//     iter2 =  mapTest2.find("four");
 //     map2.erase(iter);
 //     mapTest2.erase(iter2);
 //     // //map2.erase(iter, map2.end()); 
@@ -119,26 +119,11 @@
 //         cout << "First elem -->"<< it3->first << endl;
 //         cout << "Second element -->" << it3->second << endl;
 //     }
-//     // std::cout << "swap function ***********\n";
-//     // map2.swap(map1);
+//     // std::cout << "**********swap()************\n";
+//     // map2.swap(map3);
 
-//     // std::cout << "clear function***************\n";
 
-//     // map2.clear();
-//     // mapTest2.clear();
-//     // std::cout << "Printing first map*******\n";
-//     // for(ft::map<std::string,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
-//     // {
-//     //     cout << "First elem -->"<< it1->first << endl;
-//     //     cout << "Second element -->" << it1->second << endl;
-//     // }
-//     // cout << "For testing std::map*************************\n";
-//     // for(std::map<std::string,int>::iterator it3 = mapTest2.begin();it3 != mapTest2.end(); it3++)
-//     // {
-//     //     cout << "First elem -->"<< it3->first << endl;
-//     //     cout << "Second element -->" << it3->second << endl;
-//     // }
-//     std::cout << "key_compare()****&& value_compare()***\n";
+//     std::cout << "***********key_compare() && value_compare()********\n";
 //     cout << "map_test key_compare()********\n";
 //     std::map<std::string, int>::key_compare mycomp1 = mapTest2.key_comp();
 
@@ -177,7 +162,7 @@
 
 
 //     //reverse_iterator
-//     cout << "reverse iters*****\n";
+//     cout << "**************reverse iters************\n";
 //     ft::map<std::string, int>::reverse_iterator rit;
 //     std::map<std::string, int>::reverse_iterator rit2;
 //     //rit = map2.rbegin();
@@ -201,7 +186,7 @@
 //     // {
 //     //     std::cout << rit1->first << "=>" << rit1->second << endl;
 //     // }
-//     cout<< "const iters*****\n";
+//     cout<< "*****************const iters***********\n";
 //     ft::map<std::string, int>::const_iterator rit3;
 //     std::map<std::string, int>::const_iterator rit4;
 //     std::cout << "our map*******\n";
@@ -215,7 +200,7 @@
 //         std::cout << rit4->first << "=>" << rit4->second << std::endl;
 //     }
 
-//     cout << "const reverse iters***\n";
+//     cout << "***************const reverse iters*********\n";
 
 //     std::map<std::string, int>::const_reverse_iterator iter33;
 //     ft::map<std::string, int>::const_reverse_iterator iter44;
@@ -234,7 +219,7 @@
 
 //     //lower_bound and upper_bound
 
-//     std::cout << "map_test-->Lower_bound*****&& upper_bound**** \n";
+//     std::cout << "************Lower_bound*****&& upper_bound**** \n";
 
 //     // std::map<std::string, int>::iterator itlow,itup;
 
@@ -250,6 +235,54 @@
 //     std::cout << "lower_bound()********\n";
 //     std::cout << "First-->"<<map2.lower_bound("three")->first << "  Second-->" << map2.lower_bound("three")->second << endl;
 
+//     std::cout << "*********clear()***************\n";
+
+//     map2.clear();
+//     mapTest2.clear();
+//     std::cout << "Printing first map*******\n";
+//     for(ft::map<std::string,int>::iterator it1 = map2.begin();it1 != map2.end(); it1++)
+//     {
+//         cout << "First elem -->"<< it1->first << endl;
+//         cout << "Second element -->" << it1->second << endl;
+//     }
+//     cout << "For testing std::map*************************\n";
+//     for(std::map<std::string,int>::iterator it3 = mapTest2.begin();it3 != mapTest2.end(); it3++)
+//     {
+//         cout << "First elem -->"<< it3->first << endl;
+//         cout << "Second element -->" << it3->second << endl;
+//     }
+
+//     std::cout << "***********equal_range()**************\n";
+
+//     ft::map<char, int> mymap1;
+//     std::map<char, int> mymap2;
+
+//     mymap1['a']=100;
+//     mymap1['b']=400;
+//     mymap1['d']=200;
+//     mymap1['c']=300;
+//     mymap2['a']=100;
+//     mymap2['b']=400;
+//     mymap2['d']=200;
+//     mymap2['c']=300;
+
+//     std::cout << "Testing ourmap******\n";
+//     std::cout << "Lower_bound-->" << "=> first :"<< mymap1.lower_bound('b')->first << "  second :" << mymap1.lower_bound('b')->second << endl;
+//     std::cout << "Upper_bound-->" << "=> first :"<< mymap1.upper_bound('b')->first << "  second :" << mymap1.upper_bound('b')->second << endl;
+
+//     std::cout << "Testing mapTest*****\n";
+//     std::cout << "Lower_bound-->" << "=> first :"<< mymap2.lower_bound('b')->first << "  second :" << mymap2.lower_bound('b')->second << endl;
+//     std::cout << "Upper_bound-->" << "=> first :"<< mymap2.upper_bound('b')->first << "  second :" << mymap2.upper_bound('b')->second << endl;
+
+//     ft::pair<ft::map<char,int>::iterator,ft::map<char,int>::iterator> ret;
+
+//     ret = mymap1.equal_range('b');
+
+//     std::cout << "Lower bound pointes to: -->\n";
+//     std::cout << ret.first->first << "=>" << ret.first->second << std::endl;
+
+//     std::cout << "Upper_bound points to:-->\n";
+//     std::cout << ret.second->first << "=>" << ret.second->second << std::endl;
 
 //     return 0;
 
