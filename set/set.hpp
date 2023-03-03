@@ -12,7 +12,7 @@
 
 #include "iostream"
 #include "../Red_black_Tree/Red_black_tree.hpp"
-#include "../Red_black_Tree/Red_black_tree_iter.hpp"
+#include "../Red_black_Tree/Node.hpp"
 #include "../vector/iterators_traits.hpp"
 #include "../vector/vector_iterator.hpp"
 #include "../vector/vector_reverse_iterator.hpp"
@@ -42,10 +42,11 @@ class set
         typedef typename allocator_type::const_reference    const_reference;
         typedef typename allocator_type::pointer            pointer;
         typedef typename allocator_type::const_pointer      const_pointer;
-        typedef             size_t                          size_t;
+        typedef             size_t                          size_type;
 
     private:
             typedef Red_black_tree<value_type, value_compare, allocator_type> _R_B_Ttree;
+
    
     public:
             typedef typename _R_B_Ttree::iterator                                       iterator;
@@ -53,27 +54,34 @@ class set
             typedef ft::reverse_iterator < iterator >                                   reverse_iterator;
             typedef ft::reverse_iterator < const_iterator >                             const_reverse_iterator;
             typedef typename iterator_traits< iterator >::difference_type               difference_type;
-
-
+    private:
+        _R_B_Ttree              Ttree;
+        value_compare              _compare;
+        allocator_type           _alloc;
+    public:
             //*********constructers
-            set():_R_B_Ttree(value_compare()){}
-            explicit set(const value_compare& __comp):_R_B_Ttree(__comp){}
-            explicit set(const value_compare& __comp, const allocator_type& __a):_R_B_Ttree(__comp, __a){}
+            //set():Ttree(value_compare()){}
+            explicit set(const value_compare& __comp):Ttree(__comp){}
+            explicit set(const value_compare& __comp = value_compare(), const allocator_type& __a = allocator_type()):Ttree(__comp, __a),_compare(__comp),_alloc(__a){}
 
             template <class _InputIterator>
-            set(_InputIterator f,_InputIterator l, const value_compare& _comp = value_compare()):_R_B_Ttree(_comp)
+            set(_InputIterator f,_InputIterator l, const value_compare& _comp = value_compare()):Ttree(_comp)
             {
-                _R_B_Ttree.insert(f,l);
+                Ttree.insert(f,l);
             }
 
             //copy constructer
-            set(const set& obj): _R_B_Ttree(obj._R_B_Ttree){}
+            set(const set& obj): Ttree(obj.Ttree)
+            {
+                insert(obj.begin(), obj.end());
+            }
 
             // Assignement operator
 
             set& operator=(const set& obj)
             {
-                _R_B_Ttree = obj._R_B_Ttree;
+                //Ttree.free();
+                Ttree = obj.Ttree;
                 return *this;
             }
 
@@ -81,55 +89,54 @@ class set
 
             ~set()
             {
-                _R_B_Ttree.free();
             }
 
             //************ Iterators
                 iterator begin()
                 {
-                    return _R_B_Ttree.begin();
+                    return Ttree.begin();
                 }
-                const_iterator begin() const 
+                const_iterator cbegin() const 
                 {
-                    return _R_B_Ttree.begin();
+                    return Ttree.begin();
                 }
                 iterator end()
                 {
-                    return _R_B_Ttree.end();
+                    return Ttree.end();
                 }
-                const_iterator end() const
+                const_iterator cend() const
                 {
-                    return _R_B_Ttree.end();
+                    return Ttree.end();
                 }
                 reverse_iterator rbegin()
                 {
-                    return _R_B_Ttree.rbegin();
+                    return Ttree.rbegin();
                 }
-                const_reverse_iterator rbegin() const
+                const_reverse_iterator crbegin() const
                 {
-                    return _R_B_Ttree.rbegin();
+                    return Ttree.rbegin();
                 }
                 reverse_iterator rend()
                 {
-                    return _R_B_Ttree.rend();
+                    return Ttree.rend();
                 }
-                const_reverse_iterator rend() const
+                const_reverse_iterator crend() const
                 {
-                    return _R_B_Ttree.rend();
+                    return Ttree.rend();
                 }
 
 
 
                 allocator_type get_allocator() const
                 {
-                    return _R_B_Ttree._alloc;
+                    return Ttree._alloc;
                 }
                 key_compare key_comp() const
                 {
-                    return _R_B_Ttree.value_comp();
+                    return Ttree.value_comp();
                 }
                 value_compare value_comp() const{
-                    return _R_B_Ttree.value_comp();
+                    return Ttree.value_comp();
                 }
 
 
@@ -138,64 +145,66 @@ class set
 
                 pair<iterator, bool> insert(const value_type& value)
                 {
-                    return _R_B_Ttree.insert(value);
+                    return Ttree.insert(value);
                 }
-                iterator insert(const_iterator position, const value_type& value)
+                iterator insert(iterator position, const value_type& value)
                 {
-                    return _R_B_Ttree.insert(position, value);
+                    return Ttree.insert(position, value);
                 }
                 template <class _InputIterator>
                 void insert(_InputIterator first, _InputIterator last)
                 {
-                    return _R_B_Ttree.insert(first,last);
+                    return Ttree.insert(first,last);
                 }
 
                 //erase
                 void erase(iterator position)
                 {
-                    _R_B_Ttree.erase(position);
+                    cout << "here\n";
+                    Ttree.erase((position.get_node()));
                 }
 
                 size_type erase(const key_type &key)
                 {
-                    _R_B_Ttree.erase(key);
+                    return Ttree.erase(key);
                 }
                 void erase(iterator first, iterator last)
                 {
-                    _R_B_Ttree.erase(first,last);
+
+                    Ttree.erase(first,last);
                 }
 
                        //************ //Capacity
                 bool empty() const
                 {
-                    return _R_B_Ttree.empty();
+                    return Ttree.empty();
                 }
                 size_type size() const
                 {
-                    return _R_B_Ttree.size();
+                    return Ttree.size();
                 }
 
                 size_type max_size() const
                 {
-                    return _R_B_Ttree.max_size();
+                    return Ttree.max_size();
                 }
 
 
                 // function find
                 iterator find(const key_type& key)
                 {
-                    return _R_B_Ttree.find(key);
+                    return Ttree.find(key);
                 }
 
                 const_iterator find(const key_type& key) const
                 {
-                    return _R_B_Ttree.find(key);
+                    return Ttree.find(key);
                 }
 
                   //count
                 size_type count(key_type const& key) const
                 {
-                    if( (_R_B_Ttree.search(_R_B_Ttree.get_root(), key)) == 0 )
+                    if( (Ttree.search(Ttree.get_root(), key)) == 0 )
                         return 0;
                     else
                         return 1;
@@ -205,21 +214,21 @@ class set
 
                 iterator lower_bound(key_type const& key)
                 {
-                    return _R_B_Ttree.lower_bound(key);
+                    return Ttree.lower_bound(key);
                 }
                 iterator lower_bound(key_type const &key) const
                 {
-                    return _R_B_Ttree.lower_bound(key);
+                    return Ttree.lower_bound(key);
                 }
                 //upper_bound
 
                 iterator upper_bound(key_type const &key)
                 {
-                    return _R_B_Ttree.upper_bound(key);
+                    return Ttree.upper_bound(key);
                 }
                 iterator upper_bound(key_type const &key) const
                 {
-                    return _R_B_Ttree.upper_bound(key);
+                    return Ttree.upper_bound(key);
                 }
 
              

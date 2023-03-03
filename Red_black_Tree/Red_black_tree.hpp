@@ -27,7 +27,7 @@
 # include "../lexicographical_compare.hpp"
 # include "../equal.hpp"
 # include "../enable_if.hpp"
-#include "../map/map.hpp"
+
 
 
 using namespace std;
@@ -76,10 +76,7 @@ class Red_black_tree_iters
         {
             return _Node;
         }
-        // operator        const_iterator() const 
-        // {       
-        //     return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
-        // }
+       
 
         //Comparison Operators
         bool operator == (Red_black_tree_iters const& obj)
@@ -105,6 +102,10 @@ class Red_black_tree_iters
         bool operator <= (Red_black_tree_iters const &obj)
         {
             return _Node <= obj._Node;
+        }
+        operator        const_iterator() const 
+        {       
+            return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
         }
 
         // Arithmetic operator
@@ -413,11 +414,13 @@ namespace ft{
                 return node;
             }
 
-            type_name *min_element(type_name *node)
+            type_name *min_element(type_name *node) const
             {
+                
                 while(node->left != TNULL)
                 {
                     node = node->left;
+                    cout << "node left->" << node->data << std::endl;
                 }
                 return node;
             }
@@ -557,9 +560,11 @@ namespace ft{
                 
                 else
                 {
+                    
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
                     elem_delete = min_element(elem_delete->right);
+                    cout << "elem_delete->" << elem_delete->data << endl;
                     orig_color = elem_delete->color;
                     x = elem_delete->right;
                     
@@ -578,7 +583,9 @@ namespace ft{
                     elem_delete->left = node->left;
                     elem_delete->left->parent = elem_delete;
                     elem_delete->color = node->color;
-                }
+                }                
+                
+
                 // delete elem_delete;
                 if(orig_color == 0)
                 {
@@ -587,6 +594,7 @@ namespace ft{
                 _alloc.destroy(&(node->data));
                 For_allocation_Node.deallocate(node, 1);
                 NBnode--;
+                
             }
          
 
@@ -603,7 +611,6 @@ namespace ft{
                 return new_node;
 
             }
-           
             //****insert method 2:
             ft::pair<iterator, bool> insert(value_type const& data)
             {
@@ -658,7 +665,6 @@ namespace ft{
                 }
                 insert_fix(x);
                
-           
                 return ft::make_pair(iterator(x),true);
 
             };
@@ -869,10 +875,10 @@ namespace ft{
             const_iterator begin() const
             {
                 type_name *First_elem;
-                if(root == TNULL)
-                {
-                    return iterator(TNULL);
-                }
+                // if(root == TNULL)
+                // {
+                //     return const_iterator(TNULL);
+                // }
                 First_elem = root;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
@@ -900,12 +906,12 @@ namespace ft{
             const_iterator end() const
             {
                 type_name *last_elem;
-                if(root == TNULL)
-                {
-                    return iterator(TNULL);
-                }
+                // if(root == TNULL)
+                // {
+                //     return const_iterator(TNULL);
+                // }
                 last_elem = root;
-                while(last_elem != TNULL && last_elem->value_test && last_elem->right)
+                while(last_elem != TNULL)
                 {
                    
                     last_elem = last_elem->right;
@@ -950,11 +956,37 @@ namespace ft{
             }
             const_reverse_iterator rbegin() const
             {
-                return reverse_iterator(end());
+                // return reverse_iterator(end());
+                type_name *last_elem;
+                if(root == TNULL)
+                {
+                    return reverse_iterator(TNULL);
+                }
+                last_elem = root;
+                while(last_elem != TNULL && last_elem->right != TNULL)
+                {
+                   
+                    last_elem = last_elem->right;
+                    
+                }
+                
+                return  reverse_iterator(last_elem);
+
             }
             const_reverse_iterator rend() const
             {
-                return reverse_iterator(begin());
+                //return reverse_iterator(begin());
+                type_name *First_elem;
+                if(root == TNULL)
+                {
+                    return reverse_iterator(TNULL);
+                }
+                First_elem = root;
+                while(First_elem != TNULL)
+                {
+                    First_elem = First_elem->left;
+                }
+                return reverse_iterator(First_elem);
             }
 
             //search function
@@ -987,7 +1019,7 @@ namespace ft{
                 type_name *lower_node = TNULL;
                 while(node != TNULL)
                 {
-                    if(node->data == value)
+                    if(node->data >= value)
                     {
                         lower_node = node;
                         node = node->left;
@@ -996,14 +1028,14 @@ namespace ft{
                 }
                 return lower_node;
             }
-            type_name *upper_node(const value_type& value)
+            type_name *upper_bound(const value_type& value)
             {
                 type_name *node = root;
                 type_name *upper_node = TNULL;
 
                 while(node != TNULL)
                 {
-                    if(value == node->data)
+                    if(value < node->data)
                     {
                         upper_node = node;
                         node= node->left;
@@ -1022,6 +1054,17 @@ namespace ft{
 		// 	ft::swap(_comp, tree._comp);
 		// 	ft::swap(NBnode, tree.NBnode);
 		// }
+
+        // at() function
+        // value_type& at (const value_type& k)
+        // {
+        //     type_name *node;
+        //     if(search(root, k) == 0)
+        //     {
+        //         throw std::out_of_range("map ");
+        //     }else
+        //         return node->data;
+        // }
 
 
 

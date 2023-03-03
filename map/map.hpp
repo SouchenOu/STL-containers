@@ -174,7 +174,7 @@ namespace ft
                 {
                     return _R_B_Ttree.begin();
                 }
-                const_iterator begin() const 
+                const_iterator cbegin() const 
                 {
                     return _R_B_Ttree.begin();
                 }
@@ -182,7 +182,7 @@ namespace ft
                 {
                     return _R_B_Ttree.end();
                 }
-                const_iterator end() const
+                const_iterator cend() const
                 {
                     return _R_B_Ttree.end();
                 }
@@ -190,7 +190,7 @@ namespace ft
                 {
                     return _R_B_Ttree.rbegin();
                 }
-                const_reverse_iterator rbegin() const
+                const_reverse_iterator crbegin() const
                 {
                     return _R_B_Ttree.rbegin();
                 }
@@ -198,7 +198,7 @@ namespace ft
                 {
                     return _R_B_Ttree.rend();
                 }
-                const_reverse_iterator rend() const
+                const_reverse_iterator crend() const
                 {
                     return _R_B_Ttree.rend();
                 }
@@ -253,21 +253,21 @@ namespace ft
 
             iterator lower_bound(key_type const& key)
             {
-                return _R_B_Ttree.lower_bound(key);
+                return _R_B_Ttree.lower_bound(get_key(key));
             }
             iterator lower_bound(key_type const &key) const
             {
-                return _R_B_Ttree.lower_bound(key);
+                return _R_B_Ttree.lower_bound(get_key(key));
             }
             //upper_bound
 
             iterator upper_bound(key_type const &key)
             {
-                return _R_B_Ttree.upper_bound(key);
+                return _R_B_Ttree.upper_bound(get_key(key));
             }
             iterator upper_bound(key_type const &key) const
             {
-                return _R_B_Ttree.upper_bound(key);
+                return _R_B_Ttree.upper_bound(get_key(key));
             }
 
 
@@ -303,16 +303,43 @@ namespace ft
             {	
                 _R_B_Ttree.clear(_R_B_Ttree.get_root());
             }
+            
+            ////Observers:
             //key_compare()
             key_compare 	key_comp() const
             {
                 	return this->_compare;
                     
+            };//value_compare()
+			value_compare 				value_comp() const
+            {	
+                return value_compare(this->_compare);
             };
-			// value_compare 				value_comp() const
-            // {	
-            //     return value_compare(this->_compare);
-            // };
+
+            // at()
+
+            // mapped_type& at (const key_type& k)
+            // {
+            //     // if(count(k) == 0)
+            //     //     throw std::out_of_range("map ");
+            //     // else 
+            //     //     return 
+            //         Node *node;
+            //         node = _R_B_Ttree.search(_R_B_Ttree.get_root(), k);
+            //         if(node != NULL)
+            //         {
+            //             return node->data;
+            //         }else
+            //             throw std::out_of_range("map ");
+            // }
+            // // const mapped_type& at (const key_type& k) const
+            // // {
+            // //     _R_B_Ttree.at(k);
+            // // }
+            // mapped_type& at(const key_type& k)
+            // {
+            //     _R_B_Ttree.at(k);
+            // }
 
             
     };
