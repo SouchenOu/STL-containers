@@ -79,26 +79,28 @@ namespace ft
             typedef typename allocator_type::reference              reference;
             typedef typename allocator_type::const_reference        const_reference;
     
-                //**********iterators
+            //**********iterators
             typedef ft::iterator < T >                            iterator; 
             typedef ft::iterator <const T>                          const_iterator;
             typedef ft::reverse_iterator<iterator>                   reverse_iterator;
             typedef ft::reverse_iterator<const_iterator>             const_reverse_iterator;
 
-            vector(){};
-            explicit vector(size_type n) : _capacity(n){};
 
-            explicit vector (const allocator_type& alloc) :  _alloc(alloc),_value(NULL),_current(0),_capacity(0){};
+            //default
+            explicit vector (const allocator_type& alloc = allocator_type()) :_value(NULL),_capacity(0),_current(0),_alloc(alloc)
+            {};
 
-            explicit vector (size_type n, const value_type& value ,const allocator_type&  a) : _capacity(n),_alloc(a),_value(NULL),_current(0)
+            explicit vector (size_type n, const value_type& value = value_type() ,const allocator_type& a =allocator_type()) : _value(NULL),_capacity(0),_current(0),_alloc(a)
             {
-            //inserting value n times to the vector
+                //inserting value n times to the vector
+                //std::cout << "n here -->" << n << std::endl;
                 insert(begin(), n, value);
 
             }
-                /***copy constructor***/
+            /***copy constructor***/
             vector (const vector& obj)
             {
+                std::cout << "enter\n";
                 _capacity   = obj._capacity;
                 _current    = obj._current;
                 _alloc      = obj._alloc;
@@ -111,7 +113,7 @@ namespace ft
 
             //Input iterators are iterators that can be used in sequential input operations, where each value pointed by the iterator is read only once and then the iterator is incremented.
             template <class InputIterator> 
-            vector (InputIterator first, InputIterator last,const allocator_type& alloc,typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type): _alloc(alloc), _capacity(0),_current(0),_value(NULL)
+            vector (InputIterator first, InputIterator last,const allocator_type& alloc = allocator_type(),typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0):_value(NULL), _capacity(0),_current(0), _alloc(alloc)
             {
                 insert(begin(), first, last);	
             }    
@@ -119,16 +121,27 @@ namespace ft
             //Assignment operator
             vector&	operator = (const vector& obj)
 		    {
-			    if (this == &obj) 
-                    return *this;
-			    assign(obj.begin(), obj.end());
+			    if (this != &obj) 
+			        assign(obj.begin(), obj.end());
+                return *this;
 		    }
             ~vector()
 		    {
-	    	    //clear();
+	    	    clear();
 			    _alloc.deallocate(_value, _capacity);	
 		    }
-        
+
+            //access operator(subscript operator)
+
+            reference	operator[](size_type n)	
+            {		
+                return _value[n];
+            }
+
+			const_reference	operator[](size_type n) const
+            {		
+                return _value[n];
+            }
     
             //implement iterators
             iterator begin()
@@ -189,8 +202,7 @@ namespace ft
             {
                 if(_current == 0)
                     return 1;
-                else if (_current != 0)
-                    return 0;
+                return 0;
             }
 
 
@@ -266,25 +278,6 @@ namespace ft
 			}
            
            //Element access *****************
-           //element access
-            size_type operator[](size_type index)
-            {
-                if(index >= _current)
-                {
-                    std::cout << "index out of bound\n" << std::endl;
-                    exit(0);
-                }
-                return _value[index];
-            }
-            size_type operator[](size_type index) const
-            {
-                if(index >= _current)
-                {
-                    std::cout << "index out of bound\n" << std::endl;
-                    exit(0);
-                }
-                return _value[index];
-            }
             reference at (size_type n)
             {
                 if (n > _current)
@@ -363,8 +356,8 @@ namespace ft
                     }
                     reserve(new_capacity);
                 }
-				//_alloc.construct(_value + _current, val);
-                _value[_current] = val;
+				_alloc.construct(_value + _current, val);
+                //_value[_current] = val;
 				_current++;
 			}
 
@@ -422,6 +415,8 @@ namespace ft
                 }
 					return position;
             }
+          
+
            template <class InputIterator>
 			iterator	insert( iterator position, InputIterator first, InputIterator last,
 							typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
@@ -434,10 +429,6 @@ namespace ft
                 size_type           j = 0;
                 value_type *tmp = _alloc.allocate(_capacity);
 
-				if ((_current + i) > _capacity)
-                {
-                    reserve(_current + i);
-                }
                 while(m < _current)
                 {
                     tmp[m] = _value[m];
@@ -481,6 +472,7 @@ namespace ft
 					_alloc.construct(&_value[i], _value[i + 1]);
 					_alloc.destroy(&_value[i + 1]);
 				}
+                //return next element to the first value position
 				return iterator(&_value[value_pos]);
 			}
 
@@ -498,7 +490,7 @@ namespace ft
 					_alloc.destroy(&(*first));
 					first++;
 				}
-				_current -= nb_element;
+				_current = _current - nb_element;
 				return last - nb_element;
 			}
            
@@ -515,10 +507,20 @@ namespace ft
             //     ft::swap(_current,x._current);
 
             // }
+
+            //Returns a copy of the allocator object associated with the vector.
             allocator_type get_allocator() const
             {
                 return _alloc;
             }
+            // private:
+
+            // allocator_type             _alloc;
+            // size_type                _capacity;
+            // value_type               *_value;
+            // size_type               _current;
+           
+
            
 
     };

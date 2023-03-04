@@ -17,6 +17,9 @@
 #include "../vector/vector.hpp"
 #include "../vector/vector_iterator.hpp"
 #include "../vector/vector_reverse_iterator.hpp"
+#include "../lexicographical_compare.hpp"
+#include "../make_pair.hpp"
+#include "../equal.hpp"
 
 #ifndef STACK_HPP
 # define STACK_HPP
@@ -32,8 +35,9 @@ namespace ft
                 typedef size_t size_type;
             protected:
                 container_type c;
-        //constructers
-        explicit stack(const container_type &__c = conatiner_type()):c(__c){} 
+        public:
+            //constructers
+            explicit stack(const container_type &__c = container_type()):c(__c){} 
         //copy constructer
 
         stack(const stack &obj): c(obj.c){}

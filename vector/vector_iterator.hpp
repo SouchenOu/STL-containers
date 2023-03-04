@@ -13,8 +13,8 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
-# include <vector>
-# include <cstddef>
+// # include <vector>
+// # include <cstddef>
 # include <iterator>
 #include "iterators_traits.hpp"
 
@@ -199,18 +199,7 @@ namespace ft
 	{
 		return  iter1 + iter2;			
 	};
-	template<typename InputIterator>
-	typename ft::iterator_traits<InputIterator>::difference_type distance(InputIterator first, InputIterator last)
-	{
-		typename ft::iterator_traits<InputIterator>::difference_type dis = 0;
-
-		while (first != last)
-		{	
-			 dis++;
-			 first++;	
-		};
-		return dis;
-	}
+	
 
 	
 
