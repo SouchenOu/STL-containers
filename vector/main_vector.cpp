@@ -75,7 +75,7 @@
 //     }
 
 //     std::cout << "***********************start test ********************************\n";
-//     std::cout << "size() && Max_size() && capacity()" << std::endl;
+//     std::cout << "-------------size() && Max_size() && capacity()----------" << std::endl;
 
 //     std::cout << "size() function ------>" << std::endl;
 //     std::cout << "size of our vector = " << vect1.size() << std::endl;
@@ -89,12 +89,12 @@
 
 //     std::cout << "*********************************************\n";
 
-//     std::cout << "capacity befaure resinzing :-->" << vect1.capacity() << std::endl;
-//     std::cout << "capacity befaure resinzing :-->" << vectTest1.capacity() << std::endl;
+//     std::cout << "capacity befaure resizing :-->" << vect1.capacity() << std::endl;
+//     std::cout << "capacity befaure resizing :-->" << vectTest1.capacity() << std::endl;
 
 //     std::cout << "*********************************************\n";
 
-//     std::cout << "resize function *****---->" << std::endl;
+//     std::cout << "------------------resize function---------------->" << std::endl;
 
 //     vect1.resize(20,20);
 //     vectTest1.resize(20,20);
@@ -119,9 +119,9 @@
 //     }
 
 
-//     std::cout << "*********************************************\n";
+//     std::cout << "******************************************************\n";
 
-//     std::cout << "function reserve --****->" << std::endl;
+//     std::cout << "---------------------function reserve -------------->" << std::endl;
 //     // vect1.reserve(4611686018427387903);
 //     // vectTest1.reserve(4611686018427387903);
 //     vect1.reserve(46);
@@ -132,19 +132,19 @@
 //     std::cout << "capacity after reserve function to test-->" << vectTest1.capacity() << std::endl;
    
 //     std::cout << "**************************************************\n";
-//     std::cout << "empty()*******\n";
+//     std::cout << "-------------------------empty()----------------------------\n";
 //     if(vect1.empty() == 0)
 //     {
 //         std::cout << "Our vector is not empty\n";
 //     }else
 //         std::cout<< "Is empty\n";
 
-//     std::cout << "*************************** at() function ******************\n";
+//     std::cout << "---------------------at() function---------------------------\n";
 //     std::cout << "at() function--------->" << std::endl;
 //     std::cout << "at() function of our vector is --> " << vect1.at(4) <<std::endl;
 //     std::cout << "at() function to test --->" << vectTest1.at(4) << std::endl;
 
-//     std::cout << "******************Access element operator[]******************\n";
+//     std::cout << "-----------------------Access element operator[]-------------------\n";
 
 //     for(size_t j = 0; j < vect1.size(); j++)
 //     {
@@ -153,7 +153,7 @@
 //     }
 //     std::cout << "vect1-->" << vect1[100] << std::endl;
 //     std::cout << "vectTest-->" << vectTest1[1000] << std::endl;
-//     std::cout << "***********Front() and back()  functions*************\n";
+//     std::cout << "-------------------Front() and back()------------------------------\n";
 
 //     std::cout << "Front() for our vect-->" << vect1.front() << std::endl;
 //     std::cout << "back() for our vect -->" << vect1.back() << std::endl;
@@ -162,7 +162,7 @@
 //     std::cout<< "Front() for vect test-->" << vectTest1.front() << std::endl;
 //     std::cout << "Back() for vect test-->" << vectTest1.back() << std::endl;
 
-//     std::cout << "**********Function assign() with integral******\n";
+//     std::cout << "--------------Function assign() with integral----------------\n";
 
 //     //vect1.assign(4611686018427387903,70);
 //     //vectTest1.assign(4611686018427387903,70);
@@ -183,7 +183,7 @@
 //     std::cout << "capacity func of our vector-->" << vect1.capacity() << std::endl;
 //     std::cout << "capacity function to test--->" << vectTest1.capacity() <<std::endl;
 
-//     std::cout << "Function assign with iterator*******\n";
+//     std::cout << "---------------Function assign with iterator-----------------\n";
 
 //     vect1.assign(i3,vect2.end());
 //     vectTest1.assign(i3,vect2.end());
@@ -198,7 +198,7 @@
 //     }
 
 
-//     std::cout << "Erase function with one iterator*******\n";
+//     std::cout << "----------------Erase function with one iterator----------------\n";
 
 //     ft::vector<int>::iterator it1;
 //     std::vector<int>::iterator it2;
@@ -224,7 +224,7 @@
 //     {
 //         std::cout << "Test element -->" << *i2 << std::endl;
 //     }
-//     std::cout << "Erase function with two iterators\n";
+//     std::cout << "-----------------Erase function with two iterators-----------\n";
 
 //     ii1 = vect1.erase(vect1.begin() + 1, vect1.begin() + 3);// return last element in that case is 600
 //     ii2 = vectTest1.erase(vectTest1.begin() + 1, vectTest1.begin() + 3);
@@ -240,7 +240,7 @@
 //         std::cout << "Test element -->" << *i2 << std::endl;
 //     }
 
-//     std::cout << "*************Pop_back() && push_bacck()**************\n";
+//     std::cout << "-----------------Pop_back() && push_back()----------------\n";
 
 //     vect1.push_back(1000);
 //     vect1.push_back(2000);
@@ -268,7 +268,7 @@
    
     
 
-// //     // std::cout << "swap() function\n";
+// //  std::cout << "---------------------swap()------------------------------\n";
 
 // //     // vect1.swap(vect2);
 // //     // vectTest1.swap(vect3);
@@ -283,7 +283,7 @@
 
 
 
-//     std::cout << "Insert() function with two element in parameter**********\n";
+//     std::cout << "----------Insert() function with two element in parameter--------\n";
 //     ft::vector<int> vector;
 //     std::vector<int> vectorTest;
 //     std::vector<int> vectInsertTest;
@@ -333,7 +333,7 @@
 //     }
 //     std::cout << "Test for vector test-->" << *iter2 << std::endl;
 //     std::cout << "Test our vector-->" << *iter1 << std::endl;
-//     std::cout << "insert() with 3 element in parameter\n";
+//     std::cout << "------------------insert() with 3 element in parameter----------\n";
 
 //     iter1 = vector.insert(iter1,4,444);
 //     iter2 = vectorTest.insert(iter2,4, 444);
@@ -348,7 +348,7 @@
 //     {
 //         std::cout << "Test element -->" << *iterTest << std::endl;
 //     }
-//     std::cout << "insert() with 3 iterators\n";
+//     std::cout << "-------------------insert() with 3 iterators-------------\n";
 //     iterTest = vectorTest.begin()+2;
 //     iter1 = vector.begin() + 2;
 //     vectorTest.insert(iterTest,vectInsertTest.begin(), vectInsertTest.end());
@@ -363,7 +363,7 @@
 //     }
 
 
-//  std::cout << "******************************Clear() **********************\n";
+//  std::cout << "-------------------------Clear()----------------------------\n";
 
 //     vect1.clear();
 //     vectTest1.clear();
@@ -379,7 +379,7 @@
 //         std::cout << "Test element -->" << *i2 << std::endl;
 //     }
 
-//     std::cout << "get_Allocator()*********\n";
+//     std::cout << "--------------------get_Allocator()------------------\n";
 //     ft::vector<int>m_vector;
 //     int *array;
 //     //// allocate an array with space for 5 elements using vector's allocator:
@@ -401,8 +401,7 @@
 //        // m_vector.get_allocator().destroy(&array[k]);
 //         //m_vector.get_allocator().deallocate(array, 5);
 //     }
-// //******** I should testing vector_reverse_iterator && constructers &&and inserting by using subscript operator
-//     std::cout << "*****************Constructers**************\n";
+//     std::cout << "-----------------------Constructers----------------------\n";
 //     ft::vector<int> third;
 //     third.push_back(47);
 //     third.push_back(48);
@@ -435,7 +434,7 @@
 //         std::cout << fifth[m] << std::endl;
 //     }
 
-//     std::cout << "************Assignment operator************\n";
+//     std::cout << "----------------Assignment operator---------------------\n";
 
 //     ft::vector<int>vv1(40,20);
 //     ft::vector<int>vv2;

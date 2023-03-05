@@ -32,6 +32,8 @@ void   breakFunc()
     }
 }
 
+//std::cout << "Set***********************\n";
+
 // int main()
 // {
 //     ft::set<int> setElem1;
@@ -276,257 +278,272 @@ void   breakFunc()
 
 // }
 
-int main()
-{
 
-    ft::map<int,char> map1;
-    ft::map<int,char>::iterator it1;
-    std::map<int, char> mapTest2;
-	ft::map<int,char>::reverse_iterator revIter1;
-    int num = 65;
-//     std::cout << "inserting 7 elements in map"  << std::endl;
-    for (int i = 0 ; i <= 7 ; i++)
-    {
-         map1.insert(ft::pair<int,char>(i,num));
-         mapTest2.insert(std::pair<int,char>(i,num));
-         num++;
-    }
+
+//std::cout << "Map*************************\n" 
+
+
+
+// int main()
+// {
+
+//     ft::map<int,char> map1;
+//     ft::map<int,char>::iterator it1;
+//     std::map<int, char> mapTest2;
+// 	ft::map<int,char>::reverse_iterator revIter1;
+//     int num = 65;
+// //     std::cout << "inserting 7 elements in map"  << std::endl;
+//     for (int i = 0 ; i <= 7 ; i++)
+//     {
+//          map1.insert(ft::pair<int,char>(i,num));
+//          mapTest2.insert(std::pair<int,char>(i,num));
+//          num++;
+//     }
        
-    std::cout << "Printing our map\n";
-    for ( it1 = map1.begin() ; it1 != map1.end() ; it1++)
-        std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
+//     std::cout << "Printing our map\n";
+//     for ( it1 = map1.begin() ; it1 != map1.end() ; it1++)
+//         std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
 
-//     breakFunc();
-    std::cout << "------------------->Constructers<--------------------------------" << std::endl;
-    std::cout << "Testing copy constructor, constructor with iterater and assignement operator" << std::endl;
-    ft::map<int,char> map2(map1);
-    ft::map<int,char> map3(map1.begin(),map1.end());
-    ft::map<int,char> map4(map1.begin(),map1.end());
-    std::map<int, char> mapTest;
-    int nb = 97;
+// //     breakFunc();
+//     std::cout << "------------------->Constructers<--------------------------------" << std::endl;
+//     std::cout << "Testing copy constructor, constructor with iterater and assignement operator" << std::endl;
+//     ft::map<int,char> map2(map1);
+//     ft::map<int,char> map3(map1.begin(),map1.end());
+//     ft::map<int,char> map4(map1.begin(),map1.end());
+//     std::map<int, char> mapTest;
+//     int nb = 97;
 
-   ft::map<int,char> assign_map;
-    for (int i = 1 ; i <= 5 ; i++)
-    {
-        //assign_map.insert(ft::make_pair(i,nb));
-        assign_map.insert(ft::pair<int,char>(i,nb));
-        mapTest.insert(std::pair<int, char>(i,nb));
-        nb++;
-    }
+//    ft::map<int,char> assign_map;
+//     for (int i = 1 ; i <= 5 ; i++)
+//     {
+//         //assign_map.insert(ft::make_pair(i,nb));
+//         assign_map.insert(ft::pair<int,char>(i,nb));
+//         mapTest.insert(std::pair<int, char>(i,nb));
+//         nb++;
+//     }
         
     
-    map2 = assign_map;
-    std::cout << "Print map2 :\n";
-    for ( it1 = map2.begin() ; it1 != map2.end() ; it1++)
-        std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
-    std::cout << "Print map3 :\n";
-    for ( it1 = map3.begin() ; it1 != map3.end() ; it1++)
-        std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
+//     map2 = assign_map;
+//     std::cout << "Print map2 :\n";
+//     for ( it1 = map2.begin() ; it1 != map2.end() ; it1++)
+//         std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
+//     std::cout << "Print map3 :\n";
+//     for ( it1 = map3.begin() ; it1 != map3.end() ; it1++)
+//         std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
 
-    std::cout << "Print map_assign :\n";
-    for ( it1 = assign_map.begin() ; it1 != assign_map.end() ; it1++)
-        std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
+//     std::cout << "Print map_assign :\n";
+//     for ( it1 = assign_map.begin() ; it1 != assign_map.end() ; it1++)
+//         std::cout << "first : "  << it1->first << "   second : " << it1->second << std::endl;
 
-    std::cout << "map1 size now " << map1.size() << std::endl;
-    std::cout << "map2 size now " << map2.size() << std::endl;
-    std::cout << "map3 size now " << map3.size() << std::endl;
-    std::cout << "assign_map size now " << assign_map.size() << std::endl;
+//     std::cout << "map1 size now " << map1.size() << std::endl;
+//     std::cout << "map2 size now " << map2.size() << std::endl;
+//     std::cout << "map3 size now " << map3.size() << std::endl;
+//     std::cout << "assign_map size now " << assign_map.size() << std::endl;
 
-// 	breakFunc();
-    std::cout << 
-    std::cout << "------------------->Iterators<--------------------------------" << std::endl;
-    ft::map<int, char>::iterator ii1;
-    ft::map<int, char>::reverse_iterator rev_ii1;
-    ft::map<int,char>::const_iterator const_iter;
-    ft::map<int, char>::const_reverse_iterator const_rev_iter;
-    std::cout << "--------------------Testing iterator----------------" << std::endl;
-    for(ii1= map2.begin(); ii1 != map2.end() ; ii1++)
-    {
-        std::cout << "First=>" << ii1->first << std::endl;
-        std::cout << "Second=>" << ii1->second << std::endl;
-    }
-    std::cout << "----------Testing Reverse iterator------------------"<< std::endl;
-    for(rev_ii1 = map2.rbegin(); rev_ii1 != map2.rend(); rev_ii1++)
-    {
-        std::cout << "First=> " << rev_ii1->first << std::endl;
-        std::cout << "second=>" << rev_ii1->second << std::endl;
-    }
-    std::cout << "---------Testing const_iterator---------------------" << std::endl;
-    for(const_iter = map2.begin(); const_iter != map2.end(); const_iter++)
-    {
-        std::cout << "First=>" << const_iter->first << std::endl;
-        std::cout << "Second=>" << const_iter->second << std::endl;
-    }
-    std::cout << "-------------Testing const_reverse_iterator--------------------\n";
-    for(const_rev_iter= map2.rbegin(); const_rev_iter != map2.rend(); const_rev_iter++)
-    {
-        std::cout << "First=>" << const_rev_iter->first << std::endl;
-        std::cout << "second=>" << const_rev_iter->second << std::endl;
-    }
+// // 	breakFunc();
+//     std::cout << 
+//     std::cout << "------------------->Iterators<--------------------------------" << std::endl;
+//     ft::map<int, char>::iterator ii1;
+//     ft::map<int, char>::reverse_iterator rev_ii1;
+//     ft::map<int,char>::const_iterator const_iter;
+//     ft::map<int, char>::const_reverse_iterator const_rev_iter;
+//     std::cout << "--------------------Testing iterator----------------" << std::endl;
+//     for(ii1= map2.begin(); ii1 != map2.end() ; ii1++)
+//     {
+//         std::cout << "First=>" << ii1->first << std::endl;
+//         std::cout << "Second=>" << ii1->second << std::endl;
+//     }
+//     std::cout << "----------Testing Reverse iterator------------------"<< std::endl;
+//     for(rev_ii1 = map2.rbegin(); rev_ii1 != map2.rend(); rev_ii1++)
+//     {
+//         std::cout << "First=> " << rev_ii1->first << std::endl;
+//         std::cout << "second=>" << rev_ii1->second << std::endl;
+//     }
+//     std::cout << "---------Testing const_iterator---------------------" << std::endl;
+//     for(const_iter = map2.begin(); const_iter != map2.end(); const_iter++)
+//     {
+//         std::cout << "First=>" << const_iter->first << std::endl;
+//         std::cout << "Second=>" << const_iter->second << std::endl;
+//     }
+//     std::cout << "-------------Testing const_reverse_iterator--------------------\n";
+//     for(const_rev_iter= map2.rbegin(); const_rev_iter != map2.rend(); const_rev_iter++)
+//     {
+//         std::cout << "First=>" << const_rev_iter->first << std::endl;
+//         std::cout << "second=>" << const_rev_iter->second << std::endl;
+//     }
 
-     std::cout << "------------------->Capacity<--------------------------------" << std::endl;
-     std::cout << "-------------------Testing empty()--------------------------------" << std::endl;
+//      std::cout << "------------------->Capacity<--------------------------------" << std::endl;
+//      std::cout << "-------------------Testing empty()--------------------------------" << std::endl;
 
-    if(map2.empty() != 0)
-    {
-        std::cout << "Our map is empty\n";
-    }else
-        std::cout << "Our map is not empty\n";
-    std::cout << "-------------------Testing size() && max_size()--------------------------------" << std::endl;
+//     if(map2.empty() != 0)
+//     {
+//         std::cout << "Our map is empty\n";
+//     }else
+//         std::cout << "Our map is not empty\n";
+//     std::cout << "-------------------Testing size() && max_size()--------------------------------" << std::endl;
 
-    std::cout << "Size of our map is :-->" << map2.size() << std::endl;
-    std::cout << "max_Size of our map is :-->" << map2.max_size() << std::endl;
-    std::cout << "------------------->Element access<--------------------------------" << std::endl;
-    std::cout << "-------------------Testing operator[]--------------------------------" << std::endl;
+//     std::cout << "Size of our map is :-->" << map2.size() << std::endl;
+//     std::cout << "max_Size of our map is :-->" << map2.max_size() << std::endl;
+//     std::cout << "------------------->Element access<--------------------------------" << std::endl;
+//     std::cout << "-------------------Testing operator[]--------------------------------" << std::endl;
 
-    map2[11] = 's';
-    mapTest[11] = 's';
-    std::cout << "Print our map after adding 's'-->";
-    for(ii1= map2.begin(); ii1 != map2.end() ; ii1++)
-    {
-        std::cout << "First=>" << ii1->first << std::endl;
-        std::cout << "Second=>" << ii1->second << std::endl;
-    }
-    // 	breakFunc();
-    std::cout << "------------------->Modifiers<--------------------------------" << std::endl;
-    std::cout << "---------------------testing insert------------------------ " << std::endl;
-
-    std::cout << "inserting one element in map" << std::endl;
-    std::cout << "size before insert : " << map2.size() << std::endl;
-    map2.insert(map2.begin(),ft::make_pair(7,'c'));
-    mapTest.insert(mapTest.begin(),std::make_pair(7, 'c'));
-    std::map<int,char>::iterator iterTest;
-    std::cout << "size after insert : " << map2.size() << std::endl;
-    std::cout << "Printing our map\n";
-    for(ii1= map2.begin(); ii1 != map2.end() ; ii1++)
-    {
-        std::cout << "First=>" << ii1->first << std::endl;
-        std::cout << "Second=>" << ii1->second << std::endl;
-    }
-    std::cout << "Printing Testmap\n";
-    for(iterTest= mapTest.begin(); iterTest != mapTest.end() ; iterTest++)
-    {
-        std::cout << "First=>" << iterTest->first << std::endl;
-        std::cout << "Second=>" << iterTest->second << std::endl;
-    }
-// 	breakFunc();
-     std::cout << "inserting elements that already exists in our map" << std::endl;
-// 	breakFunc();
-     std::cout << "size before insert : " << map2.size() << std::endl;
-     map2.insert(map2.begin(),map2.end());
-     std::cout << "size after insert : " << map2.size() << std::endl;
-// 	breakFunc();
-    std::cout << "inserting a range of copyMap" << std::endl;
-    std::cout << "size before insert : " << map2.size() << std::endl;
-    map2.insert(map4.begin(),map4.end());
-    mapTest.insert(mapTest2.begin(),mapTest2.end());
-    std::cout << "size after insert : " << map2.size() << std::endl;
-    std::cout <<"Print our map ***\n";
-    for ( it1 = map2.begin() ; it1 != map2.end() ; it1++)
-    {
-         std::cout << "first : "  << it1->first << std::endl;
-        std::cout<< "second:" << it1->second << std::endl;
-    }
-     std::cout <<"Print mapTest ***\n";
-    for ( iterTest = mapTest.begin() ; iterTest != mapTest.end() ; iterTest++)
-    {
-         std::cout << "first : "  << iterTest->first << std::endl;
-        std::cout<< "second:" << iterTest->second << std::endl;
-    }
-
-
-// 	breakFunc();
-    std::cout << "------------------Testing erase()---------------------------------" << std::endl;
-//     std::cout << "erasing ..." << std::endl;
-//     for (int i = 0 ; i < 100 ; i++)
-//         map.erase(i);
-//     std::cout << "size now : " << map.size() << std::endl;
-//     if (map.empty())
-//         std::cout << "map empty now " << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
-//     std::cout << "inserting 100 element  " << std::endl;
-//     for (int i = 0 ; i < 100 ; i++)
-//         map.insert(std::make_pair(i,i));
-//     std::cout << "size now : " << map.size() << std::endl;
-//     std::cout << "max size : " << map.max_size() << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
+//     map2[11] = 's';
+//     mapTest[11] = 's';
+//     std::cout << "Print our map after adding 's'-->";
+//     for(ii1= map2.begin(); ii1 != map2.end() ; ii1++)
+//     {
+//         std::cout << "First=>" << ii1->first << std::endl;
+//         std::cout << "Second=>" << ii1->second << std::endl;
+//     }
 //     std::cout << "Accessing element using [] operator : " << std::endl;
-//     std::cout << map[48] << std::endl;
-//     std::cout << map[49] << std::endl;
-//     std::cout << map[50] << std::endl;
-//     std::cout << map[65] << std::endl;
-//     std::cout << map[66] << std::endl;
-//     std::cout << map[67] << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
-//     std::cout << "inserting more 100 elements " << std::endl;
-//     std::cout << "inserting ..." << std::endl;
-//     for (int i = 100 ; i < 200 ; i++)
-//         map.insert(std::make_pair(i,i));
-// 	breakFunc();
-//     std::cout << "size now " << map.size() << std::endl;
-//     std::cout << "erasing only first 100 elements" << std::endl;
-//     for (int i = 0 ; i < 100 ;i++ )
-//         map.erase(i);
-//     std::cout << "erasing ... " << std::endl;
-//     std::cout << "size now " << map.size() << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
-//     std::map<int,char> swapMap;
-
-//     for (int i = 0 ; i < 4 ; i++)
-//         swapMap.insert(std::make_pair(i,i+46));
-//     std::cout << "exchanging content of map with swapMap" << std::endl;
-//     std::cout << "swapMap only has 3 elements" << std::endl;
-//     map.swap(swapMap);
-//     std::cout << "Size of the map now : " << map.size() <<  std::endl;
-// 	breakFunc();
-//     std::cout << "Checking elements ..."  << std::endl;
-//     for (it = map.begin() ; it != map.end() ; it++ )
-//         std::cout << "it-> " << it->first << std::endl;
-//     std::cout << "swapMap size now :  " << swapMap.size() << std::endl;
-//     std::cout << "swapMap elements : " << std::endl;
-//     for (it = swapMap.begin() ; it != swapMap.end() ; it++ )
-//         std::cout << "it-> " << it->first << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
+//     std::cout << map2[1] << std::endl;
+//     std::cout << map2[2] << std::endl;
+//     std::cout << map2[3] << std::endl;
     
-//     std::cout << "Clearing elements of swapMap " << std::endl;
-//     swapMap.clear();
-//     std::cout << "clearing ... " << std::endl;
-//     std::cout << "size of swapMap now : " << swapMap.size() << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
-//     std::cout << "\\* Testing Find memeber function */" << std::endl;
-//     std::cout << "finding the element 2" << std::endl;
-//     it = map.find(2);
-//     std::cout << "element : " << it->first << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
-//     std::cout << "\\* Testing Count memeber function */" << std::endl;
-//     std::cout << "finding  many element that have 7" << std::endl;
-//     std::cout << "nbr of element : " << map.count(7) << std::endl;
-//     std::cout << "finding  many element that have 2" << std::endl;
-//     std::cout << "nbr of element : " << map.count(2) << std::endl;
-// 	breakFunc();
-//     std::cout << "---------------------------------------------------" << std::endl;
-//     std::cout << "Testing lower upper and equal bound functions " << std::endl;
-//     std::cout << "lower bound of 1 : " << map.lower_bound(1)->first << std::endl;
-//     std::cout << "lowe bound of 2 : " << map.lower_bound(2)->first << std::endl;
-//     std::cout << "upper bound of 1 : " << map.upper_bound(1)->first << std::endl;
-//     std::cout << "upper bound of 2 : " << map.upper_bound(2)->first << std::endl;
-//     breakFunc();       
-//     std::cout << "equal range of 1 first elem : " << map.equal_range(1).first->first << std::endl;
-//     std::cout <<  "equal range of 1 second elem : " << map.equal_range(1).first->second << std::endl;
-//     std::cout <<  "equal range of 1 first elem : " << map.equal_range(2).first->first << std::endl;
-//     std::cout <<  "equal range of 1 second elem : " << map.equal_range(2).first->second << std::endl;
+//     // 	breakFunc();
+//     std::cout << "------------------->Modifiers<--------------------------------" << std::endl;
+//     std::cout << "---------------------testing insert------------------------ " << std::endl;
 
-}
-// void vec_tests()
-// {
-// 	std::vector<int> vec;
+//     std::cout << "inserting one element in map" << std::endl;
+//     std::cout << "size before insert : " << map2.size() << std::endl;
+//     map2.insert(map2.begin(),ft::make_pair(7,'c'));
+//     mapTest.insert(mapTest.begin(),std::make_pair(7, 'c'));
+//     std::map<int,char>::iterator iterTest;
+//     std::cout << "size after insert : " << map2.size() << std::endl;
+//     std::cout << "Printing our map\n";
+//     for(ii1= map2.begin(); ii1 != map2.end() ; ii1++)
+//     {
+//         std::cout << "First=>" << ii1->first << std::endl;
+//         std::cout << "Second=>" << ii1->second << std::endl;
+//     }
+//     std::cout << "Printing Testmap\n";
+//     for(iterTest= mapTest.begin(); iterTest != mapTest.end() ; iterTest++)
+//     {
+//         std::cout << "First=>" << iterTest->first << std::endl;
+//         std::cout << "Second=>" << iterTest->second << std::endl;
+//     }
+// // 	breakFunc();
+//      std::cout << "inserting elements that already exists in our map" << std::endl;
+// // 	breakFunc();
+//      std::cout << "size before insert : " << map2.size() << std::endl;
+//      map2.insert(map2.begin(),map2.end());
+//      std::cout << "size after insert : " << map2.size() << std::endl;
+// // 	breakFunc();
+//     std::cout << "inserting a range of copyMap" << std::endl;
+//     std::cout << "size before insert : " << map2.size() << std::endl;
+//     map2.insert(map4.begin(),map4.end());
+//     mapTest.insert(mapTest2.begin(),mapTest2.end());
+//     std::cout << "size after insert : " << map2.size() << std::endl;
+//     std::cout <<"Print our map ***\n";
+//     for ( it1 = map2.begin() ; it1 != map2.end() ; it1++)
+//     {
+//          std::cout << "first : "  << it1->first << std::endl;
+//         std::cout<< "second:" << it1->second << std::endl;
+//     }
+//      std::cout <<"Print mapTest ***\n";
+//     for ( iterTest = mapTest.begin() ; iterTest != mapTest.end() ; iterTest++)
+//     {
+//          std::cout << "first : "  << iterTest->first << std::endl;
+//         std::cout<< "second:" << iterTest->second << std::endl;
+//     }
+
+
+// // 	breakFunc();
+//     std::cout << "------------------Testing erase()---------------------------------" << std::endl;
+
+//     map2.erase(7);
+//     std::cout << "size now : " << map2.size() << std::endl;
+
+// // 	breakFunc();
+//     std::cout << "---------------------------------------------------" << std::endl;
+
+//     std::cout << "erasing only first 3 elements" << std::endl;
+//     for (int i = 0 ; i < 3 ;i++ )
+//         map2.erase(i);
+//     std::cout << "erasing ... " << std::endl;
+//     std::cout << "size now " << map2.size() << std::endl;
+// // 	breakFunc();
+// //     std::cout << "--------------------Testing swap()-------------------------------" << std::endl;
+// //     ft::map<int,char> swap_map;
+
+// //     for (int i = 1 ; i <= 4 ; i++)
+// //         swap_map.insert(std::make_pair(i,i*30));
+// //     std::cout << "exchanging content of map with swap_map" << std::endl;
+// //     std::cout << "swap_map only has 4 elements" << std::endl;
+// //     map2.swap(swapMap);
+// //     std::cout << "Size of the map2 now : " << map2.size() <<  std::endl;
+// // 	breakFunc();
+// //     std::cout << "Checking elements of map2 now:"  << std::endl;
+// //     for (it1 = map2.begin() ; it1 != map2.end() ; it++ )
+// //         std::cout << "it1-> " << it1->first << std::endl;
+// // 	breakFunc();
+// //     std::cout << "--------------------Testing clear()-------------------------------" << std::endl;
+    
+// //     std::cout << "Clearing elements of swap_map " << std::endl;
+// //     swap_map.clear();
+// //     std::cout << "clearing ... " << std::endl;
+// //     std::cout << "size of swap_map now : " << swap_map.size() << std::endl;
+// // 	breakFunc();
+//     std::cout << "------------------->Operations<--------------------------------" << std::endl;
+
+
+//     std::cout << "----------------Testing find()-----------------------" << std::endl;
+//     it1 = map2.find(5);
+//     std::cout << "iterator point : " << it1->first << " && " << it1->second << std::endl;
+// // 	breakFunc();
+//     std::cout << "-----------------Testing count()----------------------------------" << std::endl;
+//     if(map2.count(5) != 0)
+//         std::cout << "This element is an elem of my map\n";
+//     else
+//         std::cout << "This element is not an element of my map\n";
+// // 	breakFunc();
+//     std::cout << "-----------------Testing lower_bound && upper_bound()------------------------------" << std::endl;
+//     std::map<int,char>Test;
+//     ft::map<int,char>OurMap;
+
+//     //Ourmap
+//     OurMap.insert(ft::pair<int,char>(5,'d'));
+//     OurMap.insert(ft::pair<int,char>(6,'m'));
+//     OurMap.insert(ft::pair<int,char>(7,'b'));
+//     OurMap.insert(ft::pair<int,char>(8,'t'));
+//     OurMap.insert(ft::pair<int,char>(9,'k'));
+//     OurMap.insert(ft::pair<int,char>(10,'o'));
+//     //TestMap
+//     Test.insert(std::pair<int,char>(5,'d'));
+//     Test.insert(std::pair<int,char>(6,'m'));
+//     Test.insert(std::pair<int,char>(7,'b'));
+//     Test.insert(std::pair<int,char>(8,'t'));
+//     Test.insert(std::pair<int,char>(9,'k'));
+//     Test.insert(std::pair<int,char>(10,'o'));
+
+//     std::cout << "Testing Lower_bound and upper_bound of our map " << std::endl;
+//     std::cout << "lower bound of 1 : " << OurMap.lower_bound(5)->first << std::endl;
+//     std::cout << "lowe bound of 2 : " << OurMap.lower_bound(2)->first << std::endl;
+//     std::cout << "upper bound of 1 : " << OurMap.upper_bound(5)->first << std::endl;
+//     std::cout << "upper bound of 2 : " << OurMap.upper_bound(2)->first << std::endl;
+
+//     std::cout << "Testing Lower_bound and upper_bound of Test map " << std::endl;
+//     std::cout << "lower bound of 1 : " << Test.lower_bound(5)->first << std::endl;
+//     std::cout << "lowe bound of 2 : " << Test.lower_bound(2)->first << std::endl;
+//     std::cout << "upper bound of 1 : " << Test.upper_bound(5)->first << std::endl;
+//     std::cout << "upper bound of 2 : " << Test.upper_bound(2)->first << std::endl;
+//     //breakFunc(); 
+
+//     std::cout << "-----------------Testing equal_range() of Ourmap------------------------------" << std::endl;      
+//     std::cout << "equal range of 1 first elem : " << OurMap.equal_range(5).first->first << std::endl;
+//     std::cout <<  "equal range of 1 second elem : " << OurMap.equal_range(5).first->second << std::endl;
+//     std::cout <<  "equal range of 1 first elem : " << OurMap.equal_range(2).first->first << std::endl;
+//     std::cout <<  "equal range of 1 second elem : " << OurMap.equal_range(2).first->second << std::endl;
+//     std::cout << "-----------------Testing equal_range() of TestMap------------------------------" << std::endl;      
+//     std::cout << "equal range of 1 first elem : " << Test.equal_range(5).first->first << std::endl;
+//     std::cout <<  "equal range of 1 second elem : " << Test.equal_range(5).first->second << std::endl;
+//     std::cout <<  "equal range of 1 first elem : " << Test.equal_range(2).first->first << std::endl;
+//     std::cout <<  "equal range of 1 second elem : " << Test.equal_range(2).first->second << std::endl;
+
+// }
+int main()
+{
+	ft::vector<int> vect1;
 
 // 	std::cout << "---------------------------------------------------" << std::endl;
 // 	std::cout << "inserting 10 elements in vec " << std::endl;
@@ -726,7 +743,7 @@ int main()
 // 	vec.clear();
 // 	std::cout << "vec size : " << vec.size() << "     capacity : " << vec.capacity() << std::endl;
 // 	std::cout << "swapVec size : " << swapVec.size() << "     capacity : " << swapVec.capacity() << std::endl;
-// }
+}
 
 // void stack_tests()
 // {

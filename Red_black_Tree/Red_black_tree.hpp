@@ -1002,7 +1002,7 @@ namespace ft{
             }
 
             //search function
-            type_name *search(type_name *node, const value_type& value)
+            type_name *search(type_name *node, const value_type& value) const
             {
                 while(node != TNULL)
                 {

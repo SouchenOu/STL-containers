@@ -151,7 +151,7 @@ namespace ft
             {
                 return _R_B_Ttree._alloc;
             }
-            value_type get_key(const key_type &k)
+            value_type get_key(const key_type &k) const
             {
                 return ft::make_pair(k, mapped_type());
             }
@@ -267,8 +267,8 @@ namespace ft
             //count
             size_type count(key_type const& key) const
             {
-                if( (_R_B_Ttree.search(_R_B_Ttree.get_root(), key)) == 0 )
-                    return 0;
+                if( (_R_B_Ttree.search(_R_B_Ttree.get_root(), get_key(key))) == 0 )
+                    return 0; 
                 else
                     return 1;
             }

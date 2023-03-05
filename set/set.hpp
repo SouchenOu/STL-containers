@@ -206,7 +206,7 @@ class set
                 }
 
                   //count
-                size_type count(key_type const& key)
+                size_type count(key_type const& key) const
                 {
                     if( (Ttree.search(Ttree.get_root(), key)) == 0 )
                         return 0;
