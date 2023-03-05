@@ -61,11 +61,11 @@ class set
     public:
             //*********constructers
             //set():Ttree(value_compare()){}
-            explicit set(const value_compare& __comp):Ttree(__comp){}
+            //explicit set(const value_compare& __comp):Ttree(__comp){}
             explicit set(const value_compare& __comp = value_compare(), const allocator_type& __a = allocator_type()):Ttree(__comp, __a),_compare(__comp),_alloc(__a){}
 
             template <class _InputIterator>
-            set(_InputIterator f,_InputIterator l, const value_compare& _comp = value_compare()):Ttree(_comp)
+            set(_InputIterator f,_InputIterator l, const value_compare& _comp = value_compare(), const allocator_type& alloc = allocator_type()):Ttree(_comp, alloc)
             {
                 Ttree.insert(f,l);
             }
@@ -73,7 +73,6 @@ class set
             //copy constructer
             set(const set& obj): Ttree(obj.Ttree)
             {
-                //insert(obj.begin(), obj.end());
                 *this = obj;
             }
 
@@ -258,7 +257,7 @@ class set
                         if (iter == this->end())
                             return ft::make_pair(iter, iter);
                         else
-                            return ft::make_pair(ietr, ++iter);
+                            return ft::make_pair(iter, ++iter);
                 }
 
              

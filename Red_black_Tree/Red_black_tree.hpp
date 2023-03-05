@@ -240,9 +240,10 @@ namespace ft{
             };*/
 
 
-        public:
-            type_name       *root;
+        private:
+            
             type_name       *TNULL;
+            type_name       *root;
             Compare         _comp;
             allocator_type _alloc;
             size_type      NBnode;
@@ -258,10 +259,10 @@ namespace ft{
             // }
             // explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
             // explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
-            explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),_comp(__comp),_alloc(__a),NBnode(0)
+            explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),root(TNULL),_comp(__comp),_alloc(__a),NBnode(0)
             {
 
-                root = TNULL;
+                
                 TNULL->color = 0;
             }
             // copy constructor
