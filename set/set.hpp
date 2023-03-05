@@ -220,10 +220,10 @@ class set
                 }
                 //swap
 
-                // void swap(set& s)
-                // {
-                //      Ttree.swap(s.Ttree);
-                // }
+                void swap(set& s)
+                {
+                     Ttree.swap(s.Ttree);
+                }
     
                 //lowerBound and upper bound
 

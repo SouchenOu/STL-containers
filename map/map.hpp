@@ -286,11 +286,10 @@ namespace ft
             size_type max_size() const{
                 return _R_B_Ttree.max_size();
             }
-                // doesnt work
-            // void swap(map& m)
-		    // {	
-			// 	_R_B_Ttree.swap(m._R_B_Ttree);						
-			// }
+            void swap(map& m)
+		    {	
+				_R_B_Ttree.swap(m._R_B_Ttree);						
+			}
             void clear()
             {	
                 _R_B_Ttree.clear();
@@ -318,12 +317,9 @@ namespace ft
             };
 
 
-   
-
             
     };
     // No member function
-
     template <class T, class Allocator>
 
     bool operator == (const map<T, Allocator>& obj1, const map<T, Allocator>& obj2)
@@ -364,24 +360,7 @@ namespace ft
         return !(obj1 < obj2);
     };
 
-
-    // swap doesnt work..
-    // template <class T, class Alloc>
-	// void	swap(map< T, Alloc >& map1, map< T, Alloc >& map2) 
-	// {	
-	// 	map1.swap(map2);			
-	// }
-
-    
-    // template<class T, class Allocator>
-    // ostream& operator<< (ostream& os, const map<T, Allocator> & m)
-    // {
-    //     os << m.value_type;
-    //     //os << m.Node->root;
-    // }
-
-
-			 		 
+		 		 
 	
 };
 

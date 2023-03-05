@@ -51,8 +51,15 @@ template <class InputIterator1, class InputIterator2>
             }
             return 1;
     }
+    template<typename T>
+	void	swap(T &a, T& b)
+	{
+		T sw = a;
+		a = b;
+		b = sw;
+	};
 
-}
+};
 
 
 # endif

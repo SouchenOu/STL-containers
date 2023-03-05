@@ -32,6 +32,7 @@ namespace ft
 		typedef T  type; 
 		
 	};
+
 };
 
 #endif

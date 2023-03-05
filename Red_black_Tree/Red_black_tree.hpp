@@ -1059,27 +1059,21 @@ namespace ft{
                 }
                 return upper_node;
             }
-        // swap doesnt work
-        // void	swap(Red_black_tree &tree ) 
-        // {
-		// 	ft::swap(TNULL, tree.TNULL);
-		// 	ft::swap(root, tree.root);
-		// 	ft::swap(_alloc, tree._alloc);
-		// 	ft::swap(For_allocation_Node, tree.For_allocation_Node);
-		// 	ft::swap(_comp, tree._comp);
-		// 	ft::swap(NBnode, tree.NBnode);
-		// }
+        void	swap(Red_black_tree &tree ) 
+        {
+			ft::swap(TNULL, tree.TNULL);
+			ft::swap(root, tree.root);
+			ft::swap(_alloc, tree._alloc);
+			ft::swap(For_allocation_Node, tree.For_allocation_Node);
+			ft::swap(_comp, tree._comp);
+			ft::swap(NBnode, tree.NBnode);
+		}
 
-// template <class T, class Alloc>
-// void	swap(Red_black_tree< T, Alloc >& map1, Red_black_tree< T, Alloc >& map2) 
-// {	
-// 		map1.swap(map2);			
-// }
+
 
 
 
 };
-
 
 
 };
@@ -1087,11 +1081,6 @@ namespace ft{
 
 
 
-// template<class T, class Allocation>
-// ostream& operator<<(ostream& os, const Red_black_tree<T, Allocation>& tree)
-// {
-//     os << tree.root->data << endl;
-// }
 
 
 

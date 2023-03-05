@@ -37,7 +37,7 @@
 //     map3.insert(ft::pair<std::string,int>("gh",310));
 //     map3.insert(ft::pair<std::string,int>("ij",410));
 //     map3.insert(ft::pair<std::string,int>("kl",510));
-//     map3["mn"] = 2000;
+    // map3["mn"] = 2000;
 //     // map 2
 //     map2.insert(ft::pair<std::string,int>("one",12));
 //     map2.insert(ft::pair<std::string,int>("two",13));
