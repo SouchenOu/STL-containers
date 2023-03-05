@@ -190,12 +190,12 @@
 //     ft::map<std::string, int>::const_iterator rit3;
 //     std::map<std::string, int>::const_iterator rit4;
 //     std::cout << "our map*******\n";
-//     for(rit3 = map2.cbegin(); rit3 != map2.cend(); rit3++)
+//     for(rit3 = map2.begin(); rit3 != map2.end(); rit3++)
 //     {
 //         std::cout << rit3->first << "=>" << rit3->second << std::endl;
 //     }
 //     std::cout << "Test map***\n";
-//     for(rit4 = mapTest2.cbegin(); rit4 != mapTest2.cend(); rit4++)
+//     for(rit4 = mapTest2.begin(); rit4 != mapTest2.end(); rit4++)
 //     {
 //         std::cout << rit4->first << "=>" << rit4->second << std::endl;
 //     }
@@ -205,12 +205,12 @@
 //     std::map<std::string, int>::const_reverse_iterator iter33;
 //     ft::map<std::string, int>::const_reverse_iterator iter44;
 //        std::cout << "our map*******\n";
-//     for(iter44 = map2.crbegin(); iter44 != map2.crend(); iter44++)
+//     for(iter44 = map2.rbegin(); iter44 != map2.rend(); iter44++)
 //     {
 //         std::cout << iter44->first << "=>" << iter44->second << std::endl;
 //     }
 //     std::cout << "Test map***\n";
-//     for(iter33 = mapTest2.crbegin(); iter33 != mapTest2.crend(); iter33++)
+//     for(iter33 = mapTest2.rbegin(); iter33 != mapTest2.rend(); iter33++)
 //     {
 //         std::cout << iter33->first << "=>" << iter33->second << std::endl;
 //     }

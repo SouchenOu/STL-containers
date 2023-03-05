@@ -208,20 +208,5 @@
 //     std::cout << "lower_bound(30)-->" << *iter1 << endl;
 //     std::cout << "upper_bound(30)-->"<< *iter2 << endl;
     
-//     std::cout << "*******equal_range()***\n";
-
-//     ft::set<int> myset;
-
-//     for(int k = 1; k <=5 ; k++)
-//     {
-//         myset.insert(k * 10);
-//     }
-
-//     ft::pair<ft::set<int>::iterator,ft::set<int>::iterator> ret;
-//     ft::pair<ft::set<int>::const_iterator,ft::set<int>::const_iterator> ret1;
-
-//     // there is a problem here
-//     ret1 = myset.equal_range(30);
-
 
 // }

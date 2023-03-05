@@ -636,17 +636,19 @@ namespace ft{
                 while(x != TNULL)
                 {
                     y = x;
-                    if(data < x->data)
+                    if(_comp(data,x->data))
                     {
                         x = x->left;
-                    }else if(data > x->data)
+                    }else if(_comp(x->data,data))
                     {
                         x = x->right;
                     }
-                    else if(data == x->data)
+                    else
                     {
                         return ft::make_pair(iterator(x), false);
                     }
+                        
+                 
                 }
                 //node->parent = y;
                 // our tree is empty
@@ -672,7 +674,7 @@ namespace ft{
                     return ft::make_pair(iterator(x),true);
                 }
                 insert_fix(x);
-                // cout << "*******\n";
+                //  cout << "*******\n";
                 // printTree();
                 // cout << "*******\n";
                 return ft::make_pair(iterator(x),true);
@@ -813,12 +815,12 @@ namespace ft{
                     cout << txt;
                     if(i == 1)
                     {
-                        cout << "R***";
+                        cout << "R***->\n";
                         txt = txt + "   ";
 
                     }else if( i == 0)
                     {
-                        cout << "L***";
+                        cout << "L***->\n";
                         txt = txt + "|   ";
                     }
                     if(root->color == 1)
@@ -828,7 +830,7 @@ namespace ft{
                     {
                         color = "Black";
                     }
-                    cout << root->data << "{" << color << "}" << endl;
+                    cout << root->data << "[" << color << "]" << endl;
                     printHelper(root->left, txt, 0);
                     printHelper(root->right, txt, 1);
                 }

@@ -96,7 +96,7 @@ class set
                 {
                     return Ttree.begin();
                 }
-                const_iterator cbegin() const 
+                const_iterator begin() const 
                 {
                     return Ttree.begin();
                 }
@@ -104,7 +104,7 @@ class set
                 {
                     return Ttree.end();
                 }
-                const_iterator cend() const
+                const_iterator end() const
                 {
                     return Ttree.end();
                 }
@@ -112,7 +112,7 @@ class set
                 {
                     return Ttree.rbegin();
                 }
-                const_reverse_iterator crbegin() const
+                const_reverse_iterator rbegin() const
                 {
                     return Ttree.rbegin();
                 }
@@ -120,7 +120,7 @@ class set
                 {
                     return Ttree.rend();
                 }
-                const_reverse_iterator crend() const
+                const_reverse_iterator rend() const
                 {
                     return Ttree.rend();
                 }
@@ -129,15 +129,20 @@ class set
 
                 allocator_type get_allocator() const
                 {
-                    return Ttree._alloc;
+                    return _alloc;
                 }
-                key_compare key_comp() const
-                {
-                    return Ttree.value_comp();
-                }
-                value_compare value_comp() const{
-                    return Ttree.value_comp();
-                }
+              //key_compare()
+            key_compare 	key_comp() const
+            {
+                	return this->_compare;
+                    
+            };
+            
+            //value_compare()
+			value_compare 				value_comp() const
+            {	
+                return value_compare(this->_compare);
+            };
 
 
                 //*******Modifiers
@@ -243,23 +248,14 @@ class set
 
                 //equal_range()
       
-                ft::pair<iterator,iterator> equal_range (const key_type& k)
-                {
-                    iterator iter = iterator(Ttree.find(k));
-                        if (iter == this->end())
-                            return ft::make_pair(iter, iter);
-                        else
-                            return ft::make_pair(iter++, iter);
-                }
-                ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-                {
-                    const_iterator iter = const_iterator(Ttree.find(k));
-                        if (iter == this->end())
-                            return ft::make_pair(iter, iter);
-                        else
-                            return ft::make_pair(iter, ++iter);
-                }
-
+            ft::pair< iterator, iterator > equal_range (const key_type& k)
+            {	
+                return (ft::make_pair(lower_bound(k), upper_bound(k)));	
+            };
+			ft::pair< const_iterator, const_iterator > equal_range (const key_type& k) const
+            {	
+                return (ft::make_pair(lower_bound(k), upper_bound(k)));	
+            };
              
 
 

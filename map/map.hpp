@@ -135,7 +135,7 @@ namespace ft
             }
             // //Assignement operator
 
-            map& operator= (const map& obj)
+            map& operator= (map const & obj)
             {
                 if(this != &obj)
                 {
@@ -166,7 +166,7 @@ namespace ft
                 {
                     return _R_B_Ttree.begin();
                 }
-                const_iterator cbegin() const 
+                const_iterator begin() const 
                 {
                     return _R_B_Ttree.begin();
                 }
@@ -174,7 +174,7 @@ namespace ft
                 {
                     return _R_B_Ttree.end();
                 }
-                const_iterator cend() const
+                const_iterator end() const
                 {
                     return _R_B_Ttree.end();
                 }
@@ -182,7 +182,7 @@ namespace ft
                 {
                     return _R_B_Ttree.rbegin();
                 }
-                const_reverse_iterator crbegin() const
+                const_reverse_iterator rbegin() const
                 {
                     return _R_B_Ttree.rbegin();
                 }
@@ -190,7 +190,7 @@ namespace ft
                 {
                     return _R_B_Ttree.rend();
                 }
-                const_reverse_iterator crend() const
+                const_reverse_iterator rend() const
                 {
                     return _R_B_Ttree.rend();
                 }
