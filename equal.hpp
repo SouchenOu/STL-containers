@@ -13,7 +13,8 @@
 #ifndef EQUAL_HPP
 # define EQUAL_HPP
 
-namespace ft{
+namespace ft
+{
 
 template <class InputIterator1, class InputIterator2>
 
@@ -51,6 +52,25 @@ template <class InputIterator1, class InputIterator2>
             }
             return 1;
     }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
     template<typename T>
 	void	swap(T &a, T& b)
 	{

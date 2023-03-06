@@ -13,7 +13,7 @@
 
 NAME = containers
 
-FILES = map/main_map.cpp Red_black_Tree/main_tree.cpp set/main_set.cpp stack/main_stack.cpp vector/main_vector.cpp main_subject.cpp main2.cpp
+FILES = map/main_map.cpp Red_black_Tree/main_tree.cpp set/main_set.cpp stack/main_stack.cpp vector/main_vector.cpp
 
 INC = map/map.hpp Red_black_Tree/Red_black_tree.hpp Red_black_Tree/Node.hpp set/set.hpp stack/stack.hpp vector/iterators_traits.hpp vector/vector_iterator.hpp vector/vector_reverse_iterator.hpp vector/vector.hpp enable_if.hpp equal.hpp is_integral.hpp pair.hpp
 

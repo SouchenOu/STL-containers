@@ -20,8 +20,7 @@
 
 namespace ft{
 
-
-// here in template we can write class or typename
+//std::iterator_traits is the type trait class that provides uniform interface to the properties of LegacyIterator types.
 	template < class iterator >
 	struct iterator_traits
 	{

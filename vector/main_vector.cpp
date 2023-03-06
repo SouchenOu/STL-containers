@@ -60,7 +60,7 @@
 //         vectTest1.push_back(i);
 //     }
 //     std::cout << "Print our vector\n";
-//     for(i = vect1.begin(); i != vect1.end(); i++)
+//     for(i = vect1.begin(); i != vect1.end(); ++i)
 //     {
 //         std::cout << *i << std::endl;
 //     }
@@ -268,18 +268,39 @@
    
     
 
-// //  std::cout << "---------------------swap()------------------------------\n";
+//  std::cout << "---------------------swap()------------------------------\n";
 
-// //     // vect1.swap(vect2);
-// //     // vectTest1.swap(vect3);
-// //     //  for(i = vect1.begin(); i != vect1.end(); i++)
-// //     // {
-// //     //     std::cout << "Our vect element -->" << *i << std::endl;
-// //     // }
-// //     // for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
-// //     // {
-// //     //     std::cout << "Test element -->" << *i2 << std::endl;
-// //     // }
+
+//     std::cout << "vect1 before\n";
+//     for(i = vect1.begin(); i != vect1.end(); i++)
+//     {
+//         std::cout << "Our vect element -->" << *i << std::endl;
+//     }
+//     std::cout << "vect2 before\n";
+//     for(i = vect2.begin(); i != vect2.end(); i++)
+//     {
+//         std::cout << "Our vect element -->" << *i << std::endl;
+//     }
+
+//     vect1.swap(vect2);
+//     vectTest1.swap(vect3);
+
+    
+//     std::cout << "vect1 after\n";
+//     for(i = vect1.begin(); i != vect1.end(); i++)
+//     {
+//         std::cout << "Our vect element -->" << *i << std::endl;
+//     }
+//     std::cout << "vect2 after\n";
+//     for(i = vect2.begin(); i != vect2.end(); i++)
+//     {
+//         std::cout << "Our vect element -->" << *i << std::endl;
+//     }
+
+//     for(i2 = vectTest1.begin(); i2 != vectTest1.end(); i2++)
+//     {
+//         std::cout << "Test element -->" << *i2 << std::endl;
+//     }
 
 
 

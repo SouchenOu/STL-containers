@@ -28,7 +28,6 @@
 # include "../equal.hpp"
 # include "../enable_if.hpp"
 
-// # include "../map/map.hpp"
 
 using namespace std;
 
@@ -39,21 +38,21 @@ class Red_black_tree_iters
     
     
     public:
-        typedef U                                   value_type;
-        typedef std::ptrdiff_t                      difference_type;
-        typedef U*                                  pointer;
-        typedef const U*                            const_pointer;
-        typedef U&                                  reference;
-        typedef const U&                            const_reference;
-        typedef std::bidirectional_iterator_tag     iterator_category;
+        typedef U                                           value_type;
+        typedef std::ptrdiff_t                              difference_type;
+        typedef U*                                          pointer;
+        typedef const U*                                    const_pointer;
+        typedef U&                                          reference;
+        typedef const U&                                    const_reference;
+        typedef std::bidirectional_iterator_tag             iterator_category;
 
-        typedef Red_black_tree_iters< U >                   iterator;
-        typedef Red_black_tree_iters<const U >              const_iterator;
+        typedef Red_black_tree_iters< U >                    iterator;
+        typedef Red_black_tree_iters<const U >               const_iterator;
         typedef Node< value_type >                           Node_tree;
         typedef Node<const value_type>                       const_Node_tree;
     private:
-            Node_tree*                                   _Node;
-        // ***********constructers
+            Node_tree*                                       _Node;
+        // ********************constructers**************************
         // default constructers
     public:
         Red_black_tree_iters(void):_Node(NULL){};
@@ -71,14 +70,14 @@ class Red_black_tree_iters
             _Node = obj._Node;
             return *this;
         }
-        // getters
+        //****************************** getters****************************
         Node_tree     *get_node() const
         {
             return _Node;
         }
        
 
-        //Comparison Operators
+        //***********************Comparison Operators*************************
         bool operator == (Red_black_tree_iters const& obj)
         {
             return _Node == obj._Node;
@@ -108,7 +107,7 @@ class Red_black_tree_iters
             return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
         }
 
-        // Arithmetic operator
+        //******************************* Arithmetic operator*********************
         Red_black_tree_iters &operator ++ () 
         {
             if(!_Node->value_test)
@@ -117,9 +116,7 @@ class Red_black_tree_iters
             }
             if(_Node && _Node->right && _Node->right->value_test)
             {
-                //cout << "her nooop\n";
                     _Node = _Node->right;
-                    //cout << _Node->data << endl;
                     while(_Node && _Node->left && _Node->left->value_test)
                     {
                         _Node = _Node->left;
@@ -217,23 +214,23 @@ namespace ft{
     class Red_black_tree
     {
         public:
-            typedef T                                                  value_type;
-            typedef Alloc                                              allocator_type;
-            typedef Compare                                            value_compare;
-            typedef std::size_t                                        size_type;
-            typedef Node<value_type>                                   type_name;
+            typedef T                                                       value_type;
+            typedef Alloc                                                   allocator_type;
+            typedef Compare                                                 value_compare;
+            typedef std::size_t                                             size_type;
+            typedef Node<value_type>                                        type_name;
 
 
-             typedef typename allocator_type::pointer                   pointer;
-             typedef typename allocator_type::const_pointer             const_pointer;
-             typedef typename allocator_type::reference                 reference;
-             typedef typename allocator_type::const_reference           const_reference;
+             typedef typename allocator_type::pointer                       pointer;
+             typedef typename allocator_type::const_pointer                 const_pointer;
+             typedef typename allocator_type::reference                     reference;
+             typedef typename allocator_type::const_reference               const_reference;
 
-             typedef Red_black_tree_iters <T>                           iterator;
-             typedef Red_black_tree_iters <const T>                     const_iterator;
-             typedef ft::reverse_iterator <iterator>                    reverse_iterator;
-             typedef ft::reverse_iterator <const_iterator>              const_reverse_iterator;
-             typedef typename Alloc::template rebind< type_name >::other   node_alloc;
+             typedef Red_black_tree_iters <T>                               iterator;
+             typedef Red_black_tree_iters <const T>                         const_iterator;
+             typedef ft::reverse_iterator <iterator>                        reverse_iterator;
+             typedef ft::reverse_iterator <const_iterator>                  const_reverse_iterator;
+             typedef typename Alloc::template rebind< type_name >::other    node_alloc;
             /*template <class Type> struct rebind 
             {
                 typedef allocator<Type> other;
@@ -242,27 +239,19 @@ namespace ft{
 
         private:
             
-            type_name       *TNULL;
-            type_name       *root;
-            Compare         _comp;
-            allocator_type _alloc;
-            size_type      NBnode;
-            node_alloc      For_allocation_Node;
+            type_name                   *TNULL;
+            type_name                   *root;
+            Compare                     _comp;
+            allocator_type              _alloc;
+            size_type                   NBnode;
+            node_alloc                  For_allocation_Node;
           
             
 
         public:
-        //********constructers
-        //default constructor
-            // Red_black_tree(void):TNULL(TNULLNode()),_comp(),_alloc(),NBnode(0){
-            //     std::cout << "out here\n";
-            // }
-            // explicit Red_black_tree(const value_compare& __comp):_comp(__comp){}
-            // explicit Red_black_tree(const allocator_type& __a):_alloc(__a){}
+        //************************constructers*******************************/
             explicit Red_black_tree(const value_compare& __comp, const allocator_type& __a):TNULL(TNULLNode()),root(TNULL),_comp(__comp),_alloc(__a),NBnode(0)
             {
-
-                
                 TNULL->color = 0;
             }
             // copy constructor
@@ -274,10 +263,6 @@ namespace ft{
             //Assignement operator
             Red_black_tree& operator=(Red_black_tree const &tree)
             {
-                // if(this == &tree)
-                // {
-                //     return *this;
-                // }
                 if(this != &tree)
                 {
                     clear();
@@ -286,8 +271,6 @@ namespace ft{
                     insert(tree.begin(), tree.end());
                 }
                 return *this;
-                
-
             }
             ~Red_black_tree()
             { 
@@ -314,8 +297,6 @@ namespace ft{
                 node_new->right = TNULL;
                 node_new->parent = 0;
                 node_new->value_test = 0;
-                //node_new->data = 0;
-                //root=node_new;
                 return node_new;
             }
             void clear()
@@ -339,14 +320,13 @@ namespace ft{
             }
             void delete_node_free(type_name *Node)
             {
-                //_alloc.destroy(&(Node->data));
                   For_allocation_Node.deallocate(Node, 1);
                   _alloc.destroy(&(Node->data));
                   NBnode--;
 
             }
             
-            //Method 2
+            //***************************Rotations***********************
             void rotateleft(type_name *node)
             {
                 type_name *r = node->right;
@@ -395,7 +375,7 @@ namespace ft{
                 l->right = node;
                 node->parent = l;
             }
-           //replace function
+           //*************************replace function*******************************
            // here we didnt just delete (delete_element but we put replace element in delete element place)
             void replace(type_name *elem_del, type_name *elem_rep)
             {
@@ -414,7 +394,7 @@ namespace ft{
                 
                 elem_rep->parent = elem_del->parent;
             }
-            /***********the largest element*/
+            /************************the largest element*******************/
             type_name *max_element(type_name *node)
             {
                 while(node && node->value_test)
@@ -423,7 +403,7 @@ namespace ft{
                 }
                 return node;
             }
-
+            /**********The lowest element*********************************/
             type_name *min_element(type_name *node) const
             {
                 
@@ -434,7 +414,7 @@ namespace ft{
                 return node;
             }
 
-            //delete fix for red black tree
+            //**************delete fix for red black tree**********************
             void deletefix(type_name *node)
             {
                 type_name *suibling;
@@ -448,12 +428,6 @@ namespace ft{
                         if(suibling->color == 1)
                         {
                             suibling->color = 0;
-                            // if(node->parent->color == 1)
-                            //     node->parent->color = 0;
-                            // else if(node->parent->color == 0)
-                            // {
-                            //     node->parent->color = 1;
-                            // }
                             node->parent->color = 1;
                             rotateleft(node->parent);
                             suibling = node->parent->right;
@@ -487,7 +461,6 @@ namespace ft{
                         if(suibling->color == 1)
                         {
                             suibling->color = 0;
-                            //node->color = 0;
                             node->parent->color = 1;
                             rotateRight(node->parent);
                             suibling = node->parent->left;
@@ -515,7 +488,7 @@ namespace ft{
                 }
                 node->color = 0;
             }
-            //********Delete in red_black_tree********/
+            //**********************Delete in red_black_tree****************/
             void erase(type_name *node)
             {
                  deleteNodeHelp(node);
@@ -525,34 +498,7 @@ namespace ft{
             {
                 type_name *elem_delete = node;
                 type_name *x;
-                // search about it***/
-                //type_name *node_to_delete;
-                // search about our delete_elem
-                // while(root != TNULL)
-                // {
-                //     if(node->data == data)
-                //     {
-                //         elem_delete = node;
-                //     }
-                //     if(node->data <= data)
-                //     {
-                //         node = node->right;
-                //     }
-                //     else {
-                //         node = node->left;
-                //     }
-                // }
-                // if(elem_delete == TNULL)
-                // {
-                //     cout << "there is no node with this data\n";
-                //     return ;
-                // }
-
-                // start instructions to delete 
-
-                /************Here if it is a value_test node or just have one child*/
-                // if delete_elem has no right element so we will replace it with his left element
-                //node_to_delete = elem_delete;
+          
                 bool orig_color = node->color;
                 if(node->left == TNULL)
                 {
@@ -566,10 +512,8 @@ namespace ft{
                     replace(node, node->left);
                 }
                 
-                
                 else
                 {
-                    
                     // i should shoose which path to follow ( right or left) 
                     // i choose to go to the right then search for the smallest element
                     elem_delete = min_element(elem_delete->right);
@@ -605,7 +549,7 @@ namespace ft{
                 
             }
          
-
+            /**********************Create new_node***************************/
             type_name *NewNode(value_type const& data, type_name *parent, int value_test)
             {
                 type_name  *new_node = For_allocation_Node.allocate(1);
@@ -619,16 +563,9 @@ namespace ft{
                 return new_node;
 
             }
-            //****insert method 2:
+            //******************************insert ***********************:
             ft::pair<iterator, bool> insert(value_type const& data)
             {
-                // type_name *node = new type_name;
-                // node->parent = nullptr;
-                // node->data = data;
-                // node->left = TNULL;
-                // node->right = TNULL;
-                // node->color = 1;
-                //std::cout << data << "\n";
                 type_name *y = TNULL;
                 type_name *x = root;
                 // while root exist
@@ -650,7 +587,6 @@ namespace ft{
                         
                  
                 }
-                //node->parent = y;
                 // our tree is empty
                 if(y == TNULL)
                 {
@@ -683,7 +619,7 @@ namespace ft{
         
 
 
-            // insert functions
+            // *******************insert function******************
             iterator insert (iterator key, const value_type &value)
             {
                 (void) key;
@@ -699,10 +635,7 @@ namespace ft{
                     insert(*(f));
                     f++;
                 }
-                // for(const_iterator e = end(); f != l ; f++)
-                // {
-                //         insert(*f);
-                // }
+               
             };
             
             void insert_fix(type_name *node)
@@ -766,8 +699,7 @@ namespace ft{
                 root->color = 0;
             }
 
-          //erase
-
+          //**************************erase***************************
           size_type erase(value_type const &value)
           {
             type_name *del_node = search(root,value);
@@ -788,7 +720,7 @@ namespace ft{
                     
           }
           
-          // find
+          // ****************************find*****************************
             iterator find(const value_type& value) 
             {
                 type_name *node = search(root, value);
@@ -807,6 +739,8 @@ namespace ft{
                 return iterator(max_element(root));
             }
 
+
+            //*********************Display our tree***********************
             void printHelper(type_name *root, string txt, int i)
             {
                 string color;
@@ -835,7 +769,7 @@ namespace ft{
                     printHelper(root->right, txt, 1);
                 }
             }
-            // print our tree
+            // *****************print our tree *****************************
             void printTree()
             {
                 if(root)
@@ -845,7 +779,7 @@ namespace ft{
             
             }
 
-            //Capacity
+            //****************************Capacity***************************
 
             bool empty() const
             {
@@ -863,7 +797,7 @@ namespace ft{
                     return For_allocation_Node.max_size();
             }
 
-            //iterators
+            /****************************iterators************************/
             iterator begin()
             {
                 type_name *First_elem;
@@ -872,10 +806,6 @@ namespace ft{
                     return iterator(TNULL);
                 }
                 First_elem = root;
-                // std::cout << "testing here\n";
-                // std::cout << "data-->"<<First_elem->data << std::endl;
-                // std::cout << "his right-->"<<First_elem->right->data << std::endl;
-                // std::cout << "his left-->"<<First_elem->right->right->data << std::endl;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
                     First_elem = First_elem->left;
@@ -887,10 +817,6 @@ namespace ft{
             const_iterator begin() const
             {
                 type_name *First_elem;
-                // if(root == TNULL)
-                // {
-                //     return const_iterator(TNULL);
-                // }
                 First_elem = root;
                 while(First_elem != TNULL && First_elem->left != TNULL)
                 {
@@ -910,18 +836,16 @@ namespace ft{
                 {
                     last_elem = last_elem->right;
                    
-                }
-                //last_elem = last_elem->right;
-                
+                }                
                 return iterator(last_elem);
             }
             const_iterator end() const
             {
                 type_name *last_elem;
-                // if(root == TNULL)
-                // {
-                //     return const_iterator(TNULL);
-                // }
+                if(root == TNULL)
+                {
+                    return const_iterator(TNULL);
+                }
                 last_elem = root;
                 while(last_elem != TNULL)
                 {
@@ -929,12 +853,11 @@ namespace ft{
                     last_elem = last_elem->right;
                    
                 }
-              
-                
+
                 return iterator(last_elem);
             }
-            reverse_iterator rbegin() {
-                //return reverse_iterator(end());
+            reverse_iterator rbegin() 
+            {
                 type_name *last_elem;
                 if(root == TNULL)
                 {
@@ -964,11 +887,9 @@ namespace ft{
                     First_elem = First_elem->left;
                 }
                 return reverse_iterator(First_elem);
-                //return reverse_iterator(begin());
             }
             const_reverse_iterator rbegin() const
             {
-                // return reverse_iterator(end());
                 type_name *last_elem;
                 if(root == TNULL)
                 {
@@ -987,7 +908,6 @@ namespace ft{
             }
             const_reverse_iterator rend() const
             {
-                //return reverse_iterator(begin());
                 type_name *First_elem;
                 if(root == TNULL)
                 {
@@ -1006,19 +926,18 @@ namespace ft{
             {
                 while(node != TNULL)
                 {
-                    // cout << "data node\n" << node->data << endl;
-                    // cout << "value-->" << value << endl;
+                   
                     if(_comp(value,node->data))
                     {
-                        // value > node->data
+                       
                         node = node->left;
                     }else if(_comp(node->data,value))
                     {
-                        //value < node->data;
+                      
                         node = node->right;
                     }else
                     {
-                        // value == node->data;
+                      
                         return node; 
                     }
                         
@@ -1059,6 +978,10 @@ namespace ft{
                 }
                 return upper_node;
             }
+
+
+        //************************Swap()*******************************";
+
         void	swap(Red_black_tree &tree ) 
         {
 			ft::swap(TNULL, tree.TNULL);
@@ -1068,10 +991,6 @@ namespace ft{
 			ft::swap(_comp, tree._comp);
 			ft::swap(NBnode, tree.NBnode);
 		}
-
-
-
-
 
 };
 

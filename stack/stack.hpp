@@ -30,24 +30,24 @@ namespace ft
     class stack
     {
             public:
-                typedef T  value_type;
-                typedef Container container_type;
-                typedef size_t size_type;
+                typedef T               value_type;
+                typedef Container       container_type;
+                typedef size_t          size_type;
             protected:
                 container_type c;
         public:
-            //constructers
+            //***********************constructers**********************
             explicit stack(const container_type &__c = container_type()):c(__c){} 
-        //copy constructer
+        //********************copy constructer************************
 
         stack(const stack &obj): c(obj.c){}
-        // assignement operator
-
+        // *******************assignement operator********************
         stack &operator=(const stack& obj) 
         {
             c = obj.c;
             return *this;
         }
+
         bool empty() const
         {
             return c.empty();

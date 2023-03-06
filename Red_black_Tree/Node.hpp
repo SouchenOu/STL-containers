@@ -49,8 +49,6 @@ template < class T >
 
          Node& operator = (Node const& obj)
          {
-            // if (this == &obj) 
-            //     return *this;
             this->color = obj.color;
             this->data = obj.data;
             this->left = obj.left;
@@ -67,12 +65,5 @@ template < class T >
        
     };
 
-
-// //  template<class T, class Allocator>
-// //     ostream& operator<< (ostream& os, const map<T, Allocator> & m)
-// //     {
-// //         os << m.value_type;
-// //         //os << m.Node->root;
-// //     }
 
 #endif

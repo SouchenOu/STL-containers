@@ -13,6 +13,8 @@
 #ifndef LEXICOGRAPHICAL_COMPARE_HPP
 # define LEXICOGRAPHICAL_COMPARE_HPP
 
+
+//Two ranges are compared element by element.
 namespace ft
 {
     template<class InputIterator1, class InputIterator2>

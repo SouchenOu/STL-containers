@@ -14,9 +14,6 @@
 # define ENABLE_IF
 
 
-
-
-
 /***What is enable if function : it is basically a tool to remove some function template instantiation from the overload resolution  */
 namespace ft
 {

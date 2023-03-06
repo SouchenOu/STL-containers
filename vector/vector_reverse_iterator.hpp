@@ -27,7 +27,7 @@ namespace ft{
 
 		private:
 
-			iterator  			_ptr;
+			iterator  															_ptr;
 		public:
 
 			typedef iterator													iterator_type;
@@ -46,16 +46,12 @@ namespace ft{
 		{}
 		/****constructer with parameter*/
 		reverse_iterator(iterator_type ptr):_ptr(ptr)
-		{
-		}
+		{}
 		/*****copy constructures*/
-		// reverse_iterator(reverse_iterator &obj)
-		// {
-		// 	_ptr = obj._ptr;
-		// }
 		template <class Iterator>
 			reverse_iterator(const reverse_iterator<Iterator> & iter):_ptr(iter.get_ptr()) {};
-
+		
+		/***assignement operator*/
 		template <class Iterator>
 			reverse_iterator&	operator = (const reverse_iterator<Iterator>& other)
 			{
@@ -64,40 +60,32 @@ namespace ft{
 			};
 		/******destructer*/
 		~reverse_iterator(){}
-		/***assignement operator*/
 		//getter
 		iterator_type get_ptr() const
 		{
 			return _ptr;
 		}
 
-		// reverse_iterator& operator=(reverse_iterator &obj)
-		// {
-		// 	if(&obj == this)
-		// 		return(*this);
-		// 	_ptr = obj._ptr;
-		// }
 
 		// **********operations
 			//difference_type is Alias of one of the fundamental signed integer types.
 			// ptrdiff_t
 			reverse_iterator operator+(difference_type nb) const
 			{
-				// _ptr = _ptr - nb;
-				// return _ptr;
 				return reverse_iterator(_ptr - nb);
-				//return *this;
 			}
+			//pre increment
 			reverse_iterator& operator++()
 			{
 				_ptr--;
 				return *this;
 			}
+			//post increment
 			reverse_iterator operator++(int)
 			{
-				reverse_iterator tmp = *this;
-				--_ptr;
-				return (tmp);
+				reverse_iterator temp = *this;
+				--_ptr; //--*this
+				return (temp);
 			}
 			reverse_iterator &operator+=(difference_type nb)
 			{
@@ -107,8 +95,6 @@ namespace ft{
 
 			reverse_iterator operator-(difference_type nb) const
 			{
-				// _ptr = _ptr + nb;
-				// return (_ptr);
 				return reverse_iterator(_ptr + nb);
 			}
 			reverse_iterator &operator--()
@@ -118,27 +104,23 @@ namespace ft{
 			}
 			reverse_iterator operator--(int)
 			{
-				reverse_iterator tmp = *this;
-				++(_ptr);
-				return (tmp);
+				reverse_iterator temp = *this;
+				++(_ptr); // or ++(*this)
+				return (temp);
 			}
 			reverse_iterator operator-=(difference_type nb)
 			{
 				_ptr+=nb;
 				return *this;
 			}
-			// reference operator*(){
-			// 	return(*_ptr);
-			// }
 			reference			operator*() const
 			{		
-				iterator_type	tmp = _ptr;	
-				return *(tmp--);
+				iterator_type	temp = _ptr;	
+				return *(temp--);
 			};
 			
 			pointer operator->() const
 			{
-				//return (_ptr);
 				return &(operator*());
 			}
 			
@@ -147,31 +129,6 @@ namespace ft{
 				return get_ptr()[ - nb - 1];
 
 			}
-			// equal
-			// friend bool  operator == (const reverse_iterator& it1, const reverse_iterator& it2)
-			// {
-			// 		return (it1._ptr == it2._ptr);
-			// }
-			// friend bool operator != (const reverse_iterator& it1, const reverse_iterator& it2)
-			// {
-			// 		return (it1._ptr != it2._ptr);
-			// }
-			// friend bool operator > (const reverse_iterator& it1, const reverse_iterator& it2)
-			// {
-			// 	return(it1._ptr > it2._ptr);
-			// }
-			// friend bool operator >= (const reverse_iterator& it1, const reverse_iterator& it2)
-			// {
-			// 	return(it1._ptr >= it2._ptr);
-			// }
-			// friend bool operator < (const reverse_iterator& it1, const reverse_iterator& it2)
-			// {
-			// 	return(it1._ptr < it2._ptr);
-			// }
-			// friend bool operator <= (const reverse_iterator& it1, const reverse_iterator& it2)
-			// {
-			// 	return(it1._ptr <= it2._ptr);
-			// }
 
 	};
 

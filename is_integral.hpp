@@ -35,10 +35,9 @@ namespace ft
             //std::numeric_limits<value_type> :: Provides information about the properties of arithmetic types (either integral or floating-point) in the specific platform for which the library compiles.
             static const bool value = std::numeric_limits<type_value>::is_integer;
             //exp std::cout << "Maximum value for int: " << std::numeric_limits<int>::max() << '\n';
-                //std::cout << "int is signed: " << std::numeric_limits<int>::is_signed << '\n';
+            //std::cout << "int is signed: " << std::numeric_limits<int>::is_signed << '\n';
+            
     };
-
-   
 }
 
 #endif

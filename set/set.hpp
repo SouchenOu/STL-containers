@@ -31,18 +31,16 @@ template <class _Key, class _Compare = std::less<_Key>, class _Allocator = std::
 class set
 {
     public:
-        typedef _Key                key_type;
-        typedef key_type            value_type;
-        typedef _Compare            key_compare;
-        typedef key_compare         value_compare;
-        typedef _Allocator          allocator_type;
-        // typedef value_type&         reference;
-        // typedef const value_type&   const_reference;
-        typedef typename allocator_type::reference          reference;
-        typedef typename allocator_type::const_reference    const_reference;
-        typedef typename allocator_type::pointer            pointer;
-        typedef typename allocator_type::const_pointer      const_pointer;
-        typedef             size_t                          size_type;
+        typedef          _Key                                                                    key_type;
+        typedef          key_type                                                                value_type;
+        typedef          _Compare                                                                key_compare;
+        typedef          key_compare                                                             value_compare;
+        typedef          _Allocator                                                              allocator_type;
+        typedef typename allocator_type::reference                                      reference;
+        typedef typename allocator_type::const_reference                                const_reference;
+        typedef typename allocator_type::pointer                                        pointer;
+        typedef typename allocator_type::const_pointer                                  const_pointer;
+        typedef          size_t                                                         size_type;
 
     private:
             typedef Red_black_tree<value_type, value_compare, allocator_type> _R_B_Ttree;
@@ -56,12 +54,10 @@ class set
             typedef typename iterator_traits< iterator >::difference_type               difference_type;
     private:
         _R_B_Ttree              Ttree;
-        value_compare              _compare;
-        allocator_type           _alloc;
+        value_compare           _compare;
+        allocator_type          _alloc;
     public:
-            //*********constructers
-            //set():Ttree(value_compare()){}
-            //explicit set(const value_compare& __comp):Ttree(__comp){}
+            //*******************************constructers*******************************
             explicit set(const value_compare& __comp = value_compare(), const allocator_type& __a = allocator_type()):Ttree(__comp, __a),_compare(__comp),_alloc(__a){}
 
             template <class _InputIterator>
@@ -70,28 +66,24 @@ class set
                 Ttree.insert(f,l);
             }
 
-            //copy constructer
+            //*****************************copy constructer***********************
             set(const set& obj): Ttree(obj.Ttree)
-            {
-                *this = obj;
-            }
+            {}
 
-            // Assignement operator
+            // ***********************Assignement operator***********************
 
             set& operator=(const set& obj)
             {
-                //Ttree.free();
                 Ttree = obj.Ttree;
                 return *this;
             }
 
-            //destructer
+            //*****************************destructer****************************
 
             ~set()
-            {
-            }
+            {}
 
-            //************ Iterators
+            //********************* Iterators************************************
                 iterator begin()
                 {
                     return Ttree.begin();
@@ -131,14 +123,14 @@ class set
                 {
                     return _alloc;
                 }
-              //key_compare()
+              //**********************key_compare()*************************
             key_compare 	key_comp() const
             {
                 	return this->_compare;
                     
             };
             
-            //value_compare()
+            //**************************value_compare()**********************
 			value_compare 				value_comp() const
             {	
                 return value_compare(this->_compare);
@@ -146,7 +138,7 @@ class set
 
 
                 //*******Modifiers
-                //insert
+                //************************insert****************************
 
                 pair<iterator, bool> insert(const value_type& value)
                 {
@@ -162,7 +154,7 @@ class set
                     return Ttree.insert(first,last);
                 }
 
-                //erase
+                //*******************************erase*************************
                 void erase(iterator position)
                 {
                     Ttree.erase(*position);
@@ -178,7 +170,7 @@ class set
                     Ttree.erase(first,last);
                 }
 
-                       //************ //Capacity
+                //*************************** //Capacity**********************
                 bool empty() const
                 {
                     return Ttree.empty();
@@ -194,7 +186,7 @@ class set
                 }
 
 
-                // function find
+                //************************* function find****************
                 iterator find(const key_type& key)
                 {
                     return Ttree.find(key);
@@ -205,7 +197,7 @@ class set
                     return Ttree.find(key);
                 }
 
-                  //count
+                  //*********************count************************
                 size_type count(key_type const& key) const
                 {
                     if( (Ttree.search(Ttree.get_root(), key)) == 0 )
@@ -213,19 +205,19 @@ class set
                     else
                         return 1;
                 }
-                //clear
+                //**************************clear**********************
                 void clear()
                 {	
                     Ttree.clear();
                 }
-                //swap
+                //*************************swap*************************
 
                 void swap(set& s)
                 {
                      Ttree.swap(s.Ttree);
                 }
     
-                //lowerBound and upper bound
+                //********************lowerBound and upper bound*********
 
                 iterator lower_bound(key_type const& key)
                 {
@@ -235,7 +227,7 @@ class set
                 {
                     return Ttree.lower_bound(key);
                 }
-                //upper_bound
+                //**************************upper_bound********************
 
                 iterator upper_bound(key_type const &key)
                 {
@@ -246,7 +238,7 @@ class set
                     return Ttree.upper_bound(key);
                 }
 
-                //equal_range()
+                //************************equal_range()*******************
       
             ft::pair< iterator, iterator > equal_range (const key_type& k)
             {	

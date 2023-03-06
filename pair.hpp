@@ -16,17 +16,9 @@
 
 
 
-// //Maps are associative containers that store elements in a mapped fashion. Each element has a key value and a mapped value. No two mapped values can have same key values.
+/*Maps are associative containers that store elements in a mapped fashion. 
+Each element has a key value and a mapped value. No two mapped values can have same key values.*/
 
-// /*******Return value
-// 1) true if both lhs.first == rhs.first and lhs.second == rhs.second, otherwise false
-// 2) !(lhs == rhs)
-// 3) If lhs.first < rhs.first, returns true. Otherwise, if rhs.first < lhs.first, returns false. Otherwise, if lhs.second < rhs.second, returns true. Otherwise, returns false.
-// 4) !(rhs < lhs)
-// 5) rhs < lhs
-// 6) !(lhs < rhs)
-// 7) synth_three_way(lhs.first, rhs.first) if it is not equal to ​0​, otherwise synth_three_way(lhs.second, rhs.second), where synth_three_way is an exposition-only function object performing synthesized three-way comparison.*/
-// #endif
 
 
 #ifndef PAIR_HPP
@@ -44,7 +36,7 @@ namespace ft
 			typedef T1	first_type;
 			typedef T2	second_type;
 
-			T1				first;
+			T1			first;
 			T2			second;
 
 			pair():first(),second()	{};
@@ -99,13 +91,14 @@ namespace ft
 	{ 
 		return !(obj1 < obj2); 
 	}
-    template < typename T1, typename T2 >
-	ostream	& operator << (ostream &out, const pair<T1,T2> &p)
-    {
-        out << p.first << std::endl;
-        out << p.second << std::endl;
-        return out;
-    }
+	//stream insertion operator “<<”  using it for output
+    // template < typename T1, typename T2 >
+	// ostream	& operator << (ostream &out, const pair<T1,T2> &p)
+    // {
+    //     out << p.first << std::endl;
+    //     out << p.second << std::endl;
+    //     return out;
+    // }
 };
 
 #endif

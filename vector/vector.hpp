@@ -62,7 +62,6 @@ namespace ft
     {
 
         private:
-   
             T                   *_value;
             size_t              _capacity;
             size_t              _current;
@@ -80,34 +79,28 @@ namespace ft
             typedef typename allocator_type::const_reference        const_reference;
     
             //**********iterators
-            typedef ft::iterator < T >                            iterator; 
+            typedef ft::iterator < T >                              iterator; 
             typedef ft::iterator <const T>                          const_iterator;
-            typedef ft::reverse_iterator<iterator>                   reverse_iterator;
-            typedef ft::reverse_iterator<const_iterator>             const_reverse_iterator;
+            typedef ft::reverse_iterator<iterator>                  reverse_iterator;
+            typedef ft::reverse_iterator<const_iterator>            const_reverse_iterator;
 
 
-            //default
+            //***************************constructers***********************************
             explicit vector (const allocator_type& alloc = allocator_type()) :_value(NULL),_capacity(0),_current(0),_alloc(alloc)
             {};
 
             explicit vector (size_type n, const value_type& value = value_type() ,const allocator_type& a =allocator_type()) : _value(NULL),_capacity(0),_current(0),_alloc(a)
             {
-                //inserting value n times to the vector
-                //std::cout << "n here -->" << n << std::endl;
                 insert(begin(), n, value);
 
             }
-            /***copy constructor***/
+            /****************************copy constructor*********************************/
             vector (const vector& obj)
             {
-                std::cout << "enter\n";
                 _capacity   = obj._capacity;
                 _current    = obj._current;
                 _alloc      = obj._alloc;
-                _value = _alloc.allocate(obj._capacity);
-
-                // assign all element of our new obj to our existent obj
-                //from begin to end
+                _value      = _alloc.allocate(obj._capacity);
                 assign(obj.begin(), obj.end());
             }
 
@@ -118,20 +111,21 @@ namespace ft
                 insert(begin(), first, last);	
             }    
         
-            //Assignment operator
+            //**********************Assignment operator********************
             vector&	operator = (const vector& obj)
 		    {
 			    if (this != &obj) 
 			        assign(obj.begin(), obj.end());
                 return *this;
 		    }
+            //************************destructer*************************
             ~vector()
 		    {
 	    	    clear();
 			    _alloc.deallocate(_value, _capacity);	
 		    }
 
-            //access operator(subscript operator)
+            //************access operator(subscript operator)**************
 
             reference	operator[](size_type n)	
             {		
@@ -143,7 +137,7 @@ namespace ft
                 return _value[n];
             }
     
-            //implement iterators
+            //******************implement iterators***********************
             iterator begin()
             {
                  return iterator(_value);
@@ -161,7 +155,7 @@ namespace ft
                 return const_iterator(_value + _current);
             }
 
-            //implement reverse iterators
+            //***************implement reverse iterators******************
             reverse_iterator rbegin()
             {
                 return reverse_iterator(end());
@@ -180,7 +174,7 @@ namespace ft
             }
 
             
-            
+            //**********************Capacity********************
             size_type size() const
             {
                 return _current;
@@ -191,12 +185,10 @@ namespace ft
                     return _alloc.max_size();
             }
 
-
             size_type capacity() const
             {
                 return _capacity;
             }
-
 
             bool empty() const
             {
@@ -205,7 +197,7 @@ namespace ft
                 return 0;
             }
 
-
+            //************************resize***********************
             void resize (size_type n, value_type val = value_type())
             {
                 if (n < _current)
@@ -213,7 +205,6 @@ namespace ft
                     size_type i = n;
                     while (_current >= i)
                     {
-                        //_alloc.destroy(&(_value[_current]));
                         _alloc.destroy((_value + _current));
                         _current--;
                     }
@@ -255,7 +246,7 @@ namespace ft
                     return ;
                 }
             }
-             // function reserve()
+             // ************************function reserve()****************************
             void	reserve(size_type n)
 			{
 				if (n <= _capacity)
@@ -268,16 +259,13 @@ namespace ft
 				value_type	*_new = _alloc.allocate(n);
 				for (size_type i = 0; i < _current; i++)
 				{
-					//_alloc.construct(&_new[i], _value[i]);
                     _new[i] = _value[i];
-					//_alloc.destroy(&_value[i]);
 				}
-				//_alloc.deallocate(_value, _capacity);
 				_value= _new;
 				_capacity = n;
 			}
            
-           //Element access *****************
+           //***************************Element access ******************************
             reference at (size_type n)
             {
                 if (n > _current)
@@ -291,7 +279,7 @@ namespace ft
                     throw std::out_of_range("vector ");
                 return (_value[n]);
             }
-            //front
+            //****************************front***************************************
             reference front()
             {
                 return _value[0];
@@ -300,6 +288,7 @@ namespace ft
             {
                 return _value[0];
             }
+            //*******************************back**********************************
             reference back()
             {
                 return _value[_current - 1];
@@ -308,9 +297,9 @@ namespace ft
             {
                 return _value[_current - 1];
             }
-             //***************************Modifiers*/
+             //***************************Modifiers******************************/
+             //*********************Assign*****************
             template <class InputIterator>
-            //typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0
 			void		assign( InputIterator first, InputIterator last,typename std::enable_if<!std::is_integral<InputIterator>::value>::type* = 0)
 			{
 				size_type	n = ft::distance(first, last);
@@ -328,7 +317,6 @@ namespace ft
                 
             }
            
-            //Method 2*/
 			void		assign( size_type count, const value_type& val )
 			{
                 //first we remove all old element in our vector then we put val count time
@@ -344,33 +332,9 @@ namespace ft
 				_current = count;
 
 			}
-            void		push_back(const value_type& val)
-			{
-                size_type new_capacity;
-                new_capacity = 1;
-				if (_current == _capacity)
-                {
-                    while(new_capacity < _current + 1)
-                    {
-                        new_capacity = new_capacity * 2;
-                    }
-                    reserve(new_capacity);
-                }
-				_alloc.construct(_value + _current, val);
-                //_value[_current] = val;
-				_current++;
-			}
+            //*******************************insert*********************
 
-			void		pop_back() 						
-            {		
-                _alloc.destroy(&_value[_current]);
-                _current--;		
-            }
-            
-           
-
-
-			iterator	insert(iterator position, const value_type& val)
+            iterator	insert(iterator position, const value_type& val)
 			{
 			
 				insert(position, 1, val);
@@ -461,6 +425,7 @@ namespace ft
 				return position;
 
 			}
+            //*******************************erase*********************
             iterator				erase( iterator position )
 			{
 				size_type			value_pos = position - begin();
@@ -493,45 +458,50 @@ namespace ft
 				_current = _current - nb_element;
 				return last - nb_element;
 			}
-           
-            //still swap , emplace and emplace_back
-            
+            //*************************push_back*******************************
+            void		push_back(const value_type& val)
+			{
+                size_type new_capacity;
+                new_capacity = 1;
+				if (_current == _capacity)
+                {
+                    while(new_capacity < _current + 1)
+                    {
+                        new_capacity = new_capacity * 2;
+                    }
+                    reserve(new_capacity);
+                }
+				_alloc.construct(_value + _current, val);
+                //_value[_current] = val;
+				_current++;
+			}
+            //*************************pop_back()****************************
+			void		pop_back() 						
+            {		
+                _alloc.destroy(&_value[_current]);
+                _current--;		
+            }
 
-            //swap
+            //********************************swap**************************
         
-            // void swap(vector& x)
-            // {
-            //     ft::swap(_alloc,x._alloc);
-            //     ft::swap(_capacity,x._capacity);
-            //     ft::swap(_value, x._value);
-            //     ft::swap(_current,x._current);
+            void swap(vector& x)
+            {
+                ft::swap(_alloc,x._alloc);
+                ft::swap(_capacity,x._capacity);
+                ft::swap(_value, x._value);
+                ft::swap(_current,x._current);
 
-            // }
-
+            }
+            //****************************allocator***********************
             //Returns a copy of the allocator object associated with the vector.
             allocator_type get_allocator() const
             {
                 return _alloc;
             }
-            // private:
-
-            // allocator_type             _alloc;
-            // size_type                _capacity;
-            // value_type               *_value;
-            // size_type               _current;
-           
-
-           
 
     };
-
-
-            // template <class T, class Alloc>
-            // void swap(vector<T, Alloc> &vect1, vector<T, Alloc>& vect2)
-            // {
-            //     vect1.swap(vect2);
-            // }
- /*****Non member function :*/
+    
+ /**********************************Non member function :**********************/
 
             template <class T, class Alloc>
 	        bool	operator == (const vector<T,Alloc>& obj1, const vector<T,Alloc>& obj2)

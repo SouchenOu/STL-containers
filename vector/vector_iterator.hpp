@@ -19,7 +19,8 @@
 #include "iterators_traits.hpp"
 
 
-
+//ptrdiff_t : Alias of one of the fundamental signed integer types.--> Distance
+//Distance: Type to represent the difference between two iterators.
 /*****The iterator_traits class template comes with a default definition that obtains these types from the iterator type itself (see below). It is also specialized for pointers (T*) and pointers to const (const T*).****/
 /*****NAMESPACE : are used to orgnise code into logical groups especialy when your code base includes multiple libraries*/
 /*******WHY WE USE TYPEDEF : WE USE IT FOR ALIASING EXISTING DATATYPES*/
@@ -28,10 +29,10 @@ namespace ft
 		// class iterator
 	/***
 	 * 
-	 * T :Type of elements pointed by the iterator.
-		Distance :Type to represent the difference between two iterators.
-		Pointer : Type to represent a pointer to an element pointed by the iterator.
-		Reference :Type to represent a reference to an element pointed by the iterator.
+	 * 	T 			:Type of elements pointed by the iterator.
+		Distance 	:Type to represent the difference between two iterators.
+		Pointer 	:Type to represent a pointer to an element pointed by the iterator.
+		Reference 	:Type to represent a reference to an element pointed by the iterator.
 	*/
 	template<typename T>
 	class iterator
@@ -87,22 +88,20 @@ namespace ft
 			// ptrdiff_t
 			iterator operator+(difference_type nb) const
 			{
-				// _ptr = _ptr + nb;
-				// return _ptr;
-				return iterator(get_ptr() + nb);
-				//return *this;
+				return iterator(get_ptr() + nb);	
 			}
+			//++_ptr; // pre increment: calls TimeKeeper::operator++()
 			iterator& operator++()
 			{
 				_ptr = _ptr + 1;
 				return *this;
 			}
+			//_ptr++; // post increment: calls TimeKeeper::operator++(int)
 			iterator operator++(int)
 			{
-				iterator (tmp) = *this;
-				//tmp = *this;
-				_ptr = _ptr + 1;
-				return tmp;
+				iterator temp = *this;
+				++*this;
+				return temp;
 			}
 			iterator operator+=(difference_type nb)
 			{
@@ -112,8 +111,6 @@ namespace ft
 
 			iterator operator-(difference_type nb) const
 			{
-				// _ptr = _ptr - nb;
-				// return (_ptr);
 				return iterator(get_ptr() - nb);
 			}
 			iterator operator--()
@@ -123,11 +120,9 @@ namespace ft
 			}
 			iterator operator--(int)
 			{
-				iterator (tmp) = *this;
-				// tmp = *this;
-				// (*this)--;
-				_ptr--;
-				return tmp;
+				iterator temp = *this;
+				--*this;
+				return temp;
 			}
 			iterator operator-=(difference_type nb)
 			{
@@ -150,7 +145,6 @@ namespace ft
 			}
 			const_pointer operator->() const
 			{
-				//return (_ptr);
 				return &(operator*());
 			}
 			reference operator[] (difference_type nb)
