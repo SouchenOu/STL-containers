@@ -16,13 +16,26 @@ srand() is used to initialize random number generators. The srand() function set
 If srand() is not called, the rand() seed is set as if srand(1) were called at the program start.
 Any other value for seed sets the generator to a different starting point. 
 
+  
+  
 Friend class:
 --------------
 
 A friend class can access private and protected members of other classes in which it is declared as a friend
 
+  
+  
+  
 Class value_compare in stl container c++:
 ---------------------------------------
+  
+value_compare value_comp() const;
+  
+Return value comparison object
+  
+Returns a comparison object that can be used to compare two elements to get whether the key of the first one goes before the second.
+
+The arguments taken by this function object are of member type value_type (defined in map as an alias of pair<const key_type,mapped_type>), but the mapped_type part of the value is not taken into consideration in this comparison.
   
   
   
