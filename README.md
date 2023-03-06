@@ -53,3 +53,10 @@ private - members cannot be accessed (or viewed) from outside the class
   
 protected - members cannot be accessed from outside the class, however, they can be accessed in inherited classes. You will learn more about Inheritance later.
   
+  
+  
+Destructer:
+----------
+  
+Destructor is also a special member function like constructor. Destructor destroys the class objects created by constructor.
+  
