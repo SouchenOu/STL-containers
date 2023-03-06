@@ -37,7 +37,7 @@
 //     map3.insert(ft::pair<std::string,int>("gh",310));
 //     map3.insert(ft::pair<std::string,int>("ij",410));
 //     map3.insert(ft::pair<std::string,int>("kl",510));
-    // map3["mn"] = 2000;
+//     map3["mn"] = 2000;
 //     // map 2
 //     map2.insert(ft::pair<std::string,int>("one",12));
 //     map2.insert(ft::pair<std::string,int>("two",13));
@@ -71,13 +71,13 @@
 //         cout << "First elem -->"<< it1->first << endl;
 //         cout << "Second element -->" << it1->second << endl;
 //     }
-//     // //   std::cout<< "Printing second map*******\n";
-//     // // // for(ft::map<std::string,int>::iterator it2 = map3.begin();it2 != map3.end(); it2++)
-//     // // // {
+//     //   std::cout<< "Printing second map*******\n";
+//     // // for(ft::map<std::string,int>::iterator it2 = map3.begin();it2 != map3.end(); it2++)
+//     // // {
        
-//     // // //     cout << "First elem -->"<< it2->first << endl;
-//     // // //     cout << "Second element -->" << it2->second << endl;
-//     // // // }
+//     // //     cout << "First elem -->"<< it2->first << endl;
+//     // //     cout << "Second element -->" << it2->second << endl;
+//     // // }
 //     cout << "For testing std::map*************************\n";
 //     for(std::map<std::string,int>::iterator it3 = mapTest2.begin();it3 != mapTest2.end(); it3++)
 //     {

@@ -102,11 +102,6 @@ class Red_black_tree_iters
         {
             return _Node <= obj._Node;
         }
-        operator        const_iterator() const 
-        {       
-            return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
-        }
-
         //******************************* Arithmetic operator*********************
         Red_black_tree_iters &operator ++ () 
         {
@@ -114,10 +109,10 @@ class Red_black_tree_iters
             {
                 return *this;
             }
-            if(_Node && _Node->right && _Node->right->value_test)
+            if(_Node && _Node->right->value_test)
             {
                     _Node = _Node->right;
-                    while(_Node && _Node->left && _Node->left->value_test)
+                    while(_Node && _Node->left->value_test)
                     {
                         _Node = _Node->left;
   
@@ -149,10 +144,10 @@ class Red_black_tree_iters
             {
                 return *this;
             }
-            else if(_Node && _Node->left && _Node->left->value_test)
+            else if(_Node && _Node->left->value_test)
             {
                     _Node = _Node->left;
-                    while(_Node && _Node->right && _Node->right->value_test)
+                    while(_Node &&  _Node->right->value_test)
                     {
                         _Node = _Node->right;
                     }
@@ -199,6 +194,12 @@ class Red_black_tree_iters
         const_reference operator*() const
         {
             return _Node->data;
+        }
+        //convert a pointer of some data type into a pointer of another data type
+        //convert node to const_node_tree
+        operator        const_iterator() const 
+        {       
+            return const_iterator(reinterpret_cast<const_Node_tree *>(_Node));    
         }
        
 
@@ -275,7 +276,6 @@ namespace ft{
             ~Red_black_tree()
             { 
                 clear();
-                free_null_node(TNULL);
             }
 
             //getters
@@ -284,11 +284,6 @@ namespace ft{
                 return root;
             }
            
-            void        free_null_node(type_name *node)
-            {              
-                For_allocation_Node.deallocate(node, 1); 
-                NBnode--; 
-            }
             type_name *TNULLNode()
             {
                 type_name *node_new =  For_allocation_Node.allocate(1);
@@ -590,7 +585,7 @@ namespace ft{
                 // our tree is empty
                 if(y == TNULL)
                 {
-                    root = NewNode(data,TNULL,2);
+                    root = NewNode(data,TNULL,1);
                     root->color = 0;
                     return ft::make_pair(iterator(root),true);
                 }
