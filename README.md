@@ -4,6 +4,7 @@
 
 
 ---> srand():
+-------------
 
 How srand() and rand() are related to each other?
 
@@ -14,3 +15,8 @@ srand() function is an inbuilt function in C++ STL, which is a header file defin
 srand() is used to initialize random number generators. The srand() function sets the starting point for producing a series of pseudo-random integers.
 If srand() is not called, the rand() seed is set as if srand(1) were called at the program start.
 Any other value for seed sets the generator to a different starting point. 
+
+Friend class:
+--------------
+
+A friend class can access private and protected members of other classes in which it is declared as a friend
