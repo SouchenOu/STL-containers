@@ -40,6 +40,9 @@ The arguments taken by this function object are of member type value_type (defin
   
   
   
+The public member of this comparison class returns true if the key of the first argument is considered to go before that of the second (according to the strict weak ordering specified by the container's comparison object, key_comp), and false otherwise.
+  
+  
 The difference between private, public and protected:
   ---------------------------------------------------
   
