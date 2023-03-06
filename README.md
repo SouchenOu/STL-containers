@@ -67,3 +67,12 @@ Subscrit operator:
 -----------------
   
 The subscript operator [] is normally used to access array elements. This operator can be overloaded to enhance the existing functionality of C++ arrays.
+  
+  
+  
+The difference between post increment and post increment:
+------------------------------------------------------
+  
+The difference between pre increment and post increment is that for pre increment the value of the expression is that after the increment while for post increment it is the value before the expression.
+
+  For post increment the object the increment is applied to gets moved forward and a different object representing the state before the increment is returned. The object representing the previous state is a temporary object which only lives within the expression and which, thus, needs to be returned by value. For the pre increment only one value is involved and that can be returned immediately by reference.
