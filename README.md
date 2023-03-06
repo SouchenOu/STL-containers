@@ -60,3 +60,10 @@ Destructer:
   
 Destructor is also a special member function like constructor. Destructor destroys the class objects created by constructor.
   
+
+  
+  
+Subscrit operator:
+-----------------
+  
+The subscript operator [] is normally used to access array elements. This operator can be overloaded to enhance the existing functionality of C++ arrays.
