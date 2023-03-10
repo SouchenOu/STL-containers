@@ -1,5 +1,3 @@
-// Script for correction :
---------------------------
 
 
 
@@ -70,7 +68,7 @@ The subscript operator [] is normally used to access array elements. This operat
   
   
   
-The difference between post increment and post increment:
+The difference between post increment and pre-increment:
 ------------------------------------------------------
   
 The difference between pre increment and post increment is that for pre increment the value of the expression is that after the increment while for post increment it is the value before the expression.
